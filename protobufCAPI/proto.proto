@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package camera;
+
+enum CaptureEncoding {
+    UNKNOWN = 0;
+    RGBA32 = 1;
+    RGB24 = 2;
+    YUY2 = 3;
+    NV12 = 4; 
+    MJPG = 5;
+}
+
+message CaptureFormat {
+    uint32 width = 1;
+    uint32 height = 2;
+    double framerate = 3;
+    CaptureEncoding encoding = 4;
+	bool isAutoConvertSupported = 5;
+}
+
+message Camera {
+    string cameraName = 5;
+    repeated CaptureFormat formats = 6;
+}
+
+message CameraList {
+    repeated Camera cameras = 7;
+}
