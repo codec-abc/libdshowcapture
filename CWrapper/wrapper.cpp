@@ -7,11 +7,6 @@
 #include "proto.pb.h"
 #include <google/protobuf/util/json_util.h>
 
-int add(int a, int b)
-{
-	return a + b;
-}
-
 void SampleCallback(const DShow::VideoConfig &config,
 	unsigned char *data, size_t size,
 	long long startTime, long long stopTime)

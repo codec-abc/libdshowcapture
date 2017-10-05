@@ -46,20 +46,4 @@ namespace WebcamSampleApp
             Console.WriteLine(msg);
         }
     }
-
-    public static class CWrapperAPI
-    {
-        private const string dllPath = @"C:\DEV\libshowcapture\libdshowcapture\build\x64\Release\CWrapper.dll";
-
-        [DllImport(dllPath)]
-        public static extern int add(int a, int b);
-
-
-        [DllImport(dllPath)]
-        public static extern byte enumDevices();
-
-        [DllImport(dllPath)]
-        public static extern byte getDevices(ref IntPtr arraySize, ref IntPtr arrayPtr);
-
-    }
 }
