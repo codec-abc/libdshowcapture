@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -20,6 +21,8 @@ namespace WebcamSampleApp
 
         private void button1_Click(object sender, EventArgs e)
         {
+            var currentDir = Directory.GetCurrentDirectory();
+            Console.WriteLine("current dir " + currentDir);
             //var result = CWrapperAPI.add(1, 2);
             //Console.WriteLine("1+2=" + result);
 
