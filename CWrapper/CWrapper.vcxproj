@@ -82,6 +82,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(solutiondir)build\$(Platform)\$(configuration)</OutDir>
+    <IntDir>$(solutiondir)build\temp\CWrapper\$(Platform)\$(configuration)</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -176,11 +178,12 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(projectdir)..\packages\google-protobuf-cpp.3.3.0.2\installed\x64-windows-static\release\lib;$(projectDir)..\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libdshowcapture.lib;libprotobuf.lib%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(projectdir)..\packages\google-protobuf-cpp.3.3.0.2\installed\x64-windows-static\lib;$(projectDir)..\build\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libdshowcapture.lib;libprotobuf.lib;strmiids.lib;ksuser.lib;wmcodecdspuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y $(projectdir)..\$(configuration) $(projectdir)..\x64\$(configuration)</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(projectdir)..\packages\google-protobuf-cpp.3.3.0.2\installed\x64-windows-static\tools\protoc.exe -I $(projectdir)..\protobufCAPI\ $(projectdir)..\protobufCAPI\proto.proto --cpp_out=$(projectdir)..\protobufCAPI\output\cpp</Command>

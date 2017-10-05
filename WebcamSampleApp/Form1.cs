@@ -42,12 +42,14 @@ namespace WebcamSampleApp
                 );
 
             var msg = parser.Parse<Camera.CameraList>(str);
+
+            Console.WriteLine(msg);
         }
     }
 
     public static class CWrapperAPI
     {
-        private const string dllPath = @"C:\DEV\libshowcapture\libdshowcapture\build\x64\Debug\CWrapper.dll";
+        private const string dllPath = @"C:\DEV\libshowcapture\libdshowcapture\build\x64\Release\CWrapper.dll";
 
         [DllImport(dllPath)]
         public static extern int add(int a, int b);
