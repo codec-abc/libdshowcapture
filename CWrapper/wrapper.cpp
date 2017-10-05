@@ -7,6 +7,10 @@
 #include "proto.pb.h"
 #include <google/protobuf/util/json_util.h>
 
+
+#include <windows.h>
+
+
 void SampleCallback(const DShow::VideoConfig &config,
 	unsigned char *data, size_t size,
 	long long startTime, long long stopTime)
@@ -41,6 +45,8 @@ unsigned char enumDevices()
 		long long stopTime
 	) 
 	{
+		//printf("p = %p\n", (void *)data);
+		//Sleep(500);
 		if (*frameCount == 10)
 		{
 			SampleCallback(config, data, size, startTime, stopTime);

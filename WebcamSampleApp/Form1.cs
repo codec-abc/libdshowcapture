@@ -23,11 +23,7 @@ namespace WebcamSampleApp
         {
             var currentDir = Directory.GetCurrentDirectory();
             Console.WriteLine("current dir " + currentDir);
-            //var result = CWrapperAPI.add(1, 2);
-            //Console.WriteLine("1+2=" + result);
 
-            //var byteResult = CWrapperAPI.enumDevices();
-            //Console.WriteLine("result is " + byteResult);
             IntPtr size = new IntPtr(0);
             IntPtr pointer = new IntPtr(0);
             var isOk = CWrapperAPI.getDevices(ref size, ref pointer);
@@ -35,8 +31,6 @@ namespace WebcamSampleApp
             byte[] array = new byte[size.ToInt32()];
             Marshal.Copy(pointer, array, 0, size.ToInt32());
             var str = Encoding.ASCII.GetString(array);
-
-            //EscapiDll.releaseCharArray(buffer);
 
             Google.Protobuf.JsonParser parser =
                 new Google.Protobuf.JsonParser
@@ -47,6 +41,10 @@ namespace WebcamSampleApp
             var msg = parser.Parse<Camera.CameraList>(str);
 
             Console.WriteLine(msg);
+
+
+            var byteResult = CWrapperAPI.enumDevices();
+            Console.WriteLine("result is " + byteResult);
         }
     }
 }
