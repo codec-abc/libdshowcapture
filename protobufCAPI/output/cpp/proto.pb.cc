@@ -26,14 +26,16 @@ class CameraListDefaultTypeInternal : public ::google::protobuf::internal::Expli
 } _CameraList_default_instance_;
 class StartCaptureArgumentsDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<StartCaptureArguments> {
 } _StartCaptureArguments_default_instance_;
+class StartCaptureResultDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<StartCaptureResult> {
+} _StartCaptureResult_default_instance_;
 
 namespace protobuf_proto_2eproto {
 
 
 namespace {
 
-::google::protobuf::Metadata file_level_metadata[4];
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[1];
+::google::protobuf::Metadata file_level_metadata[5];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[2];
 
 }  // namespace
 
@@ -48,6 +50,7 @@ PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::AuxillaryParseTableField
 };
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTable const
     TableStruct::schema[] = {
+  { NULL, NULL, 0, -1, -1, false },
   { NULL, NULL, 0, -1, -1, false },
   { NULL, NULL, 0, -1, -1, false },
   { NULL, NULL, 0, -1, -1, false },
@@ -89,6 +92,17 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureArguments, height_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureArguments, framerate_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureArguments, encoding_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureResult, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureResult, canresetgraph_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureResult, cansetaudioconfig_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureResult, cansetvideoconfig_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureResult, canconnectfilters_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureResult, result_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureResult, devicepointer_),
 };
 
 static const ::google::protobuf::internal::MigrationSchema schemas[] = {
@@ -96,6 +110,7 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] = {
   { 9, -1, sizeof(Camera)},
   { 17, -1, sizeof(CameraList)},
   { 23, -1, sizeof(StartCaptureArguments)},
+  { 34, -1, sizeof(StartCaptureResult)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -103,6 +118,7 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&_Camera_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&_CameraList_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&_StartCaptureArguments_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&_StartCaptureResult_default_instance_),
 };
 
 namespace {
@@ -123,7 +139,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 4);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 5);
 }
 
 }  // namespace
@@ -137,6 +153,8 @@ void TableStruct::Shutdown() {
   delete file_level_metadata[2].reflection;
   _StartCaptureArguments_default_instance_.Shutdown();
   delete file_level_metadata[3].reflection;
+  _StartCaptureResult_default_instance_.Shutdown();
+  delete file_level_metadata[4].reflection;
 }
 
 void TableStruct::InitDefaultsImpl() {
@@ -147,6 +165,7 @@ void TableStruct::InitDefaultsImpl() {
   _Camera_default_instance_.DefaultConstruct();
   _CameraList_default_instance_.DefaultConstruct();
   _StartCaptureArguments_default_instance_.DefaultConstruct();
+  _StartCaptureResult_default_instance_.DefaultConstruct();
 }
 
 void InitDefaults() {
@@ -166,14 +185,20 @@ void AddDescriptorsImpl() {
       "ptureArguments\022\022\n\ncameraName\030\010 \001(\t\022\022\n\nca"
       "meraPath\030\t \001(\t\022\r\n\005width\030\n \001(\r\022\016\n\006height\030"
       "\013 \001(\r\022\021\n\tframerate\030\014 \001(\001\022)\n\010encoding\030\r \001"
-      "(\0162\027.camera.CaptureEncoding*\240\001\n\017CaptureE"
-      "ncoding\022\007\n\003Any\020\000\022\013\n\007Unknown\020\001\022\010\n\004ARGB\020\002\022"
-      "\010\n\004XRGB\020\003\022\010\n\004I420\020\004\022\010\n\004NV12\020\005\022\010\n\004YV12\020\006\022"
-      "\010\n\004Y800\020\007\022\010\n\004YVYU\020\010\022\010\n\004YUY2\020\t\022\010\n\004UYVY\020\n\022"
-      "\010\n\004HDYC\020\013\022\t\n\005MJPEG\020\014\022\010\n\004H264\020\rb\006proto3"
+      "(\0162\027.camera.CaptureEncoding\"\270\001\n\022StartCap"
+      "tureResult\022\025\n\rcanResetGraph\030\016 \001(\010\022\031\n\021can"
+      "SetAudioConfig\030\017 \001(\010\022\031\n\021canSetVideoConfi"
+      "g\030\020 \001(\010\022\031\n\021canConnectFilters\030\021 \001(\010\022#\n\006re"
+      "sult\030\022 \001(\0162\023.camera.StartResult\022\025\n\rdevic"
+      "ePointer\030\023 \001(\004*\240\001\n\017CaptureEncoding\022\007\n\003An"
+      "y\020\000\022\013\n\007Unknown\020\001\022\010\n\004ARGB\020\002\022\010\n\004XRGB\020\003\022\010\n\004"
+      "I420\020\004\022\010\n\004NV12\020\005\022\010\n\004YV12\020\006\022\010\n\004Y800\020\007\022\010\n\004"
+      "YVYU\020\010\022\010\n\004YUY2\020\t\022\010\n\004UYVY\020\n\022\010\n\004HDYC\020\013\022\t\n\005"
+      "MJPEG\020\014\022\010\n\004H264\020\r*0\n\013StartResult\022\013\n\007Succ"
+      "ess\020\000\022\t\n\005InUse\020\001\022\t\n\005Error\020\002b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 598);
+      descriptor, 835);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "proto.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&TableStruct::Shutdown);
@@ -212,6 +237,21 @@ bool CaptureEncoding_IsValid(int value) {
     case 11:
     case 12:
     case 13:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* StartResult_descriptor() {
+  protobuf_proto_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_proto_2eproto::file_level_enum_descriptors[1];
+}
+bool StartResult_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
       return true;
     default:
       return false;
@@ -1935,6 +1975,488 @@ void StartCaptureArguments::set_encoding(::camera::CaptureEncoding value) {
   
   encoding_ = value;
   // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.encoding)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int StartCaptureResult::kCanResetGraphFieldNumber;
+const int StartCaptureResult::kCanSetAudioConfigFieldNumber;
+const int StartCaptureResult::kCanSetVideoConfigFieldNumber;
+const int StartCaptureResult::kCanConnectFiltersFieldNumber;
+const int StartCaptureResult::kResultFieldNumber;
+const int StartCaptureResult::kDevicePointerFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+StartCaptureResult::StartCaptureResult()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_proto_2eproto::InitDefaults();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:camera.StartCaptureResult)
+}
+StartCaptureResult::StartCaptureResult(const StartCaptureResult& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&canresetgraph_, &from.canresetgraph_,
+    reinterpret_cast<char*>(&devicepointer_) -
+    reinterpret_cast<char*>(&canresetgraph_) + sizeof(devicepointer_));
+  // @@protoc_insertion_point(copy_constructor:camera.StartCaptureResult)
+}
+
+void StartCaptureResult::SharedCtor() {
+  ::memset(&canresetgraph_, 0, reinterpret_cast<char*>(&devicepointer_) -
+    reinterpret_cast<char*>(&canresetgraph_) + sizeof(devicepointer_));
+  _cached_size_ = 0;
+}
+
+StartCaptureResult::~StartCaptureResult() {
+  // @@protoc_insertion_point(destructor:camera.StartCaptureResult)
+  SharedDtor();
+}
+
+void StartCaptureResult::SharedDtor() {
+}
+
+void StartCaptureResult::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* StartCaptureResult::descriptor() {
+  protobuf_proto_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_proto_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const StartCaptureResult& StartCaptureResult::default_instance() {
+  protobuf_proto_2eproto::InitDefaults();
+  return *internal_default_instance();
+}
+
+StartCaptureResult* StartCaptureResult::New(::google::protobuf::Arena* arena) const {
+  StartCaptureResult* n = new StartCaptureResult;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void StartCaptureResult::Clear() {
+// @@protoc_insertion_point(message_clear_start:camera.StartCaptureResult)
+  ::memset(&canresetgraph_, 0, reinterpret_cast<char*>(&devicepointer_) -
+    reinterpret_cast<char*>(&canresetgraph_) + sizeof(devicepointer_));
+}
+
+bool StartCaptureResult::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:camera.StartCaptureResult)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(16383u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // bool canResetGraph = 14;
+      case 14: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(112u)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &canresetgraph_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bool canSetAudioConfig = 15;
+      case 15: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(120u)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &cansetaudioconfig_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bool canSetVideoConfig = 16;
+      case 16: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(128u)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &cansetvideoconfig_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bool canConnectFilters = 17;
+      case 17: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(136u)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &canconnectfilters_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .camera.StartResult result = 18;
+      case 18: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(144u)) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_result(static_cast< ::camera::StartResult >(value));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint64 devicePointer = 19;
+      case 19: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(152u)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &devicepointer_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:camera.StartCaptureResult)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:camera.StartCaptureResult)
+  return false;
+#undef DO_
+}
+
+void StartCaptureResult::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:camera.StartCaptureResult)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bool canResetGraph = 14;
+  if (this->canresetgraph() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(14, this->canresetgraph(), output);
+  }
+
+  // bool canSetAudioConfig = 15;
+  if (this->cansetaudioconfig() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(15, this->cansetaudioconfig(), output);
+  }
+
+  // bool canSetVideoConfig = 16;
+  if (this->cansetvideoconfig() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(16, this->cansetvideoconfig(), output);
+  }
+
+  // bool canConnectFilters = 17;
+  if (this->canconnectfilters() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(17, this->canconnectfilters(), output);
+  }
+
+  // .camera.StartResult result = 18;
+  if (this->result() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      18, this->result(), output);
+  }
+
+  // uint64 devicePointer = 19;
+  if (this->devicepointer() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(19, this->devicepointer(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:camera.StartCaptureResult)
+}
+
+::google::protobuf::uint8* StartCaptureResult::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:camera.StartCaptureResult)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bool canResetGraph = 14;
+  if (this->canresetgraph() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(14, this->canresetgraph(), target);
+  }
+
+  // bool canSetAudioConfig = 15;
+  if (this->cansetaudioconfig() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(15, this->cansetaudioconfig(), target);
+  }
+
+  // bool canSetVideoConfig = 16;
+  if (this->cansetvideoconfig() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(16, this->cansetvideoconfig(), target);
+  }
+
+  // bool canConnectFilters = 17;
+  if (this->canconnectfilters() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(17, this->canconnectfilters(), target);
+  }
+
+  // .camera.StartResult result = 18;
+  if (this->result() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      18, this->result(), target);
+  }
+
+  // uint64 devicePointer = 19;
+  if (this->devicepointer() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(19, this->devicepointer(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:camera.StartCaptureResult)
+  return target;
+}
+
+size_t StartCaptureResult::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:camera.StartCaptureResult)
+  size_t total_size = 0;
+
+  // bool canResetGraph = 14;
+  if (this->canresetgraph() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // bool canSetAudioConfig = 15;
+  if (this->cansetaudioconfig() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // bool canSetVideoConfig = 16;
+  if (this->cansetvideoconfig() != 0) {
+    total_size += 2 + 1;
+  }
+
+  // bool canConnectFilters = 17;
+  if (this->canconnectfilters() != 0) {
+    total_size += 2 + 1;
+  }
+
+  // .camera.StartResult result = 18;
+  if (this->result() != 0) {
+    total_size += 2 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
+  }
+
+  // uint64 devicePointer = 19;
+  if (this->devicepointer() != 0) {
+    total_size += 2 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->devicepointer());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void StartCaptureResult::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:camera.StartCaptureResult)
+  GOOGLE_DCHECK_NE(&from, this);
+  const StartCaptureResult* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const StartCaptureResult>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:camera.StartCaptureResult)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:camera.StartCaptureResult)
+    MergeFrom(*source);
+  }
+}
+
+void StartCaptureResult::MergeFrom(const StartCaptureResult& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:camera.StartCaptureResult)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.canresetgraph() != 0) {
+    set_canresetgraph(from.canresetgraph());
+  }
+  if (from.cansetaudioconfig() != 0) {
+    set_cansetaudioconfig(from.cansetaudioconfig());
+  }
+  if (from.cansetvideoconfig() != 0) {
+    set_cansetvideoconfig(from.cansetvideoconfig());
+  }
+  if (from.canconnectfilters() != 0) {
+    set_canconnectfilters(from.canconnectfilters());
+  }
+  if (from.result() != 0) {
+    set_result(from.result());
+  }
+  if (from.devicepointer() != 0) {
+    set_devicepointer(from.devicepointer());
+  }
+}
+
+void StartCaptureResult::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:camera.StartCaptureResult)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void StartCaptureResult::CopyFrom(const StartCaptureResult& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:camera.StartCaptureResult)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool StartCaptureResult::IsInitialized() const {
+  return true;
+}
+
+void StartCaptureResult::Swap(StartCaptureResult* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void StartCaptureResult::InternalSwap(StartCaptureResult* other) {
+  std::swap(canresetgraph_, other->canresetgraph_);
+  std::swap(cansetaudioconfig_, other->cansetaudioconfig_);
+  std::swap(cansetvideoconfig_, other->cansetvideoconfig_);
+  std::swap(canconnectfilters_, other->canconnectfilters_);
+  std::swap(result_, other->result_);
+  std::swap(devicepointer_, other->devicepointer_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata StartCaptureResult::GetMetadata() const {
+  protobuf_proto_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_proto_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// StartCaptureResult
+
+// bool canResetGraph = 14;
+void StartCaptureResult::clear_canresetgraph() {
+  canresetgraph_ = false;
+}
+bool StartCaptureResult::canresetgraph() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.canResetGraph)
+  return canresetgraph_;
+}
+void StartCaptureResult::set_canresetgraph(bool value) {
+  
+  canresetgraph_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.canResetGraph)
+}
+
+// bool canSetAudioConfig = 15;
+void StartCaptureResult::clear_cansetaudioconfig() {
+  cansetaudioconfig_ = false;
+}
+bool StartCaptureResult::cansetaudioconfig() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.canSetAudioConfig)
+  return cansetaudioconfig_;
+}
+void StartCaptureResult::set_cansetaudioconfig(bool value) {
+  
+  cansetaudioconfig_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.canSetAudioConfig)
+}
+
+// bool canSetVideoConfig = 16;
+void StartCaptureResult::clear_cansetvideoconfig() {
+  cansetvideoconfig_ = false;
+}
+bool StartCaptureResult::cansetvideoconfig() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.canSetVideoConfig)
+  return cansetvideoconfig_;
+}
+void StartCaptureResult::set_cansetvideoconfig(bool value) {
+  
+  cansetvideoconfig_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.canSetVideoConfig)
+}
+
+// bool canConnectFilters = 17;
+void StartCaptureResult::clear_canconnectfilters() {
+  canconnectfilters_ = false;
+}
+bool StartCaptureResult::canconnectfilters() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.canConnectFilters)
+  return canconnectfilters_;
+}
+void StartCaptureResult::set_canconnectfilters(bool value) {
+  
+  canconnectfilters_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.canConnectFilters)
+}
+
+// .camera.StartResult result = 18;
+void StartCaptureResult::clear_result() {
+  result_ = 0;
+}
+::camera::StartResult StartCaptureResult::result() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.result)
+  return static_cast< ::camera::StartResult >(result_);
+}
+void StartCaptureResult::set_result(::camera::StartResult value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.result)
+}
+
+// uint64 devicePointer = 19;
+void StartCaptureResult::clear_devicepointer() {
+  devicepointer_ = GOOGLE_ULONGLONG(0);
+}
+::google::protobuf::uint64 StartCaptureResult::devicepointer() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.devicePointer)
+  return devicepointer_;
+}
+void StartCaptureResult::set_devicepointer(::google::protobuf::uint64 value) {
+  
+  devicepointer_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.devicePointer)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

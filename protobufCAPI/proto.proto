@@ -48,3 +48,18 @@ message StartCaptureArguments {
 	double framerate = 12;
 	CaptureEncoding encoding = 13;
 }
+
+enum StartResult {
+	Success = 0;
+	InUse = 1;
+	Error = 2;
+}
+
+message StartCaptureResult {
+	bool canResetGraph = 14;
+	bool canSetAudioConfig = 15;
+	bool canSetVideoConfig = 16;
+	bool canConnectFilters = 17;
+	StartResult result = 18;
+	uint64 devicePointer = 19;
+}

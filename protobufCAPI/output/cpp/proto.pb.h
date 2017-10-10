@@ -44,6 +44,9 @@ extern CaptureFormatDefaultTypeInternal _CaptureFormat_default_instance_;
 class StartCaptureArguments;
 class StartCaptureArgumentsDefaultTypeInternal;
 extern StartCaptureArgumentsDefaultTypeInternal _StartCaptureArguments_default_instance_;
+class StartCaptureResult;
+class StartCaptureResultDefaultTypeInternal;
+extern StartCaptureResultDefaultTypeInternal _StartCaptureResult_default_instance_;
 }  // namespace camera
 
 namespace camera {
@@ -94,6 +97,28 @@ inline bool CaptureEncoding_Parse(
     const ::std::string& name, CaptureEncoding* value) {
   return ::google::protobuf::internal::ParseNamedEnum<CaptureEncoding>(
     CaptureEncoding_descriptor(), name, value);
+}
+enum StartResult {
+  Success = 0,
+  InUse = 1,
+  Error = 2,
+  StartResult_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  StartResult_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool StartResult_IsValid(int value);
+const StartResult StartResult_MIN = Success;
+const StartResult StartResult_MAX = Error;
+const int StartResult_ARRAYSIZE = StartResult_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* StartResult_descriptor();
+inline const ::std::string& StartResult_Name(StartResult value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    StartResult_descriptor(), value);
+}
+inline bool StartResult_Parse(
+    const ::std::string& name, StartResult* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<StartResult>(
+    StartResult_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -529,6 +554,121 @@ class StartCaptureArguments : public ::google::protobuf::Message /* @@protoc_ins
   mutable int _cached_size_;
   friend struct protobuf_proto_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class StartCaptureResult : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:camera.StartCaptureResult) */ {
+ public:
+  StartCaptureResult();
+  virtual ~StartCaptureResult();
+
+  StartCaptureResult(const StartCaptureResult& from);
+
+  inline StartCaptureResult& operator=(const StartCaptureResult& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const StartCaptureResult& default_instance();
+
+  static inline const StartCaptureResult* internal_default_instance() {
+    return reinterpret_cast<const StartCaptureResult*>(
+               &_StartCaptureResult_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    4;
+
+  void Swap(StartCaptureResult* other);
+
+  // implements Message ----------------------------------------------
+
+  inline StartCaptureResult* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  StartCaptureResult* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const StartCaptureResult& from);
+  void MergeFrom(const StartCaptureResult& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(StartCaptureResult* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bool canResetGraph = 14;
+  void clear_canresetgraph();
+  static const int kCanResetGraphFieldNumber = 14;
+  bool canresetgraph() const;
+  void set_canresetgraph(bool value);
+
+  // bool canSetAudioConfig = 15;
+  void clear_cansetaudioconfig();
+  static const int kCanSetAudioConfigFieldNumber = 15;
+  bool cansetaudioconfig() const;
+  void set_cansetaudioconfig(bool value);
+
+  // bool canSetVideoConfig = 16;
+  void clear_cansetvideoconfig();
+  static const int kCanSetVideoConfigFieldNumber = 16;
+  bool cansetvideoconfig() const;
+  void set_cansetvideoconfig(bool value);
+
+  // bool canConnectFilters = 17;
+  void clear_canconnectfilters();
+  static const int kCanConnectFiltersFieldNumber = 17;
+  bool canconnectfilters() const;
+  void set_canconnectfilters(bool value);
+
+  // .camera.StartResult result = 18;
+  void clear_result();
+  static const int kResultFieldNumber = 18;
+  ::camera::StartResult result() const;
+  void set_result(::camera::StartResult value);
+
+  // uint64 devicePointer = 19;
+  void clear_devicepointer();
+  static const int kDevicePointerFieldNumber = 19;
+  ::google::protobuf::uint64 devicepointer() const;
+  void set_devicepointer(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:camera.StartCaptureResult)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool canresetgraph_;
+  bool cansetaudioconfig_;
+  bool cansetvideoconfig_;
+  bool canconnectfilters_;
+  int result_;
+  ::google::protobuf::uint64 devicepointer_;
+  mutable int _cached_size_;
+  friend struct protobuf_proto_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -933,7 +1073,97 @@ inline void StartCaptureArguments::set_encoding(::camera::CaptureEncoding value)
   // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.encoding)
 }
 
+// -------------------------------------------------------------------
+
+// StartCaptureResult
+
+// bool canResetGraph = 14;
+inline void StartCaptureResult::clear_canresetgraph() {
+  canresetgraph_ = false;
+}
+inline bool StartCaptureResult::canresetgraph() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.canResetGraph)
+  return canresetgraph_;
+}
+inline void StartCaptureResult::set_canresetgraph(bool value) {
+  
+  canresetgraph_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.canResetGraph)
+}
+
+// bool canSetAudioConfig = 15;
+inline void StartCaptureResult::clear_cansetaudioconfig() {
+  cansetaudioconfig_ = false;
+}
+inline bool StartCaptureResult::cansetaudioconfig() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.canSetAudioConfig)
+  return cansetaudioconfig_;
+}
+inline void StartCaptureResult::set_cansetaudioconfig(bool value) {
+  
+  cansetaudioconfig_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.canSetAudioConfig)
+}
+
+// bool canSetVideoConfig = 16;
+inline void StartCaptureResult::clear_cansetvideoconfig() {
+  cansetvideoconfig_ = false;
+}
+inline bool StartCaptureResult::cansetvideoconfig() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.canSetVideoConfig)
+  return cansetvideoconfig_;
+}
+inline void StartCaptureResult::set_cansetvideoconfig(bool value) {
+  
+  cansetvideoconfig_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.canSetVideoConfig)
+}
+
+// bool canConnectFilters = 17;
+inline void StartCaptureResult::clear_canconnectfilters() {
+  canconnectfilters_ = false;
+}
+inline bool StartCaptureResult::canconnectfilters() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.canConnectFilters)
+  return canconnectfilters_;
+}
+inline void StartCaptureResult::set_canconnectfilters(bool value) {
+  
+  canconnectfilters_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.canConnectFilters)
+}
+
+// .camera.StartResult result = 18;
+inline void StartCaptureResult::clear_result() {
+  result_ = 0;
+}
+inline ::camera::StartResult StartCaptureResult::result() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.result)
+  return static_cast< ::camera::StartResult >(result_);
+}
+inline void StartCaptureResult::set_result(::camera::StartResult value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.result)
+}
+
+// uint64 devicePointer = 19;
+inline void StartCaptureResult::clear_devicepointer() {
+  devicepointer_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 StartCaptureResult::devicepointer() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.devicePointer)
+  return devicepointer_;
+}
+inline void StartCaptureResult::set_devicepointer(::google::protobuf::uint64 value) {
+  
+  devicepointer_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.devicePointer)
+}
+
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
@@ -954,6 +1184,11 @@ template <> struct is_proto_enum< ::camera::CaptureEncoding> : ::google::protobu
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::camera::CaptureEncoding>() {
   return ::camera::CaptureEncoding_descriptor();
+}
+template <> struct is_proto_enum< ::camera::StartResult> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::camera::StartResult>() {
+  return ::camera::StartResult_descriptor();
 }
 
 }  // namespace protobuf

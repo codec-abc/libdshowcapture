@@ -31,18 +31,24 @@ namespace Camera {
             "AQoVU3RhcnRDYXB0dXJlQXJndW1lbnRzEhIKCmNhbWVyYU5hbWUYCCABKAkS",
             "EgoKY2FtZXJhUGF0aBgJIAEoCRINCgV3aWR0aBgKIAEoDRIOCgZoZWlnaHQY",
             "CyABKA0SEQoJZnJhbWVyYXRlGAwgASgBEikKCGVuY29kaW5nGA0gASgOMhcu",
-            "Y2FtZXJhLkNhcHR1cmVFbmNvZGluZyqgAQoPQ2FwdHVyZUVuY29kaW5nEgcK",
-            "A0FueRAAEgsKB1Vua25vd24QARIICgRBUkdCEAISCAoEWFJHQhADEggKBEk0",
-            "MjAQBBIICgROVjEyEAUSCAoEWVYxMhAGEggKBFk4MDAQBxIICgRZVllVEAgS",
-            "CAoEWVVZMhAJEggKBFVZVlkQChIICgRIRFlDEAsSCQoFTUpQRUcQDBIICgRI",
-            "MjY0EA1iBnByb3RvMw=="));
+            "Y2FtZXJhLkNhcHR1cmVFbmNvZGluZyK4AQoSU3RhcnRDYXB0dXJlUmVzdWx0",
+            "EhUKDWNhblJlc2V0R3JhcGgYDiABKAgSGQoRY2FuU2V0QXVkaW9Db25maWcY",
+            "DyABKAgSGQoRY2FuU2V0VmlkZW9Db25maWcYECABKAgSGQoRY2FuQ29ubmVj",
+            "dEZpbHRlcnMYESABKAgSIwoGcmVzdWx0GBIgASgOMhMuY2FtZXJhLlN0YXJ0",
+            "UmVzdWx0EhUKDWRldmljZVBvaW50ZXIYEyABKAQqoAEKD0NhcHR1cmVFbmNv",
+            "ZGluZxIHCgNBbnkQABILCgdVbmtub3duEAESCAoEQVJHQhACEggKBFhSR0IQ",
+            "AxIICgRJNDIwEAQSCAoETlYxMhAFEggKBFlWMTIQBhIICgRZODAwEAcSCAoE",
+            "WVZZVRAIEggKBFlVWTIQCRIICgRVWVZZEAoSCAoESERZQxALEgkKBU1KUEVH",
+            "EAwSCAoESDI2NBANKjAKC1N0YXJ0UmVzdWx0EgsKB1N1Y2Nlc3MQABIJCgVJ",
+            "blVzZRABEgkKBUVycm9yEAJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Camera.CaptureEncoding), }, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Camera.CaptureEncoding), typeof(global::Camera.StartResult), }, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Camera.CaptureFormat), global::Camera.CaptureFormat.Parser, new[]{ "Width", "Height", "Framerate", "Encoding" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Camera.Camera), global::Camera.Camera.Parser, new[]{ "CameraName", "CameraPath", "Formats" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Camera.CameraList), global::Camera.CameraList.Parser, new[]{ "Cameras" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.StartCaptureArguments), global::Camera.StartCaptureArguments.Parser, new[]{ "CameraName", "CameraPath", "Width", "Height", "Framerate", "Encoding" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.StartCaptureArguments), global::Camera.StartCaptureArguments.Parser, new[]{ "CameraName", "CameraPath", "Width", "Height", "Framerate", "Encoding" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.StartCaptureResult), global::Camera.StartCaptureResult.Parser, new[]{ "CanResetGraph", "CanSetAudioConfig", "CanSetVideoConfig", "CanConnectFilters", "Result", "DevicePointer" }, null, null, null)
           }));
     }
     #endregion
@@ -64,6 +70,12 @@ namespace Camera {
     [pbr::OriginalName("HDYC")] Hdyc = 11,
     [pbr::OriginalName("MJPEG")] Mjpeg = 12,
     [pbr::OriginalName("H264")] H264 = 13,
+  }
+
+  public enum StartResult {
+    [pbr::OriginalName("Success")] Success = 0,
+    [pbr::OriginalName("InUse")] InUse = 1,
+    [pbr::OriginalName("Error")] Error = 2,
   }
 
   #endregion
@@ -793,6 +805,263 @@ namespace Camera {
           }
           case 104: {
             encoding_ = (global::Camera.CaptureEncoding) input.ReadEnum();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class StartCaptureResult : pb::IMessage<StartCaptureResult> {
+    private static readonly pb::MessageParser<StartCaptureResult> _parser = new pb::MessageParser<StartCaptureResult>(() => new StartCaptureResult());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<StartCaptureResult> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Camera.ProtoReflection.Descriptor.MessageTypes[4]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StartCaptureResult() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StartCaptureResult(StartCaptureResult other) : this() {
+      canResetGraph_ = other.canResetGraph_;
+      canSetAudioConfig_ = other.canSetAudioConfig_;
+      canSetVideoConfig_ = other.canSetVideoConfig_;
+      canConnectFilters_ = other.canConnectFilters_;
+      result_ = other.result_;
+      devicePointer_ = other.devicePointer_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StartCaptureResult Clone() {
+      return new StartCaptureResult(this);
+    }
+
+    /// <summary>Field number for the "canResetGraph" field.</summary>
+    public const int CanResetGraphFieldNumber = 14;
+    private bool canResetGraph_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool CanResetGraph {
+      get { return canResetGraph_; }
+      set {
+        canResetGraph_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "canSetAudioConfig" field.</summary>
+    public const int CanSetAudioConfigFieldNumber = 15;
+    private bool canSetAudioConfig_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool CanSetAudioConfig {
+      get { return canSetAudioConfig_; }
+      set {
+        canSetAudioConfig_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "canSetVideoConfig" field.</summary>
+    public const int CanSetVideoConfigFieldNumber = 16;
+    private bool canSetVideoConfig_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool CanSetVideoConfig {
+      get { return canSetVideoConfig_; }
+      set {
+        canSetVideoConfig_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "canConnectFilters" field.</summary>
+    public const int CanConnectFiltersFieldNumber = 17;
+    private bool canConnectFilters_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool CanConnectFilters {
+      get { return canConnectFilters_; }
+      set {
+        canConnectFilters_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "result" field.</summary>
+    public const int ResultFieldNumber = 18;
+    private global::Camera.StartResult result_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Camera.StartResult Result {
+      get { return result_; }
+      set {
+        result_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "devicePointer" field.</summary>
+    public const int DevicePointerFieldNumber = 19;
+    private ulong devicePointer_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong DevicePointer {
+      get { return devicePointer_; }
+      set {
+        devicePointer_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as StartCaptureResult);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(StartCaptureResult other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (CanResetGraph != other.CanResetGraph) return false;
+      if (CanSetAudioConfig != other.CanSetAudioConfig) return false;
+      if (CanSetVideoConfig != other.CanSetVideoConfig) return false;
+      if (CanConnectFilters != other.CanConnectFilters) return false;
+      if (Result != other.Result) return false;
+      if (DevicePointer != other.DevicePointer) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (CanResetGraph != false) hash ^= CanResetGraph.GetHashCode();
+      if (CanSetAudioConfig != false) hash ^= CanSetAudioConfig.GetHashCode();
+      if (CanSetVideoConfig != false) hash ^= CanSetVideoConfig.GetHashCode();
+      if (CanConnectFilters != false) hash ^= CanConnectFilters.GetHashCode();
+      if (Result != 0) hash ^= Result.GetHashCode();
+      if (DevicePointer != 0UL) hash ^= DevicePointer.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (CanResetGraph != false) {
+        output.WriteRawTag(112);
+        output.WriteBool(CanResetGraph);
+      }
+      if (CanSetAudioConfig != false) {
+        output.WriteRawTag(120);
+        output.WriteBool(CanSetAudioConfig);
+      }
+      if (CanSetVideoConfig != false) {
+        output.WriteRawTag(128, 1);
+        output.WriteBool(CanSetVideoConfig);
+      }
+      if (CanConnectFilters != false) {
+        output.WriteRawTag(136, 1);
+        output.WriteBool(CanConnectFilters);
+      }
+      if (Result != 0) {
+        output.WriteRawTag(144, 1);
+        output.WriteEnum((int) Result);
+      }
+      if (DevicePointer != 0UL) {
+        output.WriteRawTag(152, 1);
+        output.WriteUInt64(DevicePointer);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (CanResetGraph != false) {
+        size += 1 + 1;
+      }
+      if (CanSetAudioConfig != false) {
+        size += 1 + 1;
+      }
+      if (CanSetVideoConfig != false) {
+        size += 2 + 1;
+      }
+      if (CanConnectFilters != false) {
+        size += 2 + 1;
+      }
+      if (Result != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
+      }
+      if (DevicePointer != 0UL) {
+        size += 2 + pb::CodedOutputStream.ComputeUInt64Size(DevicePointer);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(StartCaptureResult other) {
+      if (other == null) {
+        return;
+      }
+      if (other.CanResetGraph != false) {
+        CanResetGraph = other.CanResetGraph;
+      }
+      if (other.CanSetAudioConfig != false) {
+        CanSetAudioConfig = other.CanSetAudioConfig;
+      }
+      if (other.CanSetVideoConfig != false) {
+        CanSetVideoConfig = other.CanSetVideoConfig;
+      }
+      if (other.CanConnectFilters != false) {
+        CanConnectFilters = other.CanConnectFilters;
+      }
+      if (other.Result != 0) {
+        Result = other.Result;
+      }
+      if (other.DevicePointer != 0UL) {
+        DevicePointer = other.DevicePointer;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 112: {
+            CanResetGraph = input.ReadBool();
+            break;
+          }
+          case 120: {
+            CanSetAudioConfig = input.ReadBool();
+            break;
+          }
+          case 128: {
+            CanSetVideoConfig = input.ReadBool();
+            break;
+          }
+          case 136: {
+            CanConnectFilters = input.ReadBool();
+            break;
+          }
+          case 144: {
+            result_ = (global::Camera.StartResult) input.ReadEnum();
+            break;
+          }
+          case 152: {
+            DevicePointer = input.ReadUInt64();
             break;
           }
         }

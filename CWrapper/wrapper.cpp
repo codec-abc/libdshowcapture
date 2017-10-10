@@ -12,6 +12,28 @@
 #include <codecvt>
 #include <string>
 
+class DeviceHolder
+{
+public:
+	DeviceHolder(DShow::Device* devicePtr)
+	{
+		_devicePtr = devicePtr;
+		_frameCount = 0;
+	}
+	~DeviceHolder()
+	{
+		if (_devicePtr != NULL)
+		{
+			_devicePtr->Stop();
+			delete(_devicePtr);
+		}
+	}
+private:
+	DShow::Device* _devicePtr;
+	int _frameCount;
+	//std::vector<unsigned char*> _buffers;
+};
+
 // convert UTF-8 string to wstring
 std::wstring utf8_to_wstring(const std::string& str)
 {
@@ -112,48 +134,77 @@ void SampleCallback(const DShow::VideoConfig &config,
 	myfile.close();
 }
 
-unsigned char startCapture(char* startCaptureOptions)
+void AllocResultByteArray(const camera::StartCaptureResult& result, int* arraySize, char** arrayPtr)
+{
+	std::string output;
+	auto status = google::protobuf::util::MessageToJsonString(result, &output);
+
+	char* array = (char*)calloc(output.length() + 1, sizeof(char));
+	output.copy(array, output.length());
+	*arraySize = output.length();
+	*arrayPtr = array;
+}
+
+void startCapture(char* startCaptureOptions, int* arraySize, char** arrayPtr)
 {
 	camera::StartCaptureArguments message;
 	std::string messageAsString(startCaptureOptions);
 	google::protobuf::util::JsonStringToMessage(messageAsString, &message);
 
-	DShow::Device* device = new DShow::Device(); // so 2000, much memory leak
-	bool result2 = device->ResetGraph();
+	camera::StartCaptureResult result;
+
+	result.set_canconnectfilters(false);
+	result.set_canresetgraph(false);
+	result.set_cansetaudioconfig(false);
+	result.set_cansetvideoconfig(false);
+	result.set_result(camera::StartResult::Error);
+
+
+	DShow::Device* device = new DShow::Device();
+	DeviceHolder* deviceHolder = new DeviceHolder(device);
+	long addr = (long) (deviceHolder);
+	result.set_devicepointer(addr);
+
+	bool canResetGraph = device->ResetGraph();
+	result.set_canresetgraph(canResetGraph);
+	if (!canResetGraph)
+	{
+		AllocResultByteArray(result, arraySize, arrayPtr);
+		return;
+	}
+
 	DShow::AudioConfig audioConfig;
-	bool result3 = device->SetAudioConfig(nullptr);
+	bool canSetAudioConfig = device->SetAudioConfig(nullptr);
+	result.set_cansetaudioconfig(canSetAudioConfig);
+	if (!canSetAudioConfig)
+	{
+		AllocResultByteArray(result, arraySize, arrayPtr);
+		return;
+	}
+
 	DShow::VideoConfig videoConfig;
 	int* frameCount = new int;
 	*frameCount = 0;
 
-	auto callback = [frameCount]
-	(
-		const DShow::VideoConfig &config,
-		unsigned char *data, 
-		size_t size,
-		long long startTime, 
-		long long stopTime
-	) 
-	{
-		if (*frameCount == 10)
-		{
-			//std::cout << "resolution is " << config.cx << "x" << config.cy << std::endl;
-			SampleCallback(config, data, size, startTime, stopTime);
-		}
-		(*frameCount)++;
-	};
+	//auto callback = [frameCount]
+	//(
+	//	const DShow::VideoConfig &config,
+	//	unsigned char *data, 
+	//	size_t size,
+	//	long long startTime, 
+	//	long long stopTime
+	//) 
+	//{
+	//	if (*frameCount == 10)
+	//	{
+	//		//std::cout << "resolution is " << config.cx << "x" << config.cy << std::endl;
+	//		SampleCallback(config, data, size, startTime, stopTime);
+	//	}
+	//	(*frameCount)++;
+	//};
 
-	videoConfig.callback = callback;
+	//videoConfig.callback = callback;
 	videoConfig.useDefaultConfig = false;
-
-	//videoConfig.cx = 640;
-	//videoConfig.cy = 480;
-	//videoConfig.frameInterval = 30000000;
-	//videoConfig.format = DShow::VideoFormat::NV12;
-	//videoConfig.internalFormat = DShow::VideoFormat::Any;
-
-	//videoConfig.name = devices[0].name; // so direct access, much dangerous
-	//videoConfig.path = devices[0].path;
 
 	videoConfig.cx = message.width();
 	videoConfig.cy = message.height();
@@ -163,34 +214,45 @@ unsigned char startCapture(char* startCaptureOptions)
 	videoConfig.name = utf8_to_wstring(message.cameraname());
 	videoConfig.path = utf8_to_wstring(message.camerapath());
 
-	bool result4 = device->SetVideoConfig(&videoConfig);
-	bool result5 = device->ConnectFilters();
-	auto result = device->Start();
+	bool canSetVideoConfig = device->SetVideoConfig(&videoConfig);
+	result.set_cansetvideoconfig(canSetVideoConfig);
+	if (!canSetVideoConfig)
+	{
+		AllocResultByteArray(result, arraySize, arrayPtr);
+		return;
+	}
 
-	if (result == DShow::Result::Success)
+	bool canConnectFilter = device->ConnectFilters();
+	result.set_canconnectfilters(canConnectFilter);
+	if (!canConnectFilter)
 	{
-		return 1;
+		AllocResultByteArray(result, arraySize, arrayPtr);
+		return;
 	}
-	else if (result == DShow::Result::InUse)
+
+	auto startResult = device->Start();
+	switch (startResult)
 	{
-		return 2;
+	case DShow::Result::Success:
+		result.set_result(camera::StartResult::Success);
+		break;
+	case DShow::Result::Error:
+		result.set_result(camera::StartResult::Error);
+		break;
+	case DShow::Result::InUse:
+		result.set_result(camera::StartResult::InUse);
+		break;
 	}
-	else if (result == DShow::Result::Error)
-	{
-		return 0;
-	}
-	else
-	{
-		return 3;
-	}
+	AllocResultByteArray(result, arraySize, arrayPtr);
+
 }
 
 unsigned char getDevices(int* arraySize, char** arrayPtr)
 {
 	std::vector<DShow::VideoDevice> devices;
-	bool result1 = DShow::Device::EnumVideoDevices(devices);
+	bool canEnumDevices = DShow::Device::EnumVideoDevices(devices);
 
-	if (!result1)
+	if (!canEnumDevices)
 	{
 		return 0;
 	}
@@ -213,16 +275,6 @@ unsigned char getDevices(int* arraySize, char** arrayPtr)
 				format->set_width(currentFormat->maxCX);
 				format->set_height(currentFormat->maxCY);
 				format->set_framerate(10000000 / currentFormat->minInterval);
-
-				//std::cout << 
-				//	"minCX " << currentFormat->minCX << " " << 
-				//	"maxCX " << currentFormat->maxCX << " " <<
-				//	"minCY " << currentFormat->minCY << " " <<
-				//	"maxCY " << currentFormat->maxCY << " " <<
-				//	"minInterval " << currentFormat->minInterval << " " <<
-				//	"maxInterval " << currentFormat->maxInterval << " " <<
-				//	"granularityCX " << currentFormat->granularityCX << " " <<
-				//	"granularityCY " << currentFormat->granularityCY << std::endl;
 			}
 		}
 
@@ -234,5 +286,19 @@ unsigned char getDevices(int* arraySize, char** arrayPtr)
 		*arraySize = output.length();
 		*arrayPtr = array;
 		return 1;
+	}
+}
+
+void freeByteArray(unsigned char* byteArray)
+{
+	free(byteArray);
+}
+
+void shutDownAndFreeDevice(void* device)
+{
+	if (device != NULL)
+	{
+		DeviceHolder* deviceHolder = (DeviceHolder*)device;
+		delete(deviceHolder);
 	}
 }
