@@ -22,20 +22,21 @@ namespace Camera {
     static ProtoReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cgtwcm90by5wcm90bxIGY2FtZXJhIowBCg1DYXB0dXJlRm9ybWF0Eg0KBXdp",
-            "ZHRoGAEgASgNEg4KBmhlaWdodBgCIAEoDRIRCglmcmFtZXJhdGUYAyABKAES",
-            "KQoIZW5jb2RpbmcYBCABKA4yFy5jYW1lcmEuQ2FwdHVyZUVuY29kaW5nEh4K",
-            "FmlzQXV0b0NvbnZlcnRTdXBwb3J0ZWQYBSABKAgiRAoGQ2FtZXJhEhIKCmNh",
-            "bWVyYU5hbWUYBSABKAkSJgoHZm9ybWF0cxgGIAMoCzIVLmNhbWVyYS5DYXB0",
-            "dXJlRm9ybWF0Ii0KCkNhbWVyYUxpc3QSHwoHY2FtZXJhcxgHIAMoCzIOLmNh",
-            "bWVyYS5DYW1lcmEqUwoPQ2FwdHVyZUVuY29kaW5nEgsKB1VOS05PV04QABIK",
-            "CgZSR0JBMzIQARIJCgVSR0IyNBACEggKBFlVWTIQAxIICgROVjEyEAQSCAoE",
-            "TUpQRxAFYgZwcm90bzM="));
+            "Cgtwcm90by5wcm90bxIGY2FtZXJhImwKDUNhcHR1cmVGb3JtYXQSDQoFd2lk",
+            "dGgYASABKA0SDgoGaGVpZ2h0GAIgASgNEhEKCWZyYW1lcmF0ZRgDIAEoARIp",
+            "CghlbmNvZGluZxgEIAEoDjIXLmNhbWVyYS5DYXB0dXJlRW5jb2RpbmciWAoG",
+            "Q2FtZXJhEhIKCmNhbWVyYU5hbWUYBSABKAkSEgoKY2FtZXJhUGF0aBgGIAEo",
+            "CRImCgdmb3JtYXRzGAcgAygLMhUuY2FtZXJhLkNhcHR1cmVGb3JtYXQiLQoK",
+            "Q2FtZXJhTGlzdBIfCgdjYW1lcmFzGAcgAygLMg4uY2FtZXJhLkNhbWVyYSqg",
+            "AQoPQ2FwdHVyZUVuY29kaW5nEgcKA0FueRAAEgsKB1Vua25vd24QARIICgRB",
+            "UkdCEAISCAoEWFJHQhADEggKBEk0MjAQBBIICgROVjEyEAUSCAoEWVYxMhAG",
+            "EggKBFk4MDAQBxIICgRZVllVEAgSCAoEWVVZMhAJEggKBFVZVlkQChIICgRI",
+            "RFlDEAsSCQoFTUpQRUcQDBIICgRIMjY0EA1iBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Camera.CaptureEncoding), }, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.CaptureFormat), global::Camera.CaptureFormat.Parser, new[]{ "Width", "Height", "Framerate", "Encoding", "IsAutoConvertSupported" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.Camera), global::Camera.Camera.Parser, new[]{ "CameraName", "Formats" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.CaptureFormat), global::Camera.CaptureFormat.Parser, new[]{ "Width", "Height", "Framerate", "Encoding" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.Camera), global::Camera.Camera.Parser, new[]{ "CameraName", "CameraPath", "Formats" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Camera.CameraList), global::Camera.CameraList.Parser, new[]{ "Cameras" }, null, null, null)
           }));
     }
@@ -44,12 +45,20 @@ namespace Camera {
   }
   #region Enums
   public enum CaptureEncoding {
-    [pbr::OriginalName("UNKNOWN")] Unknown = 0,
-    [pbr::OriginalName("RGBA32")] Rgba32 = 1,
-    [pbr::OriginalName("RGB24")] Rgb24 = 2,
-    [pbr::OriginalName("YUY2")] Yuy2 = 3,
-    [pbr::OriginalName("NV12")] Nv12 = 4,
-    [pbr::OriginalName("MJPG")] Mjpg = 5,
+    [pbr::OriginalName("Any")] Any = 0,
+    [pbr::OriginalName("Unknown")] Unknown = 1,
+    [pbr::OriginalName("ARGB")] Argb = 2,
+    [pbr::OriginalName("XRGB")] Xrgb = 3,
+    [pbr::OriginalName("I420")] I420 = 4,
+    [pbr::OriginalName("NV12")] Nv12 = 5,
+    [pbr::OriginalName("YV12")] Yv12 = 6,
+    [pbr::OriginalName("Y800")] Y800 = 7,
+    [pbr::OriginalName("YVYU")] Yvyu = 8,
+    [pbr::OriginalName("YUY2")] Yuy2 = 9,
+    [pbr::OriginalName("UYVY")] Uyvy = 10,
+    [pbr::OriginalName("HDYC")] Hdyc = 11,
+    [pbr::OriginalName("MJPEG")] Mjpeg = 12,
+    [pbr::OriginalName("H264")] H264 = 13,
   }
 
   #endregion
@@ -83,7 +92,6 @@ namespace Camera {
       height_ = other.height_;
       framerate_ = other.framerate_;
       encoding_ = other.encoding_;
-      isAutoConvertSupported_ = other.isAutoConvertSupported_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -135,17 +143,6 @@ namespace Camera {
       }
     }
 
-    /// <summary>Field number for the "isAutoConvertSupported" field.</summary>
-    public const int IsAutoConvertSupportedFieldNumber = 5;
-    private bool isAutoConvertSupported_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool IsAutoConvertSupported {
-      get { return isAutoConvertSupported_; }
-      set {
-        isAutoConvertSupported_ = value;
-      }
-    }
-
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as CaptureFormat);
@@ -163,7 +160,6 @@ namespace Camera {
       if (Height != other.Height) return false;
       if (Framerate != other.Framerate) return false;
       if (Encoding != other.Encoding) return false;
-      if (IsAutoConvertSupported != other.IsAutoConvertSupported) return false;
       return true;
     }
 
@@ -174,7 +170,6 @@ namespace Camera {
       if (Height != 0) hash ^= Height.GetHashCode();
       if (Framerate != 0D) hash ^= Framerate.GetHashCode();
       if (Encoding != 0) hash ^= Encoding.GetHashCode();
-      if (IsAutoConvertSupported != false) hash ^= IsAutoConvertSupported.GetHashCode();
       return hash;
     }
 
@@ -201,10 +196,6 @@ namespace Camera {
         output.WriteRawTag(32);
         output.WriteEnum((int) Encoding);
       }
-      if (IsAutoConvertSupported != false) {
-        output.WriteRawTag(40);
-        output.WriteBool(IsAutoConvertSupported);
-      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -221,9 +212,6 @@ namespace Camera {
       }
       if (Encoding != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Encoding);
-      }
-      if (IsAutoConvertSupported != false) {
-        size += 1 + 1;
       }
       return size;
     }
@@ -244,9 +232,6 @@ namespace Camera {
       }
       if (other.Encoding != 0) {
         Encoding = other.Encoding;
-      }
-      if (other.IsAutoConvertSupported != false) {
-        IsAutoConvertSupported = other.IsAutoConvertSupported;
       }
     }
 
@@ -272,10 +257,6 @@ namespace Camera {
           }
           case 32: {
             encoding_ = (global::Camera.CaptureEncoding) input.ReadEnum();
-            break;
-          }
-          case 40: {
-            IsAutoConvertSupported = input.ReadBool();
             break;
           }
         }
@@ -309,6 +290,7 @@ namespace Camera {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Camera(Camera other) : this() {
       cameraName_ = other.cameraName_;
+      cameraPath_ = other.cameraPath_;
       formats_ = other.formats_.Clone();
     }
 
@@ -328,10 +310,21 @@ namespace Camera {
       }
     }
 
+    /// <summary>Field number for the "cameraPath" field.</summary>
+    public const int CameraPathFieldNumber = 6;
+    private string cameraPath_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string CameraPath {
+      get { return cameraPath_; }
+      set {
+        cameraPath_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     /// <summary>Field number for the "formats" field.</summary>
-    public const int FormatsFieldNumber = 6;
+    public const int FormatsFieldNumber = 7;
     private static readonly pb::FieldCodec<global::Camera.CaptureFormat> _repeated_formats_codec
-        = pb::FieldCodec.ForMessage(50, global::Camera.CaptureFormat.Parser);
+        = pb::FieldCodec.ForMessage(58, global::Camera.CaptureFormat.Parser);
     private readonly pbc::RepeatedField<global::Camera.CaptureFormat> formats_ = new pbc::RepeatedField<global::Camera.CaptureFormat>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::Camera.CaptureFormat> Formats {
@@ -352,6 +345,7 @@ namespace Camera {
         return true;
       }
       if (CameraName != other.CameraName) return false;
+      if (CameraPath != other.CameraPath) return false;
       if(!formats_.Equals(other.formats_)) return false;
       return true;
     }
@@ -360,6 +354,7 @@ namespace Camera {
     public override int GetHashCode() {
       int hash = 1;
       if (CameraName.Length != 0) hash ^= CameraName.GetHashCode();
+      if (CameraPath.Length != 0) hash ^= CameraPath.GetHashCode();
       hash ^= formats_.GetHashCode();
       return hash;
     }
@@ -375,6 +370,10 @@ namespace Camera {
         output.WriteRawTag(42);
         output.WriteString(CameraName);
       }
+      if (CameraPath.Length != 0) {
+        output.WriteRawTag(50);
+        output.WriteString(CameraPath);
+      }
       formats_.WriteTo(output, _repeated_formats_codec);
     }
 
@@ -383,6 +382,9 @@ namespace Camera {
       int size = 0;
       if (CameraName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(CameraName);
+      }
+      if (CameraPath.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(CameraPath);
       }
       size += formats_.CalculateSize(_repeated_formats_codec);
       return size;
@@ -395,6 +397,9 @@ namespace Camera {
       }
       if (other.CameraName.Length != 0) {
         CameraName = other.CameraName;
+      }
+      if (other.CameraPath.Length != 0) {
+        CameraPath = other.CameraPath;
       }
       formats_.Add(other.formats_);
     }
@@ -412,6 +417,10 @@ namespace Camera {
             break;
           }
           case 50: {
+            CameraPath = input.ReadString();
+            break;
+          }
+          case 58: {
             formats_.AddEntriesFrom(input, _repeated_formats_codec);
             break;
           }

@@ -41,10 +41,9 @@ namespace WebcamSampleApp
             var msg = parser.Parse<Camera.CameraList>(str);
 
             Console.WriteLine(msg);
-
-
-            var byteResult = CWrapperAPI.enumDevices();
-            Console.WriteLine("result is " + byteResult);
+            
+            //var byteResult = CWrapperAPI.enumDevices();
+            //Console.WriteLine("result is " + byteResult);
         }
     }
 }

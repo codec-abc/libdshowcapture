@@ -61,13 +61,13 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CaptureFormat, height_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CaptureFormat, framerate_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CaptureFormat, encoding_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CaptureFormat, isautoconvertsupported_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Camera, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Camera, cameraname_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Camera, camerapath_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Camera, formats_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CameraList, _internal_metadata_),
@@ -79,7 +79,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
 
 static const ::google::protobuf::internal::MigrationSchema schemas[] = {
   { 0, -1, sizeof(CaptureFormat)},
-  { 10, -1, sizeof(Camera)},
+  { 9, -1, sizeof(Camera)},
   { 17, -1, sizeof(CameraList)},
 };
 
@@ -137,19 +137,20 @@ void InitDefaults() {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] = {
-      "\n\013proto.proto\022\006camera\"\214\001\n\rCaptureFormat\022"
-      "\r\n\005width\030\001 \001(\r\022\016\n\006height\030\002 \001(\r\022\021\n\tframer"
-      "ate\030\003 \001(\001\022)\n\010encoding\030\004 \001(\0162\027.camera.Cap"
-      "tureEncoding\022\036\n\026isAutoConvertSupported\030\005"
-      " \001(\010\"D\n\006Camera\022\022\n\ncameraName\030\005 \001(\t\022&\n\007fo"
-      "rmats\030\006 \003(\0132\025.camera.CaptureFormat\"-\n\nCa"
-      "meraList\022\037\n\007cameras\030\007 \003(\0132\016.camera.Camer"
-      "a*S\n\017CaptureEncoding\022\013\n\007UNKNOWN\020\000\022\n\n\006RGB"
-      "A32\020\001\022\t\n\005RGB24\020\002\022\010\n\004YUY2\020\003\022\010\n\004NV12\020\004\022\010\n\004"
-      "MJPG\020\005b\006proto3"
+      "\n\013proto.proto\022\006camera\"l\n\rCaptureFormat\022\r"
+      "\n\005width\030\001 \001(\r\022\016\n\006height\030\002 \001(\r\022\021\n\tframera"
+      "te\030\003 \001(\001\022)\n\010encoding\030\004 \001(\0162\027.camera.Capt"
+      "ureEncoding\"X\n\006Camera\022\022\n\ncameraName\030\005 \001("
+      "\t\022\022\n\ncameraPath\030\006 \001(\t\022&\n\007formats\030\007 \003(\0132\025"
+      ".camera.CaptureFormat\"-\n\nCameraList\022\037\n\007c"
+      "ameras\030\007 \003(\0132\016.camera.Camera*\240\001\n\017Capture"
+      "Encoding\022\007\n\003Any\020\000\022\013\n\007Unknown\020\001\022\010\n\004ARGB\020\002"
+      "\022\010\n\004XRGB\020\003\022\010\n\004I420\020\004\022\010\n\004NV12\020\005\022\010\n\004YV12\020\006"
+      "\022\010\n\004Y800\020\007\022\010\n\004YVYU\020\010\022\010\n\004YUY2\020\t\022\010\n\004UYVY\020\n"
+      "\022\010\n\004HDYC\020\013\022\t\n\005MJPEG\020\014\022\010\n\004H264\020\rb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 374);
+      descriptor, 439);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "proto.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&TableStruct::Shutdown);
@@ -180,6 +181,14 @@ bool CaptureEncoding_IsValid(int value) {
     case 3:
     case 4:
     case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+    case 12:
+    case 13:
       return true;
     default:
       return false;
@@ -194,7 +203,6 @@ const int CaptureFormat::kWidthFieldNumber;
 const int CaptureFormat::kHeightFieldNumber;
 const int CaptureFormat::kFramerateFieldNumber;
 const int CaptureFormat::kEncodingFieldNumber;
-const int CaptureFormat::kIsAutoConvertSupportedFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 CaptureFormat::CaptureFormat()
@@ -211,14 +219,14 @@ CaptureFormat::CaptureFormat(const CaptureFormat& from)
       _cached_size_(0) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::memcpy(&width_, &from.width_,
-    reinterpret_cast<char*>(&isautoconvertsupported_) -
-    reinterpret_cast<char*>(&width_) + sizeof(isautoconvertsupported_));
+    reinterpret_cast<char*>(&encoding_) -
+    reinterpret_cast<char*>(&width_) + sizeof(encoding_));
   // @@protoc_insertion_point(copy_constructor:camera.CaptureFormat)
 }
 
 void CaptureFormat::SharedCtor() {
-  ::memset(&width_, 0, reinterpret_cast<char*>(&isautoconvertsupported_) -
-    reinterpret_cast<char*>(&width_) + sizeof(isautoconvertsupported_));
+  ::memset(&width_, 0, reinterpret_cast<char*>(&encoding_) -
+    reinterpret_cast<char*>(&width_) + sizeof(encoding_));
   _cached_size_ = 0;
 }
 
@@ -255,8 +263,8 @@ CaptureFormat* CaptureFormat::New(::google::protobuf::Arena* arena) const {
 
 void CaptureFormat::Clear() {
 // @@protoc_insertion_point(message_clear_start:camera.CaptureFormat)
-  ::memset(&width_, 0, reinterpret_cast<char*>(&isautoconvertsupported_) -
-    reinterpret_cast<char*>(&width_) + sizeof(isautoconvertsupported_));
+  ::memset(&width_, 0, reinterpret_cast<char*>(&encoding_) -
+    reinterpret_cast<char*>(&width_) + sizeof(encoding_));
 }
 
 bool CaptureFormat::MergePartialFromCodedStream(
@@ -326,20 +334,6 @@ bool CaptureFormat::MergePartialFromCodedStream(
         break;
       }
 
-      // bool isAutoConvertSupported = 5;
-      case 5: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(40u)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &isautoconvertsupported_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
       default: {
       handle_unusual:
         if (tag == 0 ||
@@ -388,11 +382,6 @@ void CaptureFormat::SerializeWithCachedSizes(
       4, this->encoding(), output);
   }
 
-  // bool isAutoConvertSupported = 5;
-  if (this->isautoconvertsupported() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(5, this->isautoconvertsupported(), output);
-  }
-
   // @@protoc_insertion_point(serialize_end:camera.CaptureFormat)
 }
 
@@ -421,11 +410,6 @@ void CaptureFormat::SerializeWithCachedSizes(
   if (this->encoding() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       4, this->encoding(), target);
-  }
-
-  // bool isAutoConvertSupported = 5;
-  if (this->isautoconvertsupported() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(5, this->isautoconvertsupported(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:camera.CaptureFormat)
@@ -459,11 +443,6 @@ size_t CaptureFormat::ByteSizeLong() const {
   if (this->encoding() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->encoding());
-  }
-
-  // bool isAutoConvertSupported = 5;
-  if (this->isautoconvertsupported() != 0) {
-    total_size += 1 + 1;
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -507,9 +486,6 @@ void CaptureFormat::MergeFrom(const CaptureFormat& from) {
   if (from.encoding() != 0) {
     set_encoding(from.encoding());
   }
-  if (from.isautoconvertsupported() != 0) {
-    set_isautoconvertsupported(from.isautoconvertsupported());
-  }
 }
 
 void CaptureFormat::CopyFrom(const ::google::protobuf::Message& from) {
@@ -539,7 +515,6 @@ void CaptureFormat::InternalSwap(CaptureFormat* other) {
   std::swap(height_, other->height_);
   std::swap(framerate_, other->framerate_);
   std::swap(encoding_, other->encoding_);
-  std::swap(isautoconvertsupported_, other->isautoconvertsupported_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
@@ -607,26 +582,13 @@ void CaptureFormat::set_encoding(::camera::CaptureEncoding value) {
   // @@protoc_insertion_point(field_set:camera.CaptureFormat.encoding)
 }
 
-// bool isAutoConvertSupported = 5;
-void CaptureFormat::clear_isautoconvertsupported() {
-  isautoconvertsupported_ = false;
-}
-bool CaptureFormat::isautoconvertsupported() const {
-  // @@protoc_insertion_point(field_get:camera.CaptureFormat.isAutoConvertSupported)
-  return isautoconvertsupported_;
-}
-void CaptureFormat::set_isautoconvertsupported(bool value) {
-  
-  isautoconvertsupported_ = value;
-  // @@protoc_insertion_point(field_set:camera.CaptureFormat.isAutoConvertSupported)
-}
-
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int Camera::kCameraNameFieldNumber;
+const int Camera::kCameraPathFieldNumber;
 const int Camera::kFormatsFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -648,11 +610,16 @@ Camera::Camera(const Camera& from)
   if (from.cameraname().size() > 0) {
     cameraname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cameraname_);
   }
+  camerapath_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.camerapath().size() > 0) {
+    camerapath_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.camerapath_);
+  }
   // @@protoc_insertion_point(copy_constructor:camera.Camera)
 }
 
 void Camera::SharedCtor() {
   cameraname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  camerapath_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   _cached_size_ = 0;
 }
 
@@ -663,6 +630,7 @@ Camera::~Camera() {
 
 void Camera::SharedDtor() {
   cameraname_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  camerapath_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void Camera::SetCachedSize(int size) const {
@@ -692,6 +660,7 @@ void Camera::Clear() {
 // @@protoc_insertion_point(message_clear_start:camera.Camera)
   formats_.Clear();
   cameraname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  camerapath_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 bool Camera::MergePartialFromCodedStream(
@@ -720,10 +689,26 @@ bool Camera::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .camera.CaptureFormat formats = 6;
+      // string cameraPath = 6;
       case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(50u)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_camerapath()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->camerapath().data(), this->camerapath().length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "camera.Camera.cameraPath"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // repeated .camera.CaptureFormat formats = 7;
+      case 7: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(58u)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_formats()));
         } else {
@@ -769,10 +754,20 @@ void Camera::SerializeWithCachedSizes(
       5, this->cameraname(), output);
   }
 
-  // repeated .camera.CaptureFormat formats = 6;
+  // string cameraPath = 6;
+  if (this->camerapath().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->camerapath().data(), this->camerapath().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "camera.Camera.cameraPath");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      6, this->camerapath(), output);
+  }
+
+  // repeated .camera.CaptureFormat formats = 7;
   for (unsigned int i = 0, n = this->formats_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      6, this->formats(i), output);
+      7, this->formats(i), output);
   }
 
   // @@protoc_insertion_point(serialize_end:camera.Camera)
@@ -795,11 +790,22 @@ void Camera::SerializeWithCachedSizes(
         5, this->cameraname(), target);
   }
 
-  // repeated .camera.CaptureFormat formats = 6;
+  // string cameraPath = 6;
+  if (this->camerapath().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->camerapath().data(), this->camerapath().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "camera.Camera.cameraPath");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        6, this->camerapath(), target);
+  }
+
+  // repeated .camera.CaptureFormat formats = 7;
   for (unsigned int i = 0, n = this->formats_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        6, this->formats(i), deterministic, target);
+        7, this->formats(i), deterministic, target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:camera.Camera)
@@ -810,7 +816,7 @@ size_t Camera::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:camera.Camera)
   size_t total_size = 0;
 
-  // repeated .camera.CaptureFormat formats = 6;
+  // repeated .camera.CaptureFormat formats = 7;
   {
     unsigned int count = this->formats_size();
     total_size += 1UL * count;
@@ -826,6 +832,13 @@ size_t Camera::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->cameraname());
+  }
+
+  // string cameraPath = 6;
+  if (this->camerapath().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->camerapath());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -862,6 +875,10 @@ void Camera::MergeFrom(const Camera& from) {
 
     cameraname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cameraname_);
   }
+  if (from.camerapath().size() > 0) {
+
+    camerapath_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.camerapath_);
+  }
 }
 
 void Camera::CopyFrom(const ::google::protobuf::Message& from) {
@@ -889,6 +906,7 @@ void Camera::Swap(Camera* other) {
 void Camera::InternalSwap(Camera* other) {
   formats_.InternalSwap(&other->formats_);
   cameraname_.Swap(&other->cameraname_);
+  camerapath_.Swap(&other->camerapath_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
@@ -953,7 +971,60 @@ void Camera::set_allocated_cameraname(::std::string* cameraname) {
   // @@protoc_insertion_point(field_set_allocated:camera.Camera.cameraName)
 }
 
-// repeated .camera.CaptureFormat formats = 6;
+// string cameraPath = 6;
+void Camera::clear_camerapath() {
+  camerapath_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+const ::std::string& Camera::camerapath() const {
+  // @@protoc_insertion_point(field_get:camera.Camera.cameraPath)
+  return camerapath_.GetNoArena();
+}
+void Camera::set_camerapath(const ::std::string& value) {
+  
+  camerapath_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:camera.Camera.cameraPath)
+}
+#if LANG_CXX11
+void Camera::set_camerapath(::std::string&& value) {
+  
+  camerapath_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:camera.Camera.cameraPath)
+}
+#endif
+void Camera::set_camerapath(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  camerapath_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:camera.Camera.cameraPath)
+}
+void Camera::set_camerapath(const char* value, size_t size) {
+  
+  camerapath_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:camera.Camera.cameraPath)
+}
+::std::string* Camera::mutable_camerapath() {
+  
+  // @@protoc_insertion_point(field_mutable:camera.Camera.cameraPath)
+  return camerapath_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+::std::string* Camera::release_camerapath() {
+  // @@protoc_insertion_point(field_release:camera.Camera.cameraPath)
+  
+  return camerapath_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+void Camera::set_allocated_camerapath(::std::string* camerapath) {
+  if (camerapath != NULL) {
+    
+  } else {
+    
+  }
+  camerapath_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), camerapath);
+  // @@protoc_insertion_point(field_set_allocated:camera.Camera.cameraPath)
+}
+
+// repeated .camera.CaptureFormat formats = 7;
 int Camera::formats_size() const {
   return formats_.size();
 }

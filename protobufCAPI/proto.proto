@@ -3,12 +3,24 @@ syntax = "proto3";
 package camera;
 
 enum CaptureEncoding {
-    UNKNOWN = 0;
-    RGBA32 = 1;
-    RGB24 = 2;
-    YUY2 = 3;
-    NV12 = 4; 
-    MJPG = 5;
+
+	Any = 0;
+	Unknown = 1;
+	ARGB = 2;
+	XRGB = 3;
+
+	I420 = 4;
+	NV12 = 5;
+	YV12 = 6;
+	Y800 = 7;
+
+	YVYU = 8;
+	YUY2 = 9;
+	UYVY = 10;
+	HDYC = 11;
+
+	MJPEG = 12;
+	H264 = 13;
 }
 
 message CaptureFormat {
@@ -16,12 +28,12 @@ message CaptureFormat {
     uint32 height = 2;
     double framerate = 3;
     CaptureEncoding encoding = 4;
-	bool isAutoConvertSupported = 5;
 }
 
 message Camera {
     string cameraName = 5;
-    repeated CaptureFormat formats = 6;
+	string cameraPath = 6;
+    repeated CaptureFormat formats = 7;
 }
 
 message CameraList {
