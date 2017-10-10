@@ -18,7 +18,7 @@ namespace WebcamSampleApp
 #endif
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte enumDevices();
+        public static extern byte startCapture(IntPtr message);
 
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern byte getDevices(ref IntPtr arraySize, ref IntPtr arrayPtr);

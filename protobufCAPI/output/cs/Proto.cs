@@ -27,17 +27,22 @@ namespace Camera {
             "CghlbmNvZGluZxgEIAEoDjIXLmNhbWVyYS5DYXB0dXJlRW5jb2RpbmciWAoG",
             "Q2FtZXJhEhIKCmNhbWVyYU5hbWUYBSABKAkSEgoKY2FtZXJhUGF0aBgGIAEo",
             "CRImCgdmb3JtYXRzGAcgAygLMhUuY2FtZXJhLkNhcHR1cmVGb3JtYXQiLQoK",
-            "Q2FtZXJhTGlzdBIfCgdjYW1lcmFzGAcgAygLMg4uY2FtZXJhLkNhbWVyYSqg",
-            "AQoPQ2FwdHVyZUVuY29kaW5nEgcKA0FueRAAEgsKB1Vua25vd24QARIICgRB",
-            "UkdCEAISCAoEWFJHQhADEggKBEk0MjAQBBIICgROVjEyEAUSCAoEWVYxMhAG",
-            "EggKBFk4MDAQBxIICgRZVllVEAgSCAoEWVVZMhAJEggKBFVZVlkQChIICgRI",
-            "RFlDEAsSCQoFTUpQRUcQDBIICgRIMjY0EA1iBnByb3RvMw=="));
+            "Q2FtZXJhTGlzdBIfCgdjYW1lcmFzGAcgAygLMg4uY2FtZXJhLkNhbWVyYSKc",
+            "AQoVU3RhcnRDYXB0dXJlQXJndW1lbnRzEhIKCmNhbWVyYU5hbWUYCCABKAkS",
+            "EgoKY2FtZXJhUGF0aBgJIAEoCRINCgV3aWR0aBgKIAEoDRIOCgZoZWlnaHQY",
+            "CyABKA0SEQoJZnJhbWVyYXRlGAwgASgBEikKCGVuY29kaW5nGA0gASgOMhcu",
+            "Y2FtZXJhLkNhcHR1cmVFbmNvZGluZyqgAQoPQ2FwdHVyZUVuY29kaW5nEgcK",
+            "A0FueRAAEgsKB1Vua25vd24QARIICgRBUkdCEAISCAoEWFJHQhADEggKBEk0",
+            "MjAQBBIICgROVjEyEAUSCAoEWVYxMhAGEggKBFk4MDAQBxIICgRZVllVEAgS",
+            "CAoEWVVZMhAJEggKBFVZVlkQChIICgRIRFlDEAsSCQoFTUpQRUcQDBIICgRI",
+            "MjY0EA1iBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Camera.CaptureEncoding), }, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Camera.CaptureFormat), global::Camera.CaptureFormat.Parser, new[]{ "Width", "Height", "Framerate", "Encoding" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Camera.Camera), global::Camera.Camera.Parser, new[]{ "CameraName", "CameraPath", "Formats" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.CameraList), global::Camera.CameraList.Parser, new[]{ "Cameras" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.CameraList), global::Camera.CameraList.Parser, new[]{ "Cameras" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.StartCaptureArguments), global::Camera.StartCaptureArguments.Parser, new[]{ "CameraName", "CameraPath", "Width", "Height", "Framerate", "Encoding" }, null, null, null)
           }));
     }
     #endregion
@@ -531,6 +536,263 @@ namespace Camera {
             break;
           case 58: {
             cameras_.AddEntriesFrom(input, _repeated_cameras_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class StartCaptureArguments : pb::IMessage<StartCaptureArguments> {
+    private static readonly pb::MessageParser<StartCaptureArguments> _parser = new pb::MessageParser<StartCaptureArguments>(() => new StartCaptureArguments());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<StartCaptureArguments> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Camera.ProtoReflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StartCaptureArguments() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StartCaptureArguments(StartCaptureArguments other) : this() {
+      cameraName_ = other.cameraName_;
+      cameraPath_ = other.cameraPath_;
+      width_ = other.width_;
+      height_ = other.height_;
+      framerate_ = other.framerate_;
+      encoding_ = other.encoding_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StartCaptureArguments Clone() {
+      return new StartCaptureArguments(this);
+    }
+
+    /// <summary>Field number for the "cameraName" field.</summary>
+    public const int CameraNameFieldNumber = 8;
+    private string cameraName_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string CameraName {
+      get { return cameraName_; }
+      set {
+        cameraName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "cameraPath" field.</summary>
+    public const int CameraPathFieldNumber = 9;
+    private string cameraPath_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string CameraPath {
+      get { return cameraPath_; }
+      set {
+        cameraPath_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "width" field.</summary>
+    public const int WidthFieldNumber = 10;
+    private uint width_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Width {
+      get { return width_; }
+      set {
+        width_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "height" field.</summary>
+    public const int HeightFieldNumber = 11;
+    private uint height_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Height {
+      get { return height_; }
+      set {
+        height_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "framerate" field.</summary>
+    public const int FramerateFieldNumber = 12;
+    private double framerate_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public double Framerate {
+      get { return framerate_; }
+      set {
+        framerate_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "encoding" field.</summary>
+    public const int EncodingFieldNumber = 13;
+    private global::Camera.CaptureEncoding encoding_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Camera.CaptureEncoding Encoding {
+      get { return encoding_; }
+      set {
+        encoding_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as StartCaptureArguments);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(StartCaptureArguments other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (CameraName != other.CameraName) return false;
+      if (CameraPath != other.CameraPath) return false;
+      if (Width != other.Width) return false;
+      if (Height != other.Height) return false;
+      if (Framerate != other.Framerate) return false;
+      if (Encoding != other.Encoding) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (CameraName.Length != 0) hash ^= CameraName.GetHashCode();
+      if (CameraPath.Length != 0) hash ^= CameraPath.GetHashCode();
+      if (Width != 0) hash ^= Width.GetHashCode();
+      if (Height != 0) hash ^= Height.GetHashCode();
+      if (Framerate != 0D) hash ^= Framerate.GetHashCode();
+      if (Encoding != 0) hash ^= Encoding.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (CameraName.Length != 0) {
+        output.WriteRawTag(66);
+        output.WriteString(CameraName);
+      }
+      if (CameraPath.Length != 0) {
+        output.WriteRawTag(74);
+        output.WriteString(CameraPath);
+      }
+      if (Width != 0) {
+        output.WriteRawTag(80);
+        output.WriteUInt32(Width);
+      }
+      if (Height != 0) {
+        output.WriteRawTag(88);
+        output.WriteUInt32(Height);
+      }
+      if (Framerate != 0D) {
+        output.WriteRawTag(97);
+        output.WriteDouble(Framerate);
+      }
+      if (Encoding != 0) {
+        output.WriteRawTag(104);
+        output.WriteEnum((int) Encoding);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (CameraName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(CameraName);
+      }
+      if (CameraPath.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(CameraPath);
+      }
+      if (Width != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Width);
+      }
+      if (Height != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Height);
+      }
+      if (Framerate != 0D) {
+        size += 1 + 8;
+      }
+      if (Encoding != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Encoding);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(StartCaptureArguments other) {
+      if (other == null) {
+        return;
+      }
+      if (other.CameraName.Length != 0) {
+        CameraName = other.CameraName;
+      }
+      if (other.CameraPath.Length != 0) {
+        CameraPath = other.CameraPath;
+      }
+      if (other.Width != 0) {
+        Width = other.Width;
+      }
+      if (other.Height != 0) {
+        Height = other.Height;
+      }
+      if (other.Framerate != 0D) {
+        Framerate = other.Framerate;
+      }
+      if (other.Encoding != 0) {
+        Encoding = other.Encoding;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 66: {
+            CameraName = input.ReadString();
+            break;
+          }
+          case 74: {
+            CameraPath = input.ReadString();
+            break;
+          }
+          case 80: {
+            Width = input.ReadUInt32();
+            break;
+          }
+          case 88: {
+            Height = input.ReadUInt32();
+            break;
+          }
+          case 97: {
+            Framerate = input.ReadDouble();
+            break;
+          }
+          case 104: {
+            encoding_ = (global::Camera.CaptureEncoding) input.ReadEnum();
             break;
           }
         }

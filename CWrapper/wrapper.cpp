@@ -7,7 +7,6 @@
 #include "proto.pb.h"
 #include <google/protobuf/util/json_util.h>
 
-
 #include <windows.h>
 
 #include <codecvt>
@@ -25,83 +24,6 @@ std::string wstring_to_utf8(const std::wstring& str)
 {
 	std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
 	return myconv.to_bytes(str);
-}
-
-
-void SampleCallback(const DShow::VideoConfig &config,
-	unsigned char *data, size_t size,
-	long long startTime, long long stopTime)
-{
-	int width = config.cx;
-	int heigth = config.cy;
-	std::ofstream myfile("image.rgba", std::ios_base::binary);
-	myfile.write((char*) data, size);
-	myfile.flush();
-	myfile.close();
-}
-
-
-unsigned char enumDevices()
-{
-	std::vector<DShow::VideoDevice> devices;
-	bool result1 = DShow::Device::EnumVideoDevices(devices);
-
-	DShow::Device* device = new DShow::Device(); // so 2000, much memory leak
-	bool result2 = device->ResetGraph();
-	DShow::AudioConfig audioConfig;
-	bool result3 = device->SetAudioConfig(nullptr);
-	DShow::VideoConfig videoConfig;
-	int* frameCount = new int;
-	*frameCount = 0;
-
-	auto callback = [frameCount]
-	(
-		const DShow::VideoConfig &config,
-		unsigned char *data, 
-		size_t size,
-		long long startTime, 
-		long long stopTime
-	) 
-	{
-		//printf("p = %p\n", (void *)data);
-		//Sleep(500);
-		if (*frameCount == 10)
-		{
-			SampleCallback(config, data, size, startTime, stopTime);
-		}
-		(*frameCount)++;
-	};
-
-	videoConfig.callback = callback;
-	videoConfig.useDefaultConfig = false;
-	videoConfig.cx = 640;
-	videoConfig.cy = 480;
-	videoConfig.frameInterval = 30000000;
-	videoConfig.format = DShow::VideoFormat::NV12;
-	videoConfig.internalFormat = DShow::VideoFormat::Any;
-	videoConfig.name = devices[0].name; // so direct access, much dangerous
-	videoConfig.path = devices[0].path;
-
-	bool result4 = device->SetVideoConfig(&videoConfig);
-	bool result5 = device->ConnectFilters();
-	auto result = device->Start();
-
-	if (result == DShow::Result::Success)
-	{
-		return 1;
-	}
-	else if (result == DShow::Result::InUse)
-	{
-		return 2;
-	}
-	else if (result == DShow::Result::Error)
-	{
-		return 0;
-	}
-	else
-	{
-		return 3;
-	}
 }
 
 camera::CaptureEncoding DshowCaptureToProtobufCapture(const DShow::VideoInfo& info)
@@ -138,6 +60,128 @@ camera::CaptureEncoding DshowCaptureToProtobufCapture(const DShow::VideoInfo& in
 		return camera::CaptureEncoding::Unknown;
 	default:
 		return camera::CaptureEncoding::Unknown;
+	}
+}
+
+DShow::VideoFormat ProtobufCaptureToDshowCapture(camera::CaptureEncoding format)
+{
+	switch (format)
+	{
+	case camera::CaptureEncoding::ARGB:
+		return DShow::VideoFormat::ARGB;
+	case camera::CaptureEncoding::XRGB:
+		return DShow::VideoFormat::XRGB;
+	case camera::CaptureEncoding::I420:
+		return DShow::VideoFormat::I420;
+	case camera::CaptureEncoding::NV12:
+		return DShow::VideoFormat::NV12;
+	case camera::CaptureEncoding::YV12:
+		return DShow::VideoFormat::YV12;
+	case camera::CaptureEncoding::Y800:
+		return DShow::VideoFormat::Y800;
+	case camera::CaptureEncoding::YVYU:
+		return DShow::VideoFormat::YVYU;
+	case camera::CaptureEncoding::YUY2:
+		return DShow::VideoFormat::YUY2;
+	case camera::CaptureEncoding::UYVY:
+		return DShow::VideoFormat::UYVY;
+	case camera::CaptureEncoding::HDYC:
+		return DShow::VideoFormat::HDYC;
+	case camera::CaptureEncoding::MJPEG:
+		return DShow::VideoFormat::MJPEG;
+	case camera::CaptureEncoding::H264:
+		return DShow::VideoFormat::H264;
+	case camera::CaptureEncoding::Any:
+		return DShow::VideoFormat::Any;
+	case camera::CaptureEncoding::Unknown:
+		return DShow::VideoFormat::Unknown;
+	default:
+		return DShow::VideoFormat::Unknown;
+	}
+}
+
+void SampleCallback(const DShow::VideoConfig &config,
+	unsigned char *data, size_t size,
+	long long startTime, long long stopTime)
+{
+	int width = config.cx;
+	int heigth = config.cy;
+	std::ofstream myfile("image.rgba", std::ios_base::binary);
+	myfile.write((char*) data, size);
+	myfile.flush();
+	myfile.close();
+}
+
+unsigned char startCapture(char* startCaptureOptions)
+{
+	camera::StartCaptureArguments message;
+	std::string messageAsString(startCaptureOptions);
+	google::protobuf::util::JsonStringToMessage(messageAsString, &message);
+
+	DShow::Device* device = new DShow::Device(); // so 2000, much memory leak
+	bool result2 = device->ResetGraph();
+	DShow::AudioConfig audioConfig;
+	bool result3 = device->SetAudioConfig(nullptr);
+	DShow::VideoConfig videoConfig;
+	int* frameCount = new int;
+	*frameCount = 0;
+
+	auto callback = [frameCount]
+	(
+		const DShow::VideoConfig &config,
+		unsigned char *data, 
+		size_t size,
+		long long startTime, 
+		long long stopTime
+	) 
+	{
+		if (*frameCount == 10)
+		{
+			//std::cout << "resolution is " << config.cx << "x" << config.cy << std::endl;
+			SampleCallback(config, data, size, startTime, stopTime);
+		}
+		(*frameCount)++;
+	};
+
+	videoConfig.callback = callback;
+	videoConfig.useDefaultConfig = false;
+
+	//videoConfig.cx = 640;
+	//videoConfig.cy = 480;
+	//videoConfig.frameInterval = 30000000;
+	//videoConfig.format = DShow::VideoFormat::NV12;
+	//videoConfig.internalFormat = DShow::VideoFormat::Any;
+
+	//videoConfig.name = devices[0].name; // so direct access, much dangerous
+	//videoConfig.path = devices[0].path;
+
+	videoConfig.cx = message.width();
+	videoConfig.cy = message.height();
+	videoConfig.frameInterval = 10000000 / message.framerate();
+	videoConfig.internalFormat = ProtobufCaptureToDshowCapture(message.encoding());
+	videoConfig.format = DShow::VideoFormat::ARGB;
+	videoConfig.name = utf8_to_wstring(message.cameraname());
+	videoConfig.path = utf8_to_wstring(message.camerapath());
+
+	bool result4 = device->SetVideoConfig(&videoConfig);
+	bool result5 = device->ConnectFilters();
+	auto result = device->Start();
+
+	if (result == DShow::Result::Success)
+	{
+		return 1;
+	}
+	else if (result == DShow::Result::InUse)
+	{
+		return 2;
+	}
+	else if (result == DShow::Result::Error)
+	{
+		return 0;
+	}
+	else
+	{
+		return 3;
 	}
 }
 

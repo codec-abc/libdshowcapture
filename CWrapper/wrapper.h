@@ -2,7 +2,7 @@
 
 extern "C"
 {
-	__declspec(dllexport) unsigned char enumDevices();
+	__declspec(dllexport) unsigned char startCapture(char* input);
 }
 
 extern "C"

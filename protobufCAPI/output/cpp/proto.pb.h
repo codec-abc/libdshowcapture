@@ -41,6 +41,9 @@ extern CameraListDefaultTypeInternal _CameraList_default_instance_;
 class CaptureFormat;
 class CaptureFormatDefaultTypeInternal;
 extern CaptureFormatDefaultTypeInternal _CaptureFormat_default_instance_;
+class StartCaptureArguments;
+class StartCaptureArgumentsDefaultTypeInternal;
+extern StartCaptureArgumentsDefaultTypeInternal _StartCaptureArguments_default_instance_;
 }  // namespace camera
 
 namespace camera {
@@ -395,6 +398,137 @@ class CameraList : public ::google::protobuf::Message /* @@protoc_insertion_poin
   mutable int _cached_size_;
   friend struct protobuf_proto_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class StartCaptureArguments : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:camera.StartCaptureArguments) */ {
+ public:
+  StartCaptureArguments();
+  virtual ~StartCaptureArguments();
+
+  StartCaptureArguments(const StartCaptureArguments& from);
+
+  inline StartCaptureArguments& operator=(const StartCaptureArguments& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const StartCaptureArguments& default_instance();
+
+  static inline const StartCaptureArguments* internal_default_instance() {
+    return reinterpret_cast<const StartCaptureArguments*>(
+               &_StartCaptureArguments_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    3;
+
+  void Swap(StartCaptureArguments* other);
+
+  // implements Message ----------------------------------------------
+
+  inline StartCaptureArguments* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  StartCaptureArguments* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const StartCaptureArguments& from);
+  void MergeFrom(const StartCaptureArguments& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(StartCaptureArguments* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string cameraName = 8;
+  void clear_cameraname();
+  static const int kCameraNameFieldNumber = 8;
+  const ::std::string& cameraname() const;
+  void set_cameraname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_cameraname(::std::string&& value);
+  #endif
+  void set_cameraname(const char* value);
+  void set_cameraname(const char* value, size_t size);
+  ::std::string* mutable_cameraname();
+  ::std::string* release_cameraname();
+  void set_allocated_cameraname(::std::string* cameraname);
+
+  // string cameraPath = 9;
+  void clear_camerapath();
+  static const int kCameraPathFieldNumber = 9;
+  const ::std::string& camerapath() const;
+  void set_camerapath(const ::std::string& value);
+  #if LANG_CXX11
+  void set_camerapath(::std::string&& value);
+  #endif
+  void set_camerapath(const char* value);
+  void set_camerapath(const char* value, size_t size);
+  ::std::string* mutable_camerapath();
+  ::std::string* release_camerapath();
+  void set_allocated_camerapath(::std::string* camerapath);
+
+  // .camera.CaptureEncoding encoding = 13;
+  void clear_encoding();
+  static const int kEncodingFieldNumber = 13;
+  ::camera::CaptureEncoding encoding() const;
+  void set_encoding(::camera::CaptureEncoding value);
+
+  // uint32 width = 10;
+  void clear_width();
+  static const int kWidthFieldNumber = 10;
+  ::google::protobuf::uint32 width() const;
+  void set_width(::google::protobuf::uint32 value);
+
+  // uint32 height = 11;
+  void clear_height();
+  static const int kHeightFieldNumber = 11;
+  ::google::protobuf::uint32 height() const;
+  void set_height(::google::protobuf::uint32 value);
+
+  // double framerate = 12;
+  void clear_framerate();
+  static const int kFramerateFieldNumber = 12;
+  double framerate() const;
+  void set_framerate(double value);
+
+  // @@protoc_insertion_point(class_scope:camera.StartCaptureArguments)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr cameraname_;
+  ::google::protobuf::internal::ArenaStringPtr camerapath_;
+  int encoding_;
+  ::google::protobuf::uint32 width_;
+  ::google::protobuf::uint32 height_;
+  double framerate_;
+  mutable int _cached_size_;
+  friend struct protobuf_proto_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -633,7 +767,175 @@ CameraList::cameras() const {
   return cameras_;
 }
 
+// -------------------------------------------------------------------
+
+// StartCaptureArguments
+
+// string cameraName = 8;
+inline void StartCaptureArguments::clear_cameraname() {
+  cameraname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& StartCaptureArguments::cameraname() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.cameraName)
+  return cameraname_.GetNoArena();
+}
+inline void StartCaptureArguments::set_cameraname(const ::std::string& value) {
+  
+  cameraname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.cameraName)
+}
+#if LANG_CXX11
+inline void StartCaptureArguments::set_cameraname(::std::string&& value) {
+  
+  cameraname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:camera.StartCaptureArguments.cameraName)
+}
+#endif
+inline void StartCaptureArguments::set_cameraname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  cameraname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:camera.StartCaptureArguments.cameraName)
+}
+inline void StartCaptureArguments::set_cameraname(const char* value, size_t size) {
+  
+  cameraname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:camera.StartCaptureArguments.cameraName)
+}
+inline ::std::string* StartCaptureArguments::mutable_cameraname() {
+  
+  // @@protoc_insertion_point(field_mutable:camera.StartCaptureArguments.cameraName)
+  return cameraname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* StartCaptureArguments::release_cameraname() {
+  // @@protoc_insertion_point(field_release:camera.StartCaptureArguments.cameraName)
+  
+  return cameraname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void StartCaptureArguments::set_allocated_cameraname(::std::string* cameraname) {
+  if (cameraname != NULL) {
+    
+  } else {
+    
+  }
+  cameraname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), cameraname);
+  // @@protoc_insertion_point(field_set_allocated:camera.StartCaptureArguments.cameraName)
+}
+
+// string cameraPath = 9;
+inline void StartCaptureArguments::clear_camerapath() {
+  camerapath_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& StartCaptureArguments::camerapath() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.cameraPath)
+  return camerapath_.GetNoArena();
+}
+inline void StartCaptureArguments::set_camerapath(const ::std::string& value) {
+  
+  camerapath_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.cameraPath)
+}
+#if LANG_CXX11
+inline void StartCaptureArguments::set_camerapath(::std::string&& value) {
+  
+  camerapath_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:camera.StartCaptureArguments.cameraPath)
+}
+#endif
+inline void StartCaptureArguments::set_camerapath(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  camerapath_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:camera.StartCaptureArguments.cameraPath)
+}
+inline void StartCaptureArguments::set_camerapath(const char* value, size_t size) {
+  
+  camerapath_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:camera.StartCaptureArguments.cameraPath)
+}
+inline ::std::string* StartCaptureArguments::mutable_camerapath() {
+  
+  // @@protoc_insertion_point(field_mutable:camera.StartCaptureArguments.cameraPath)
+  return camerapath_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* StartCaptureArguments::release_camerapath() {
+  // @@protoc_insertion_point(field_release:camera.StartCaptureArguments.cameraPath)
+  
+  return camerapath_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void StartCaptureArguments::set_allocated_camerapath(::std::string* camerapath) {
+  if (camerapath != NULL) {
+    
+  } else {
+    
+  }
+  camerapath_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), camerapath);
+  // @@protoc_insertion_point(field_set_allocated:camera.StartCaptureArguments.cameraPath)
+}
+
+// uint32 width = 10;
+inline void StartCaptureArguments::clear_width() {
+  width_ = 0u;
+}
+inline ::google::protobuf::uint32 StartCaptureArguments::width() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.width)
+  return width_;
+}
+inline void StartCaptureArguments::set_width(::google::protobuf::uint32 value) {
+  
+  width_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.width)
+}
+
+// uint32 height = 11;
+inline void StartCaptureArguments::clear_height() {
+  height_ = 0u;
+}
+inline ::google::protobuf::uint32 StartCaptureArguments::height() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.height)
+  return height_;
+}
+inline void StartCaptureArguments::set_height(::google::protobuf::uint32 value) {
+  
+  height_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.height)
+}
+
+// double framerate = 12;
+inline void StartCaptureArguments::clear_framerate() {
+  framerate_ = 0;
+}
+inline double StartCaptureArguments::framerate() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.framerate)
+  return framerate_;
+}
+inline void StartCaptureArguments::set_framerate(double value) {
+  
+  framerate_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.framerate)
+}
+
+// .camera.CaptureEncoding encoding = 13;
+inline void StartCaptureArguments::clear_encoding() {
+  encoding_ = 0;
+}
+inline ::camera::CaptureEncoding StartCaptureArguments::encoding() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.encoding)
+  return static_cast< ::camera::CaptureEncoding >(encoding_);
+}
+inline void StartCaptureArguments::set_encoding(::camera::CaptureEncoding value) {
+  
+  encoding_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.encoding)
+}
+
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
