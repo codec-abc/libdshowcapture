@@ -2,7 +2,12 @@
 
 extern "C"
 {
-	__declspec(dllexport) void startCapture(char* startCaptureOptions, int* arraySize, char** arrayPtr);
+	__declspec(dllexport) void startCapture
+	(
+		char* startCaptureOptions, 
+		int* arraySize, 
+		char** arrayPtr
+	);
 }
 
 extern "C"

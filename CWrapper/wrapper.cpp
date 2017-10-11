@@ -55,10 +55,7 @@ void convertToYUV
 		0.0f
 	);
 
-	//auto start = std::chrono::steady_clock::now();
-
 	concurrency::parallel_for((unsigned int)0, width, [&](unsigned int i)
-		//for (unsigned int i = 0; i < mCaptureBufferWidth; i++)
 	{
 		for (unsigned int j = 0; j < height; j++)
 		{
@@ -67,7 +64,7 @@ void convertToYUV
 			// create a word containing the rgb(a) values as 32 bits integers.
 			__m128i rgbaValues = _mm_setr_epi8
 			(
-				inputBuff[index], 0, 0, 0,
+				inputBuff[index + 0], 0, 0, 0,
 				inputBuff[index + 1], 0, 0, 0,
 				inputBuff[index + 2], 0, 0, 0,
 				0, 0, 0, 0
@@ -117,10 +114,7 @@ void convertToYUV
 			outputBuff[1 * imageSize + pixelIndex] = yuvInteger.m128i_u32[1];
 			outputBuff[2 * imageSize + pixelIndex] = yuvInteger.m128i_u32[2];
 		}
-	}
-	); // end of parallel for
-
-	//auto duration = std::chrono::steady_clock::now() - start;
+	});
 }
 
 
@@ -254,15 +248,12 @@ private:
 	unsigned int _height;
 	std::mutex _mutex;
 };
-
-// convert UTF-8 string to wstring
 std::wstring utf8_to_wstring(const std::string& str)
 {
 	std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
 	return myconv.from_bytes(str);
 }
 
-// convert wstring to UTF-8 string
 std::string wstring_to_utf8(const std::wstring& str)
 {
 	std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
