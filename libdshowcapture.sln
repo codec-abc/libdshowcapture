@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebcamSampleApp", "WebcamSa
 		{AF20D92A-D783-400F-85B5-6D4D17CE4539} = {AF20D92A-D783-400F-85B5-6D4D17CE4539}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibProtobufForUnity", "LibProtobufForUnity\LibProtobufForUnity.csproj", "{76B78528-A1AF-4D56-8B5D-5027FFE15A8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -47,6 +49,14 @@ Global
 		{1EA7A28D-B99D-4FDA-A770-1B63970F1453}.Release|x64.Build.0 = Release|x64
 		{1EA7A28D-B99D-4FDA-A770-1B63970F1453}.Release|x86.ActiveCfg = Release|x86
 		{1EA7A28D-B99D-4FDA-A770-1B63970F1453}.Release|x86.Build.0 = Release|x86
+		{76B78528-A1AF-4D56-8B5D-5027FFE15A8A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{76B78528-A1AF-4D56-8B5D-5027FFE15A8A}.Debug|x64.Build.0 = Debug|Any CPU
+		{76B78528-A1AF-4D56-8B5D-5027FFE15A8A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{76B78528-A1AF-4D56-8B5D-5027FFE15A8A}.Debug|x86.Build.0 = Debug|Any CPU
+		{76B78528-A1AF-4D56-8B5D-5027FFE15A8A}.Release|x64.ActiveCfg = Release|Any CPU
+		{76B78528-A1AF-4D56-8B5D-5027FFE15A8A}.Release|x64.Build.0 = Release|Any CPU
+		{76B78528-A1AF-4D56-8B5D-5027FFE15A8A}.Release|x86.ActiveCfg = Release|Any CPU
+		{76B78528-A1AF-4D56-8B5D-5027FFE15A8A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
