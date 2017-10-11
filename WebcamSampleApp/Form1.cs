@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -83,7 +84,7 @@ namespace WebcamSampleApp
 
             CWrapperAPI.freeByteArray(pointer);
             Console.WriteLine("result is " + startCaptureResult.ToString());
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
             pointer = new IntPtr(0);
             
             var devicePtr = new IntPtr((long)startCaptureResult.DevicePointer);
@@ -104,7 +105,26 @@ namespace WebcamSampleApp
 
                 if (pointer.ToInt64() != 0)
                 {
+                    var image = new Bitmap((int) width, (int)height);
+                    int bufferSize = (int) width * (int) height * 3;
+                    var buffer = new byte[bufferSize];
+                    Marshal.Copy(pointer, buffer, 0, bufferSize);
+                    int byteIndex = 0;
 
+                    for (int j = 0; j < image.Height; j++)
+                    {
+                        for (int i = 0; i < image.Width; i++)
+                        {
+                            var b = buffer[byteIndex++];
+                            var g = buffer[byteIndex++];
+                            var r = buffer[byteIndex++];
+                            var a = (byte)255;
+                            var color = Color.FromArgb(a, r, g, b);
+
+                            image.SetPixel(i, j, color);
+                        }
+                    }
+                    this.pictureBox1.Image = image;
                     CWrapperAPI.recycleUsedBuffer(pointer, devicePtr);
                 }
             }
