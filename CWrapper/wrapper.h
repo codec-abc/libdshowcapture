@@ -19,3 +19,19 @@ extern "C"
 {
 	__declspec(dllexport) void shutDownAndFreeDevice(void* device);
 }
+
+extern "C"
+{
+	__declspec(dllexport) void tryGetBuffer
+	(
+		unsigned char** buffer, 
+		void* device, 
+		unsigned int* width, 
+		unsigned int* height
+	);
+}
+
+extern "C"
+{
+	__declspec(dllexport) void recycleUsedBuffer(unsigned char* buffer, void* device);
+}

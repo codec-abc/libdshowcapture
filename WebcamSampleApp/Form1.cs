@@ -80,10 +80,39 @@ namespace WebcamSampleApp
             {
                 return;
             }
+
             CWrapperAPI.freeByteArray(pointer);
             Console.WriteLine("result is " + startCaptureResult.ToString());
             Thread.Sleep(3000);
-            CWrapperAPI.shutDownAndFreeDevice(new IntPtr((long)startCaptureResult.DevicePointer));
+            pointer = new IntPtr(0);
+            
+            var devicePtr = new IntPtr((long)startCaptureResult.DevicePointer);
+
+            if 
+            (
+                startCaptureResult.CanConnectFilters &&
+                startCaptureResult.CanResetGraph &&
+                startCaptureResult.CanSetAudioConfig &&
+                startCaptureResult.CanSetVideoConfig &&
+                startCaptureResult.DevicePointer != 0 &&
+                startCaptureResult.Result == Camera.StartResult.Success
+            )
+            {
+                uint width = 0;
+                uint height = 0;
+                CWrapperAPI.tryGetBuffer(ref pointer, devicePtr, ref width, ref height);
+
+                if (pointer.ToInt64() != 0)
+                {
+
+                    CWrapperAPI.recycleUsedBuffer(pointer, devicePtr);
+                }
+            }
+
+            if (startCaptureResult.DevicePointer != 0)
+            {
+                CWrapperAPI.shutDownAndFreeDevice(devicePtr);
+            }
         }
     }
 }

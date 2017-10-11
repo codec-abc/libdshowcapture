@@ -84,7 +84,6 @@ void convertToYUV
 			__m128 uFloat_ = _mm_dp_ps(normalizedRgba, uFactors, 0b1111'1111);
 			__m128 vFloat_ = _mm_dp_ps(normalizedRgba, vFactors, 0b1111'1111);
 
-
 			//create a word with yuv values
 			__m128 yuvFloatInRange_0_1 =
 				_mm_setr_ps
@@ -94,7 +93,6 @@ void convertToYUV
 					vFloat_.m128_f32[0],
 					0
 				);
-
 
 			// add offset so U and V are in [0;1] instead of [-0.5; 0.5]
 			yuvFloatInRange_0_1 = _mm_add_ps(yuvFloatInRange_0_1, offset);
@@ -123,10 +121,6 @@ void convertToYUV
 	); // end of parallel for
 
 	//auto duration = std::chrono::steady_clock::now() - start;
-
-	//std::cout << "elapsed time " << std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() << std::endl;
-	//memcpy(buff, copyBuffer, width * height * 3);
-	//free(copyBuffer);
 }
 
 
@@ -139,6 +133,8 @@ public:
 		_devicePtr = devicePtr;
 		_frameCount = 0;
 		_imageSize = 0;
+		_width = 0;
+		_height = 0;
 	}
 
 	~DeviceHolder()
@@ -147,7 +143,12 @@ public:
 		{
 			_devicePtr->Stop();
 			delete(_devicePtr);
-			for (auto buffIterator = _imagesBuffers.begin(); buffIterator != _imagesBuffers.end(); buffIterator++)
+			for 
+			(
+				auto buffIterator = _imagesBuffers.begin(); 
+				buffIterator != _imagesBuffers.end(); 
+				buffIterator++
+			)
 			{
 				auto buff = *buffIterator;
 				free(buff);
@@ -164,9 +165,12 @@ public:
 		long long stopTime
 	)
 	{
+		_frameCount++;
 		if (_imagesBuffers.size() == 0)
 		{
 			_imageSize = size;
+			_width = config.cx;
+			_height = config.cy;
 
 			// allocate some buffers
 			for (int i = 0; i < 3; i++)
@@ -179,6 +183,7 @@ public:
 
 		if (size == _imageSize || _imageSize == (config.cx * config.cy * 4))
 		{
+			_mutex.lock();
 			if (_freeBuffers.size() > 0)
 			{
 				unsigned char* buff = _freeBuffers.back();
@@ -193,11 +198,49 @@ public:
 				convertToYUV(data, buff, config.cx, config.cy);
 				_readyBuffers.push_back(buff);
 			}
+			_mutex.unlock();
 		}
 		else
 		{
 			std::cout << "ERROR : Image dimension or format is not valid" << std::endl;
 		}
+	}
+
+	unsigned char* tryGetReadyBuffer()
+	{
+		_mutex.lock();
+		if (_readyBuffers.size() == 0)
+		{
+			_mutex.unlock();
+			return nullptr;
+		}
+		else
+		{
+			auto buff = _readyBuffers.back();
+			_readyBuffers.pop_back();
+			_mutex.unlock();
+			return buff;
+		}
+	}
+
+	void recycleUsedBuffer(unsigned char* buffer)
+	{
+		if (buffer != nullptr)
+		{
+			_mutex.lock();
+			_freeBuffers.push_back(buffer);
+			_mutex.unlock();
+		}
+	}
+
+	unsigned int getWidth()
+	{
+		return _width;
+	}
+
+	unsigned int getHeight()
+	{
+		return _height;
 	}
 
 private:
@@ -207,6 +250,9 @@ private:
 	std::vector<unsigned char*> _freeBuffers;
 	std::vector<unsigned char*> _readyBuffers;
 	size_t _imageSize;
+	unsigned int _width;
+	unsigned int _height;
+	std::mutex _mutex;
 };
 
 // convert UTF-8 string to wstring
@@ -321,7 +367,6 @@ void startCapture(char* startCaptureOptions, int* arraySize, char** arrayPtr)
 	result.set_cansetaudioconfig(false);
 	result.set_cansetvideoconfig(false);
 	result.set_result(camera::StartResult::Error);
-
 
 	DShow::Device* device = new DShow::Device();
 	DeviceHolder* deviceHolder = new DeviceHolder(device);
@@ -457,4 +502,24 @@ void shutDownAndFreeDevice(void* device)
 		DeviceHolder* deviceHolder = (DeviceHolder*)device;
 		delete(deviceHolder);
 	}
+}
+
+void tryGetBuffer
+(
+	unsigned char** buffer, 
+	void* device, 
+	unsigned int* width, 
+	unsigned int* height
+)
+{
+	DeviceHolder* deviceHolder = (DeviceHolder*)device;
+	*width = deviceHolder->getWidth();
+	*height = deviceHolder->getHeight();
+	*buffer = deviceHolder->tryGetReadyBuffer();
+}
+
+void recycleUsedBuffer(unsigned char* buffer, void* device)
+{
+	DeviceHolder* deviceHolder = (DeviceHolder*)device;
+	deviceHolder->recycleUsedBuffer(buffer);
 }

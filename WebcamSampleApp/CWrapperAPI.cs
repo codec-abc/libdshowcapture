@@ -29,5 +29,11 @@ namespace WebcamSampleApp
         [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void shutDownAndFreeDevice(IntPtr devicePtr);
 
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void tryGetBuffer(ref IntPtr arrayPtr, IntPtr devicePtr, ref uint width, ref uint height);
+
+        [DllImport(dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void recycleUsedBuffer(IntPtr arrayPtr, IntPtr devicePtr);
+
     }
 }
