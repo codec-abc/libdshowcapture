@@ -49,7 +49,7 @@ namespace WebcamSampleApp
             args.CameraName = camList.Cameras[0].CameraName;
             args.CameraPath = camList.Cameras[0].CameraPath;
             args.Encoding = Camera.CaptureEncoding.Mjpeg;
-            args.Framerate = 30;
+            args.FrameintervalUs = 300000000;
             args.Width = 1280;
             args.Height = 720;
 
@@ -82,7 +82,7 @@ namespace WebcamSampleApp
             }
             CWrapperAPI.freeByteArray(pointer);
             Console.WriteLine("result is " + startCaptureResult.ToString());
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
             CWrapperAPI.shutDownAndFreeDevice(new IntPtr((long)startCaptureResult.DevicePointer));
         }
     }

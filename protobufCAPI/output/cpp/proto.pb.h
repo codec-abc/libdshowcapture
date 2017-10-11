@@ -198,11 +198,11 @@ class CaptureFormat : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::google::protobuf::uint32 height() const;
   void set_height(::google::protobuf::uint32 value);
 
-  // double framerate = 3;
-  void clear_framerate();
-  static const int kFramerateFieldNumber = 3;
-  double framerate() const;
-  void set_framerate(double value);
+  // uint64 frameinterval_us = 3;
+  void clear_frameinterval_us();
+  static const int kFrameintervalUsFieldNumber = 3;
+  ::google::protobuf::uint64 frameinterval_us() const;
+  void set_frameinterval_us(::google::protobuf::uint64 value);
 
   // .camera.CaptureEncoding encoding = 4;
   void clear_encoding();
@@ -216,7 +216,7 @@ class CaptureFormat : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 width_;
   ::google::protobuf::uint32 height_;
-  double framerate_;
+  ::google::protobuf::uint64 frameinterval_us_;
   int encoding_;
   mutable int _cached_size_;
   friend struct protobuf_proto_2eproto::TableStruct;
@@ -535,11 +535,11 @@ class StartCaptureArguments : public ::google::protobuf::Message /* @@protoc_ins
   ::google::protobuf::uint32 height() const;
   void set_height(::google::protobuf::uint32 value);
 
-  // double framerate = 12;
-  void clear_framerate();
-  static const int kFramerateFieldNumber = 12;
-  double framerate() const;
-  void set_framerate(double value);
+  // uint64 frameinterval_us = 12;
+  void clear_frameinterval_us();
+  static const int kFrameintervalUsFieldNumber = 12;
+  ::google::protobuf::uint64 frameinterval_us() const;
+  void set_frameinterval_us(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:camera.StartCaptureArguments)
  private:
@@ -550,7 +550,7 @@ class StartCaptureArguments : public ::google::protobuf::Message /* @@protoc_ins
   int encoding_;
   ::google::protobuf::uint32 width_;
   ::google::protobuf::uint32 height_;
-  double framerate_;
+  ::google::protobuf::uint64 frameinterval_us_;
   mutable int _cached_size_;
   friend struct protobuf_proto_2eproto::TableStruct;
 };
@@ -705,18 +705,18 @@ inline void CaptureFormat::set_height(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:camera.CaptureFormat.height)
 }
 
-// double framerate = 3;
-inline void CaptureFormat::clear_framerate() {
-  framerate_ = 0;
+// uint64 frameinterval_us = 3;
+inline void CaptureFormat::clear_frameinterval_us() {
+  frameinterval_us_ = GOOGLE_ULONGLONG(0);
 }
-inline double CaptureFormat::framerate() const {
-  // @@protoc_insertion_point(field_get:camera.CaptureFormat.framerate)
-  return framerate_;
+inline ::google::protobuf::uint64 CaptureFormat::frameinterval_us() const {
+  // @@protoc_insertion_point(field_get:camera.CaptureFormat.frameinterval_us)
+  return frameinterval_us_;
 }
-inline void CaptureFormat::set_framerate(double value) {
+inline void CaptureFormat::set_frameinterval_us(::google::protobuf::uint64 value) {
   
-  framerate_ = value;
-  // @@protoc_insertion_point(field_set:camera.CaptureFormat.framerate)
+  frameinterval_us_ = value;
+  // @@protoc_insertion_point(field_set:camera.CaptureFormat.frameinterval_us)
 }
 
 // .camera.CaptureEncoding encoding = 4;
@@ -1045,18 +1045,18 @@ inline void StartCaptureArguments::set_height(::google::protobuf::uint32 value) 
   // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.height)
 }
 
-// double framerate = 12;
-inline void StartCaptureArguments::clear_framerate() {
-  framerate_ = 0;
+// uint64 frameinterval_us = 12;
+inline void StartCaptureArguments::clear_frameinterval_us() {
+  frameinterval_us_ = GOOGLE_ULONGLONG(0);
 }
-inline double StartCaptureArguments::framerate() const {
-  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.framerate)
-  return framerate_;
+inline ::google::protobuf::uint64 StartCaptureArguments::frameinterval_us() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.frameinterval_us)
+  return frameinterval_us_;
 }
-inline void StartCaptureArguments::set_framerate(double value) {
+inline void StartCaptureArguments::set_frameinterval_us(::google::protobuf::uint64 value) {
   
-  framerate_ = value;
-  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.framerate)
+  frameinterval_us_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.frameinterval_us)
 }
 
 // .camera.CaptureEncoding encoding = 13;

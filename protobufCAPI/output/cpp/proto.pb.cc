@@ -65,7 +65,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CaptureFormat, width_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CaptureFormat, height_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CaptureFormat, framerate_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CaptureFormat, frameinterval_us_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CaptureFormat, encoding_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Camera, _internal_metadata_),
@@ -90,7 +90,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureArguments, camerapath_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureArguments, width_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureArguments, height_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureArguments, framerate_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureArguments, frameinterval_us_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureArguments, encoding_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartCaptureResult, _internal_metadata_),
@@ -175,30 +175,31 @@ void InitDefaults() {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] = {
-      "\n\013proto.proto\022\006camera\"l\n\rCaptureFormat\022\r"
-      "\n\005width\030\001 \001(\r\022\016\n\006height\030\002 \001(\r\022\021\n\tframera"
-      "te\030\003 \001(\001\022)\n\010encoding\030\004 \001(\0162\027.camera.Capt"
-      "ureEncoding\"X\n\006Camera\022\022\n\ncameraName\030\005 \001("
-      "\t\022\022\n\ncameraPath\030\006 \001(\t\022&\n\007formats\030\007 \003(\0132\025"
-      ".camera.CaptureFormat\"-\n\nCameraList\022\037\n\007c"
-      "ameras\030\007 \003(\0132\016.camera.Camera\"\234\001\n\025StartCa"
-      "ptureArguments\022\022\n\ncameraName\030\010 \001(\t\022\022\n\nca"
-      "meraPath\030\t \001(\t\022\r\n\005width\030\n \001(\r\022\016\n\006height\030"
-      "\013 \001(\r\022\021\n\tframerate\030\014 \001(\001\022)\n\010encoding\030\r \001"
-      "(\0162\027.camera.CaptureEncoding\"\270\001\n\022StartCap"
-      "tureResult\022\025\n\rcanResetGraph\030\016 \001(\010\022\031\n\021can"
-      "SetAudioConfig\030\017 \001(\010\022\031\n\021canSetVideoConfi"
-      "g\030\020 \001(\010\022\031\n\021canConnectFilters\030\021 \001(\010\022#\n\006re"
-      "sult\030\022 \001(\0162\023.camera.StartResult\022\025\n\rdevic"
-      "ePointer\030\023 \001(\004*\240\001\n\017CaptureEncoding\022\007\n\003An"
-      "y\020\000\022\013\n\007Unknown\020\001\022\010\n\004ARGB\020\002\022\010\n\004XRGB\020\003\022\010\n\004"
-      "I420\020\004\022\010\n\004NV12\020\005\022\010\n\004YV12\020\006\022\010\n\004Y800\020\007\022\010\n\004"
-      "YVYU\020\010\022\010\n\004YUY2\020\t\022\010\n\004UYVY\020\n\022\010\n\004HDYC\020\013\022\t\n\005"
-      "MJPEG\020\014\022\010\n\004H264\020\r*0\n\013StartResult\022\013\n\007Succ"
-      "ess\020\000\022\t\n\005InUse\020\001\022\t\n\005Error\020\002b\006proto3"
+      "\n\013proto.proto\022\006camera\"s\n\rCaptureFormat\022\r"
+      "\n\005width\030\001 \001(\r\022\016\n\006height\030\002 \001(\r\022\030\n\020framein"
+      "terval_us\030\003 \001(\004\022)\n\010encoding\030\004 \001(\0162\027.came"
+      "ra.CaptureEncoding\"X\n\006Camera\022\022\n\ncameraNa"
+      "me\030\005 \001(\t\022\022\n\ncameraPath\030\006 \001(\t\022&\n\007formats\030"
+      "\007 \003(\0132\025.camera.CaptureFormat\"-\n\nCameraLi"
+      "st\022\037\n\007cameras\030\007 \003(\0132\016.camera.Camera\"\243\001\n\025"
+      "StartCaptureArguments\022\022\n\ncameraName\030\010 \001("
+      "\t\022\022\n\ncameraPath\030\t \001(\t\022\r\n\005width\030\n \001(\r\022\016\n\006"
+      "height\030\013 \001(\r\022\030\n\020frameinterval_us\030\014 \001(\004\022)"
+      "\n\010encoding\030\r \001(\0162\027.camera.CaptureEncodin"
+      "g\"\270\001\n\022StartCaptureResult\022\025\n\rcanResetGrap"
+      "h\030\016 \001(\010\022\031\n\021canSetAudioConfig\030\017 \001(\010\022\031\n\021ca"
+      "nSetVideoConfig\030\020 \001(\010\022\031\n\021canConnectFilte"
+      "rs\030\021 \001(\010\022#\n\006result\030\022 \001(\0162\023.camera.StartR"
+      "esult\022\025\n\rdevicePointer\030\023 \001(\004*\240\001\n\017Capture"
+      "Encoding\022\007\n\003Any\020\000\022\013\n\007Unknown\020\001\022\010\n\004ARGB\020\002"
+      "\022\010\n\004XRGB\020\003\022\010\n\004I420\020\004\022\010\n\004NV12\020\005\022\010\n\004YV12\020\006"
+      "\022\010\n\004Y800\020\007\022\010\n\004YVYU\020\010\022\010\n\004YUY2\020\t\022\010\n\004UYVY\020\n"
+      "\022\010\n\004HDYC\020\013\022\t\n\005MJPEG\020\014\022\010\n\004H264\020\r*0\n\013Start"
+      "Result\022\013\n\007Success\020\000\022\t\n\005InUse\020\001\022\t\n\005Error\020"
+      "\002b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 835);
+      descriptor, 849);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "proto.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&TableStruct::Shutdown);
@@ -264,7 +265,7 @@ bool StartResult_IsValid(int value) {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int CaptureFormat::kWidthFieldNumber;
 const int CaptureFormat::kHeightFieldNumber;
-const int CaptureFormat::kFramerateFieldNumber;
+const int CaptureFormat::kFrameintervalUsFieldNumber;
 const int CaptureFormat::kEncodingFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -368,14 +369,14 @@ bool CaptureFormat::MergePartialFromCodedStream(
         break;
       }
 
-      // double framerate = 3;
+      // uint64 frameinterval_us = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(25u)) {
+            static_cast< ::google::protobuf::uint8>(24u)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
-                 input, &framerate_)));
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &frameinterval_us_)));
         } else {
           goto handle_unusual;
         }
@@ -434,9 +435,9 @@ void CaptureFormat::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->height(), output);
   }
 
-  // double framerate = 3;
-  if (this->framerate() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteDouble(3, this->framerate(), output);
+  // uint64 frameinterval_us = 3;
+  if (this->frameinterval_us() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->frameinterval_us(), output);
   }
 
   // .camera.CaptureEncoding encoding = 4;
@@ -464,9 +465,9 @@ void CaptureFormat::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->height(), target);
   }
 
-  // double framerate = 3;
-  if (this->framerate() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(3, this->framerate(), target);
+  // uint64 frameinterval_us = 3;
+  if (this->frameinterval_us() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->frameinterval_us(), target);
   }
 
   // .camera.CaptureEncoding encoding = 4;
@@ -497,9 +498,11 @@ size_t CaptureFormat::ByteSizeLong() const {
         this->height());
   }
 
-  // double framerate = 3;
-  if (this->framerate() != 0) {
-    total_size += 1 + 8;
+  // uint64 frameinterval_us = 3;
+  if (this->frameinterval_us() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->frameinterval_us());
   }
 
   // .camera.CaptureEncoding encoding = 4;
@@ -543,8 +546,8 @@ void CaptureFormat::MergeFrom(const CaptureFormat& from) {
   if (from.height() != 0) {
     set_height(from.height());
   }
-  if (from.framerate() != 0) {
-    set_framerate(from.framerate());
+  if (from.frameinterval_us() != 0) {
+    set_frameinterval_us(from.frameinterval_us());
   }
   if (from.encoding() != 0) {
     set_encoding(from.encoding());
@@ -576,7 +579,7 @@ void CaptureFormat::Swap(CaptureFormat* other) {
 void CaptureFormat::InternalSwap(CaptureFormat* other) {
   std::swap(width_, other->width_);
   std::swap(height_, other->height_);
-  std::swap(framerate_, other->framerate_);
+  std::swap(frameinterval_us_, other->frameinterval_us_);
   std::swap(encoding_, other->encoding_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -617,18 +620,18 @@ void CaptureFormat::set_height(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:camera.CaptureFormat.height)
 }
 
-// double framerate = 3;
-void CaptureFormat::clear_framerate() {
-  framerate_ = 0;
+// uint64 frameinterval_us = 3;
+void CaptureFormat::clear_frameinterval_us() {
+  frameinterval_us_ = GOOGLE_ULONGLONG(0);
 }
-double CaptureFormat::framerate() const {
-  // @@protoc_insertion_point(field_get:camera.CaptureFormat.framerate)
-  return framerate_;
+::google::protobuf::uint64 CaptureFormat::frameinterval_us() const {
+  // @@protoc_insertion_point(field_get:camera.CaptureFormat.frameinterval_us)
+  return frameinterval_us_;
 }
-void CaptureFormat::set_framerate(double value) {
+void CaptureFormat::set_frameinterval_us(::google::protobuf::uint64 value) {
   
-  framerate_ = value;
-  // @@protoc_insertion_point(field_set:camera.CaptureFormat.framerate)
+  frameinterval_us_ = value;
+  // @@protoc_insertion_point(field_set:camera.CaptureFormat.frameinterval_us)
 }
 
 // .camera.CaptureEncoding encoding = 4;
@@ -1378,7 +1381,7 @@ const int StartCaptureArguments::kCameraNameFieldNumber;
 const int StartCaptureArguments::kCameraPathFieldNumber;
 const int StartCaptureArguments::kWidthFieldNumber;
 const int StartCaptureArguments::kHeightFieldNumber;
-const int StartCaptureArguments::kFramerateFieldNumber;
+const int StartCaptureArguments::kFrameintervalUsFieldNumber;
 const int StartCaptureArguments::kEncodingFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -1404,16 +1407,16 @@ StartCaptureArguments::StartCaptureArguments(const StartCaptureArguments& from)
     camerapath_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.camerapath_);
   }
   ::memcpy(&encoding_, &from.encoding_,
-    reinterpret_cast<char*>(&framerate_) -
-    reinterpret_cast<char*>(&encoding_) + sizeof(framerate_));
+    reinterpret_cast<char*>(&frameinterval_us_) -
+    reinterpret_cast<char*>(&encoding_) + sizeof(frameinterval_us_));
   // @@protoc_insertion_point(copy_constructor:camera.StartCaptureArguments)
 }
 
 void StartCaptureArguments::SharedCtor() {
   cameraname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   camerapath_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&encoding_, 0, reinterpret_cast<char*>(&framerate_) -
-    reinterpret_cast<char*>(&encoding_) + sizeof(framerate_));
+  ::memset(&encoding_, 0, reinterpret_cast<char*>(&frameinterval_us_) -
+    reinterpret_cast<char*>(&encoding_) + sizeof(frameinterval_us_));
   _cached_size_ = 0;
 }
 
@@ -1454,8 +1457,8 @@ void StartCaptureArguments::Clear() {
 // @@protoc_insertion_point(message_clear_start:camera.StartCaptureArguments)
   cameraname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   camerapath_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&encoding_, 0, reinterpret_cast<char*>(&framerate_) -
-    reinterpret_cast<char*>(&encoding_) + sizeof(framerate_));
+  ::memset(&encoding_, 0, reinterpret_cast<char*>(&frameinterval_us_) -
+    reinterpret_cast<char*>(&encoding_) + sizeof(frameinterval_us_));
 }
 
 bool StartCaptureArguments::MergePartialFromCodedStream(
@@ -1528,14 +1531,14 @@ bool StartCaptureArguments::MergePartialFromCodedStream(
         break;
       }
 
-      // double framerate = 12;
+      // uint64 frameinterval_us = 12;
       case 12: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(97u)) {
+            static_cast< ::google::protobuf::uint8>(96u)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
-                 input, &framerate_)));
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &frameinterval_us_)));
         } else {
           goto handle_unusual;
         }
@@ -1614,9 +1617,9 @@ void StartCaptureArguments::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(11, this->height(), output);
   }
 
-  // double framerate = 12;
-  if (this->framerate() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteDouble(12, this->framerate(), output);
+  // uint64 frameinterval_us = 12;
+  if (this->frameinterval_us() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(12, this->frameinterval_us(), output);
   }
 
   // .camera.CaptureEncoding encoding = 13;
@@ -1666,9 +1669,9 @@ void StartCaptureArguments::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(11, this->height(), target);
   }
 
-  // double framerate = 12;
-  if (this->framerate() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(12, this->framerate(), target);
+  // uint64 frameinterval_us = 12;
+  if (this->frameinterval_us() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(12, this->frameinterval_us(), target);
   }
 
   // .camera.CaptureEncoding encoding = 13;
@@ -1719,9 +1722,11 @@ size_t StartCaptureArguments::ByteSizeLong() const {
         this->height());
   }
 
-  // double framerate = 12;
-  if (this->framerate() != 0) {
-    total_size += 1 + 8;
+  // uint64 frameinterval_us = 12;
+  if (this->frameinterval_us() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->frameinterval_us());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -1770,8 +1775,8 @@ void StartCaptureArguments::MergeFrom(const StartCaptureArguments& from) {
   if (from.height() != 0) {
     set_height(from.height());
   }
-  if (from.framerate() != 0) {
-    set_framerate(from.framerate());
+  if (from.frameinterval_us() != 0) {
+    set_frameinterval_us(from.frameinterval_us());
   }
 }
 
@@ -1803,7 +1808,7 @@ void StartCaptureArguments::InternalSwap(StartCaptureArguments* other) {
   std::swap(encoding_, other->encoding_);
   std::swap(width_, other->width_);
   std::swap(height_, other->height_);
-  std::swap(framerate_, other->framerate_);
+  std::swap(frameinterval_us_, other->frameinterval_us_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
@@ -1949,18 +1954,18 @@ void StartCaptureArguments::set_height(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.height)
 }
 
-// double framerate = 12;
-void StartCaptureArguments::clear_framerate() {
-  framerate_ = 0;
+// uint64 frameinterval_us = 12;
+void StartCaptureArguments::clear_frameinterval_us() {
+  frameinterval_us_ = GOOGLE_ULONGLONG(0);
 }
-double StartCaptureArguments::framerate() const {
-  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.framerate)
-  return framerate_;
+::google::protobuf::uint64 StartCaptureArguments::frameinterval_us() const {
+  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.frameinterval_us)
+  return frameinterval_us_;
 }
-void StartCaptureArguments::set_framerate(double value) {
+void StartCaptureArguments::set_frameinterval_us(::google::protobuf::uint64 value) {
   
-  framerate_ = value;
-  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.framerate)
+  frameinterval_us_ = value;
+  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.frameinterval_us)
 }
 
 // .camera.CaptureEncoding encoding = 13;

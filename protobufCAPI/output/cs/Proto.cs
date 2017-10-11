@@ -22,32 +22,32 @@ namespace Camera {
     static ProtoReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cgtwcm90by5wcm90bxIGY2FtZXJhImwKDUNhcHR1cmVGb3JtYXQSDQoFd2lk",
-            "dGgYASABKA0SDgoGaGVpZ2h0GAIgASgNEhEKCWZyYW1lcmF0ZRgDIAEoARIp",
-            "CghlbmNvZGluZxgEIAEoDjIXLmNhbWVyYS5DYXB0dXJlRW5jb2RpbmciWAoG",
-            "Q2FtZXJhEhIKCmNhbWVyYU5hbWUYBSABKAkSEgoKY2FtZXJhUGF0aBgGIAEo",
-            "CRImCgdmb3JtYXRzGAcgAygLMhUuY2FtZXJhLkNhcHR1cmVGb3JtYXQiLQoK",
-            "Q2FtZXJhTGlzdBIfCgdjYW1lcmFzGAcgAygLMg4uY2FtZXJhLkNhbWVyYSKc",
-            "AQoVU3RhcnRDYXB0dXJlQXJndW1lbnRzEhIKCmNhbWVyYU5hbWUYCCABKAkS",
-            "EgoKY2FtZXJhUGF0aBgJIAEoCRINCgV3aWR0aBgKIAEoDRIOCgZoZWlnaHQY",
-            "CyABKA0SEQoJZnJhbWVyYXRlGAwgASgBEikKCGVuY29kaW5nGA0gASgOMhcu",
-            "Y2FtZXJhLkNhcHR1cmVFbmNvZGluZyK4AQoSU3RhcnRDYXB0dXJlUmVzdWx0",
-            "EhUKDWNhblJlc2V0R3JhcGgYDiABKAgSGQoRY2FuU2V0QXVkaW9Db25maWcY",
-            "DyABKAgSGQoRY2FuU2V0VmlkZW9Db25maWcYECABKAgSGQoRY2FuQ29ubmVj",
-            "dEZpbHRlcnMYESABKAgSIwoGcmVzdWx0GBIgASgOMhMuY2FtZXJhLlN0YXJ0",
-            "UmVzdWx0EhUKDWRldmljZVBvaW50ZXIYEyABKAQqoAEKD0NhcHR1cmVFbmNv",
-            "ZGluZxIHCgNBbnkQABILCgdVbmtub3duEAESCAoEQVJHQhACEggKBFhSR0IQ",
-            "AxIICgRJNDIwEAQSCAoETlYxMhAFEggKBFlWMTIQBhIICgRZODAwEAcSCAoE",
-            "WVZZVRAIEggKBFlVWTIQCRIICgRVWVZZEAoSCAoESERZQxALEgkKBU1KUEVH",
-            "EAwSCAoESDI2NBANKjAKC1N0YXJ0UmVzdWx0EgsKB1N1Y2Nlc3MQABIJCgVJ",
-            "blVzZRABEgkKBUVycm9yEAJiBnByb3RvMw=="));
+            "Cgtwcm90by5wcm90bxIGY2FtZXJhInMKDUNhcHR1cmVGb3JtYXQSDQoFd2lk",
+            "dGgYASABKA0SDgoGaGVpZ2h0GAIgASgNEhgKEGZyYW1laW50ZXJ2YWxfdXMY",
+            "AyABKAQSKQoIZW5jb2RpbmcYBCABKA4yFy5jYW1lcmEuQ2FwdHVyZUVuY29k",
+            "aW5nIlgKBkNhbWVyYRISCgpjYW1lcmFOYW1lGAUgASgJEhIKCmNhbWVyYVBh",
+            "dGgYBiABKAkSJgoHZm9ybWF0cxgHIAMoCzIVLmNhbWVyYS5DYXB0dXJlRm9y",
+            "bWF0Ii0KCkNhbWVyYUxpc3QSHwoHY2FtZXJhcxgHIAMoCzIOLmNhbWVyYS5D",
+            "YW1lcmEiowEKFVN0YXJ0Q2FwdHVyZUFyZ3VtZW50cxISCgpjYW1lcmFOYW1l",
+            "GAggASgJEhIKCmNhbWVyYVBhdGgYCSABKAkSDQoFd2lkdGgYCiABKA0SDgoG",
+            "aGVpZ2h0GAsgASgNEhgKEGZyYW1laW50ZXJ2YWxfdXMYDCABKAQSKQoIZW5j",
+            "b2RpbmcYDSABKA4yFy5jYW1lcmEuQ2FwdHVyZUVuY29kaW5nIrgBChJTdGFy",
+            "dENhcHR1cmVSZXN1bHQSFQoNY2FuUmVzZXRHcmFwaBgOIAEoCBIZChFjYW5T",
+            "ZXRBdWRpb0NvbmZpZxgPIAEoCBIZChFjYW5TZXRWaWRlb0NvbmZpZxgQIAEo",
+            "CBIZChFjYW5Db25uZWN0RmlsdGVycxgRIAEoCBIjCgZyZXN1bHQYEiABKA4y",
+            "Ey5jYW1lcmEuU3RhcnRSZXN1bHQSFQoNZGV2aWNlUG9pbnRlchgTIAEoBCqg",
+            "AQoPQ2FwdHVyZUVuY29kaW5nEgcKA0FueRAAEgsKB1Vua25vd24QARIICgRB",
+            "UkdCEAISCAoEWFJHQhADEggKBEk0MjAQBBIICgROVjEyEAUSCAoEWVYxMhAG",
+            "EggKBFk4MDAQBxIICgRZVllVEAgSCAoEWVVZMhAJEggKBFVZVlkQChIICgRI",
+            "RFlDEAsSCQoFTUpQRUcQDBIICgRIMjY0EA0qMAoLU3RhcnRSZXN1bHQSCwoH",
+            "U3VjY2VzcxAAEgkKBUluVXNlEAESCQoFRXJyb3IQAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Camera.CaptureEncoding), typeof(global::Camera.StartResult), }, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.CaptureFormat), global::Camera.CaptureFormat.Parser, new[]{ "Width", "Height", "Framerate", "Encoding" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.CaptureFormat), global::Camera.CaptureFormat.Parser, new[]{ "Width", "Height", "FrameintervalUs", "Encoding" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Camera.Camera), global::Camera.Camera.Parser, new[]{ "CameraName", "CameraPath", "Formats" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Camera.CameraList), global::Camera.CameraList.Parser, new[]{ "Cameras" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.StartCaptureArguments), global::Camera.StartCaptureArguments.Parser, new[]{ "CameraName", "CameraPath", "Width", "Height", "Framerate", "Encoding" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.StartCaptureArguments), global::Camera.StartCaptureArguments.Parser, new[]{ "CameraName", "CameraPath", "Width", "Height", "FrameintervalUs", "Encoding" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Camera.StartCaptureResult), global::Camera.StartCaptureResult.Parser, new[]{ "CanResetGraph", "CanSetAudioConfig", "CanSetVideoConfig", "CanConnectFilters", "Result", "DevicePointer" }, null, null, null)
           }));
     }
@@ -107,7 +107,7 @@ namespace Camera {
     public CaptureFormat(CaptureFormat other) : this() {
       width_ = other.width_;
       height_ = other.height_;
-      framerate_ = other.framerate_;
+      frameintervalUs_ = other.frameintervalUs_;
       encoding_ = other.encoding_;
     }
 
@@ -138,14 +138,14 @@ namespace Camera {
       }
     }
 
-    /// <summary>Field number for the "framerate" field.</summary>
-    public const int FramerateFieldNumber = 3;
-    private double framerate_;
+    /// <summary>Field number for the "frameinterval_us" field.</summary>
+    public const int FrameintervalUsFieldNumber = 3;
+    private ulong frameintervalUs_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public double Framerate {
-      get { return framerate_; }
+    public ulong FrameintervalUs {
+      get { return frameintervalUs_; }
       set {
-        framerate_ = value;
+        frameintervalUs_ = value;
       }
     }
 
@@ -175,7 +175,7 @@ namespace Camera {
       }
       if (Width != other.Width) return false;
       if (Height != other.Height) return false;
-      if (Framerate != other.Framerate) return false;
+      if (FrameintervalUs != other.FrameintervalUs) return false;
       if (Encoding != other.Encoding) return false;
       return true;
     }
@@ -185,7 +185,7 @@ namespace Camera {
       int hash = 1;
       if (Width != 0) hash ^= Width.GetHashCode();
       if (Height != 0) hash ^= Height.GetHashCode();
-      if (Framerate != 0D) hash ^= Framerate.GetHashCode();
+      if (FrameintervalUs != 0UL) hash ^= FrameintervalUs.GetHashCode();
       if (Encoding != 0) hash ^= Encoding.GetHashCode();
       return hash;
     }
@@ -205,9 +205,9 @@ namespace Camera {
         output.WriteRawTag(16);
         output.WriteUInt32(Height);
       }
-      if (Framerate != 0D) {
-        output.WriteRawTag(25);
-        output.WriteDouble(Framerate);
+      if (FrameintervalUs != 0UL) {
+        output.WriteRawTag(24);
+        output.WriteUInt64(FrameintervalUs);
       }
       if (Encoding != 0) {
         output.WriteRawTag(32);
@@ -224,8 +224,8 @@ namespace Camera {
       if (Height != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Height);
       }
-      if (Framerate != 0D) {
-        size += 1 + 8;
+      if (FrameintervalUs != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(FrameintervalUs);
       }
       if (Encoding != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Encoding);
@@ -244,8 +244,8 @@ namespace Camera {
       if (other.Height != 0) {
         Height = other.Height;
       }
-      if (other.Framerate != 0D) {
-        Framerate = other.Framerate;
+      if (other.FrameintervalUs != 0UL) {
+        FrameintervalUs = other.FrameintervalUs;
       }
       if (other.Encoding != 0) {
         Encoding = other.Encoding;
@@ -268,8 +268,8 @@ namespace Camera {
             Height = input.ReadUInt32();
             break;
           }
-          case 25: {
-            Framerate = input.ReadDouble();
+          case 24: {
+            FrameintervalUs = input.ReadUInt64();
             break;
           }
           case 32: {
@@ -584,7 +584,7 @@ namespace Camera {
       cameraPath_ = other.cameraPath_;
       width_ = other.width_;
       height_ = other.height_;
-      framerate_ = other.framerate_;
+      frameintervalUs_ = other.frameintervalUs_;
       encoding_ = other.encoding_;
     }
 
@@ -637,14 +637,14 @@ namespace Camera {
       }
     }
 
-    /// <summary>Field number for the "framerate" field.</summary>
-    public const int FramerateFieldNumber = 12;
-    private double framerate_;
+    /// <summary>Field number for the "frameinterval_us" field.</summary>
+    public const int FrameintervalUsFieldNumber = 12;
+    private ulong frameintervalUs_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public double Framerate {
-      get { return framerate_; }
+    public ulong FrameintervalUs {
+      get { return frameintervalUs_; }
       set {
-        framerate_ = value;
+        frameintervalUs_ = value;
       }
     }
 
@@ -676,7 +676,7 @@ namespace Camera {
       if (CameraPath != other.CameraPath) return false;
       if (Width != other.Width) return false;
       if (Height != other.Height) return false;
-      if (Framerate != other.Framerate) return false;
+      if (FrameintervalUs != other.FrameintervalUs) return false;
       if (Encoding != other.Encoding) return false;
       return true;
     }
@@ -688,7 +688,7 @@ namespace Camera {
       if (CameraPath.Length != 0) hash ^= CameraPath.GetHashCode();
       if (Width != 0) hash ^= Width.GetHashCode();
       if (Height != 0) hash ^= Height.GetHashCode();
-      if (Framerate != 0D) hash ^= Framerate.GetHashCode();
+      if (FrameintervalUs != 0UL) hash ^= FrameintervalUs.GetHashCode();
       if (Encoding != 0) hash ^= Encoding.GetHashCode();
       return hash;
     }
@@ -716,9 +716,9 @@ namespace Camera {
         output.WriteRawTag(88);
         output.WriteUInt32(Height);
       }
-      if (Framerate != 0D) {
-        output.WriteRawTag(97);
-        output.WriteDouble(Framerate);
+      if (FrameintervalUs != 0UL) {
+        output.WriteRawTag(96);
+        output.WriteUInt64(FrameintervalUs);
       }
       if (Encoding != 0) {
         output.WriteRawTag(104);
@@ -741,8 +741,8 @@ namespace Camera {
       if (Height != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Height);
       }
-      if (Framerate != 0D) {
-        size += 1 + 8;
+      if (FrameintervalUs != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(FrameintervalUs);
       }
       if (Encoding != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Encoding);
@@ -767,8 +767,8 @@ namespace Camera {
       if (other.Height != 0) {
         Height = other.Height;
       }
-      if (other.Framerate != 0D) {
-        Framerate = other.Framerate;
+      if (other.FrameintervalUs != 0UL) {
+        FrameintervalUs = other.FrameintervalUs;
       }
       if (other.Encoding != 0) {
         Encoding = other.Encoding;
@@ -799,8 +799,8 @@ namespace Camera {
             Height = input.ReadUInt32();
             break;
           }
-          case 97: {
-            Framerate = input.ReadDouble();
+          case 96: {
+            FrameintervalUs = input.ReadUInt64();
             break;
           }
           case 104: {

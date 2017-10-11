@@ -7,31 +7,206 @@
 #include "proto.pb.h"
 #include <google/protobuf/util/json_util.h>
 
+#include <ppl.h>
 #include <windows.h>
+#include <intrin.h>
 
 #include <codecvt>
 #include <string>
 
+void convertToYUV
+(
+	unsigned char* inputBuff, 
+	unsigned char* outputBuff, 
+	unsigned int width, 
+	unsigned int height
+)
+{
+	__m128 divideBy255 = _mm_set_ps1(0.0039215f); //0. 0039215 = 1.0 / 255.0
+	__m128 multiplyBy255 = _mm_set_ps1(255.0f);
+	__m128 zero = _mm_set_ps1(0.0f);
+	__m128 one = _mm_set_ps1(1.0f);
+
+	__m128 offset = _mm_setr_ps(
+		0.0f,
+		0.5f,
+		0.5f,
+		0
+	);
+
+	__m128 yFactors = _mm_setr_ps(
+		0.299f,
+		0.587f,
+		0.114f,
+		0.0f
+	);
+
+	__m128 uFactors = _mm_setr_ps(
+		-0.14713f,
+		-0.28886f,
+		0.436f,
+		0.0f
+	);
+
+	__m128 vFactors = _mm_setr_ps(
+		0.615f,
+		-0.51498f,
+		-0.10001f,
+		0.0f
+	);
+
+	//auto start = std::chrono::steady_clock::now();
+
+	concurrency::parallel_for((unsigned int)0, width, [&](unsigned int i)
+		//for (unsigned int i = 0; i < mCaptureBufferWidth; i++)
+	{
+		for (unsigned int j = 0; j < height; j++)
+		{
+			int index = (i * height + j) * 4;
+
+			// create a word containing the rgb(a) values as 32 bits integers.
+			__m128i rgbaValues = _mm_setr_epi8
+			(
+				inputBuff[index], 0, 0, 0,
+				inputBuff[index + 1], 0, 0, 0,
+				inputBuff[index + 2], 0, 0, 0,
+				0, 0, 0, 0
+			);
+
+			// convert the values to float
+			__m128 rgbaAsFloat = _mm_cvtepi32_ps(rgbaValues);
+
+			// divide by 255
+			__m128 normalizedRgba = _mm_mul_ps(rgbaAsFloat, divideBy255);
+
+			// apply the conversion factors
+			__m128 yFloat_ = _mm_dp_ps(normalizedRgba, yFactors, 0b1111'1111);
+			__m128 uFloat_ = _mm_dp_ps(normalizedRgba, uFactors, 0b1111'1111);
+			__m128 vFloat_ = _mm_dp_ps(normalizedRgba, vFactors, 0b1111'1111);
+
+
+			//create a word with yuv values
+			__m128 yuvFloatInRange_0_1 =
+				_mm_setr_ps
+				(
+					yFloat_.m128_f32[0],
+					uFloat_.m128_f32[0],
+					vFloat_.m128_f32[0],
+					0
+				);
+
+
+			// add offset so U and V are in [0;1] instead of [-0.5; 0.5]
+			yuvFloatInRange_0_1 = _mm_add_ps(yuvFloatInRange_0_1, offset);
+
+			// Then clamp all values in [0;1]
+			// minimum is 0
+			yuvFloatInRange_0_1 = _mm_max_ps(yuvFloatInRange_0_1, zero);
+
+			// max is 1
+			yuvFloatInRange_0_1 = _mm_min_ps(yuvFloatInRange_0_1, one);
+
+			// multiply by 255 to convert back to byte
+			__m128 yuvFloat = _mm_mul_ps(yuvFloatInRange_0_1, multiplyBy255);
+
+			// convert it back to integer
+			__m128i yuvInteger = _mm_cvtps_epi32(yuvFloat);
+
+			auto pixelIndex = (i * height + j);
+			auto imageSize = width * height;
+
+			outputBuff[0 * imageSize + pixelIndex] = yuvInteger.m128i_u32[0];
+			outputBuff[1 * imageSize + pixelIndex] = yuvInteger.m128i_u32[1];
+			outputBuff[2 * imageSize + pixelIndex] = yuvInteger.m128i_u32[2];
+		}
+	}
+	); // end of parallel for
+
+	//auto duration = std::chrono::steady_clock::now() - start;
+
+	//std::cout << "elapsed time " << std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() << std::endl;
+	//memcpy(buff, copyBuffer, width * height * 3);
+	//free(copyBuffer);
+}
+
+
 class DeviceHolder
 {
 public:
+
 	DeviceHolder(DShow::Device* devicePtr)
 	{
 		_devicePtr = devicePtr;
 		_frameCount = 0;
+		_imageSize = 0;
 	}
+
 	~DeviceHolder()
 	{
 		if (_devicePtr != NULL)
 		{
 			_devicePtr->Stop();
 			delete(_devicePtr);
+			for (auto buffIterator = _imagesBuffers.begin(); buffIterator != _imagesBuffers.end(); buffIterator++)
+			{
+				auto buff = *buffIterator;
+				free(buff);
+			}
 		}
 	}
+	
+	void HandleFrame
+	(
+		const DShow::VideoConfig &config,
+		unsigned char *data,
+		size_t size,
+		long long startTime,
+		long long stopTime
+	)
+	{
+		if (_imagesBuffers.size() == 0)
+		{
+			_imageSize = size;
+
+			// allocate some buffers
+			for (int i = 0; i < 3; i++)
+			{
+				auto buffer = (unsigned char*)malloc(size);
+				_imagesBuffers.push_back(buffer);
+				_freeBuffers.push_back(buffer);
+			}
+		}
+
+		if (size == _imageSize || _imageSize == (config.cx * config.cy * 4))
+		{
+			if (_freeBuffers.size() > 0)
+			{
+				unsigned char* buff = _freeBuffers.back();
+				_freeBuffers.pop_back();
+				convertToYUV(data, buff, config.cx, config.cy);
+				_readyBuffers.push_back(buff);
+			}
+			else
+			{
+				unsigned char* buff = _readyBuffers[0];
+				_readyBuffers.erase(_readyBuffers.begin());
+				convertToYUV(data, buff, config.cx, config.cy);
+				_readyBuffers.push_back(buff);
+			}
+		}
+		else
+		{
+			std::cout << "ERROR : Image dimension or format is not valid" << std::endl;
+		}
+	}
+
 private:
 	DShow::Device* _devicePtr;
 	int _frameCount;
-	//std::vector<unsigned char*> _buffers;
+	std::vector<unsigned char*> _imagesBuffers;
+	std::vector<unsigned char*> _freeBuffers;
+	std::vector<unsigned char*> _readyBuffers;
+	size_t _imageSize;
 };
 
 // convert UTF-8 string to wstring
@@ -122,18 +297,6 @@ DShow::VideoFormat ProtobufCaptureToDshowCapture(camera::CaptureEncoding format)
 	}
 }
 
-void SampleCallback(const DShow::VideoConfig &config,
-	unsigned char *data, size_t size,
-	long long startTime, long long stopTime)
-{
-	int width = config.cx;
-	int heigth = config.cy;
-	std::ofstream myfile("image.rgba", std::ios_base::binary);
-	myfile.write((char*) data, size);
-	myfile.flush();
-	myfile.close();
-}
-
 void AllocResultByteArray(const camera::StartCaptureResult& result, int* arraySize, char** arrayPtr)
 {
 	std::string output;
@@ -183,32 +346,25 @@ void startCapture(char* startCaptureOptions, int* arraySize, char** arrayPtr)
 	}
 
 	DShow::VideoConfig videoConfig;
-	int* frameCount = new int;
-	*frameCount = 0;
 
-	//auto callback = [frameCount]
-	//(
-	//	const DShow::VideoConfig &config,
-	//	unsigned char *data, 
-	//	size_t size,
-	//	long long startTime, 
-	//	long long stopTime
-	//) 
-	//{
-	//	if (*frameCount == 10)
-	//	{
-	//		//std::cout << "resolution is " << config.cx << "x" << config.cy << std::endl;
-	//		SampleCallback(config, data, size, startTime, stopTime);
-	//	}
-	//	(*frameCount)++;
-	//};
+	auto callback = [deviceHolder]
+	(
+		const DShow::VideoConfig &config,
+		unsigned char *data, 
+		size_t size,
+		long long startTime, 
+		long long stopTime
+	) 
+	{
+		deviceHolder->HandleFrame(config, data, size, startTime, stopTime);
+	};
 
-	//videoConfig.callback = callback;
+	videoConfig.callback = callback;
 	videoConfig.useDefaultConfig = false;
 
 	videoConfig.cx = message.width();
 	videoConfig.cy = message.height();
-	videoConfig.frameInterval = 10000000 / message.framerate();
+	videoConfig.frameInterval = message.frameinterval_us();
 	videoConfig.internalFormat = ProtobufCaptureToDshowCapture(message.encoding());
 	videoConfig.format = DShow::VideoFormat::ARGB;
 	videoConfig.name = utf8_to_wstring(message.cameraname());
@@ -274,7 +430,7 @@ unsigned char getDevices(int* arraySize, char** arrayPtr)
 				format->set_encoding(DshowCaptureToProtobufCapture(*currentFormat));
 				format->set_width(currentFormat->maxCX);
 				format->set_height(currentFormat->maxCY);
-				format->set_framerate(10000000 / currentFormat->minInterval);
+				format->set_frameinterval_us(currentFormat->minInterval);
 			}
 		}
 
