@@ -400,7 +400,7 @@ void startCapture(char* startCaptureOptions, int* arraySize, char** arrayPtr)
 
 	videoConfig.cx = message.width();
 	videoConfig.cy = message.height();
-	videoConfig.frameInterval = message.frameinterval_us();
+	videoConfig.frameInterval = message.frameinterval();
 	videoConfig.internalFormat = ProtobufCaptureToDshowCapture(message.encoding());
 	videoConfig.format = DShow::VideoFormat::ARGB;
 	videoConfig.name = utf8_to_wstring(message.cameraname());
@@ -466,7 +466,7 @@ unsigned char getDevices(int* arraySize, char** arrayPtr)
 				format->set_encoding(DshowCaptureToProtobufCapture(*currentFormat));
 				format->set_width(currentFormat->maxCX);
 				format->set_height(currentFormat->maxCY);
-				format->set_frameinterval_us(currentFormat->minInterval);
+				format->set_frameinterval(currentFormat->minInterval);
 			}
 		}
 

@@ -42,7 +42,7 @@ namespace WebcamSampleApp
 
             var camList = parser.Parse<Camera.CameraList>(str);
 
-            //Console.WriteLine(camList);
+            Console.WriteLine(camList);
 
             Camera.StartCaptureArguments args = new Camera.StartCaptureArguments();
 
@@ -50,7 +50,7 @@ namespace WebcamSampleApp
             args.CameraName = camList.Cameras[0].CameraName;
             args.CameraPath = camList.Cameras[0].CameraPath;
             args.Encoding = Camera.CaptureEncoding.Mjpeg;
-            args.FrameintervalUs = 300000000;
+            args.Frameinterval = 300000000;
             args.Width = 1280;
             args.Height = 720;
 
