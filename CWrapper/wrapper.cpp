@@ -214,17 +214,14 @@ public:
 		if (_devicePtr != NULL)
 		{
 			_devicePtr->Stop();
-			delete(_devicePtr);
-			for 
-			(
-				auto buffIterator = _imagesBuffers.begin(); 
-				buffIterator != _imagesBuffers.end(); 
-				buffIterator++
-			)
+			_callbackMutex.lock();
+			_mutex.lock();
+			for (auto buffIt = _imagesBuffers.begin();  buffIt != _imagesBuffers.end(); buffIt++)
 			{
-				auto buff = *buffIterator;
+				auto buff = *buffIt;
 				free(buff);
 			}
+			delete(_devicePtr);
 		}
 	}
 	
@@ -237,6 +234,7 @@ public:
 		long long stopTime
 	)
 	{
+		_callbackMutex.lock();
 		_frameCount++;
 		if (_imagesBuffers.size() == 0)
 		{
@@ -276,6 +274,7 @@ public:
 		{
 			std::cout << "ERROR : Image dimension or format is not valid" << std::endl;
 		}
+		_callbackMutex.unlock();
 	}
 
 	unsigned char* tryGetReadyBuffer()
@@ -284,7 +283,7 @@ public:
 		if (_readyBuffers.size() == 0)
 		{
 			_mutex.unlock();
-			return nullptr;
+			return NULL;
 		}
 		else
 		{
@@ -325,6 +324,7 @@ private:
 	unsigned int _width;
 	unsigned int _height;
 	std::mutex _mutex;
+	std::mutex _callbackMutex;
 	FlippingMode _flippingMode;
 };
 std::wstring utf8_to_wstring(const std::string& str)
@@ -413,7 +413,12 @@ DShow::VideoFormat ProtobufCaptureToDshowCapture(cameraReaderWindows::CaptureEnc
 	}
 }
 
-void AllocResultByteArray(const cameraReaderWindows::StartCaptureResult& result, int* arraySize, char** arrayPtr)
+void AllocResultByteArray
+(
+	const cameraReaderWindows::StartCaptureResult& result, 
+	int* arraySize, 
+	char** arrayPtr
+)
 {
 	std::string output;
 	auto status = google::protobuf::util::MessageToJsonString(result, &output);
