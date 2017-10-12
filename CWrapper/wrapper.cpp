@@ -221,6 +221,8 @@ public:
 				auto buff = *buffIt;
 				free(buff);
 			}
+			_callbackMutex.unlock();
+			_mutex.unlock();
 			delete(_devicePtr);
 		}
 	}
@@ -334,6 +336,7 @@ private:
 	std::mutex _callbackMutex;
 	FlippingMode _flippingMode;
 };
+
 std::wstring utf8_to_wstring(const std::string& str)
 {
 	std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
@@ -494,8 +497,10 @@ void startCapture(char* startCaptureOptions, int* arraySize, char** arrayPtr)
 	videoConfig.frameInterval = message.frameinterval();
 	videoConfig.internalFormat = ProtobufCaptureToDshowCapture(message.encoding());
 	videoConfig.format = DShow::VideoFormat::ARGB;
-	videoConfig.name = utf8_to_wstring(message.cameraname());
-	videoConfig.path = utf8_to_wstring(message.camerapath());
+	std::wstring cameraName = utf8_to_wstring(message.cameraname());;
+	videoConfig.name = cameraName;
+	std::wstring cameraPath = utf8_to_wstring(message.camerapath());
+	videoConfig.path = cameraPath;
 
 	bool canSetVideoConfig = device->SetVideoConfig(&videoConfig);
 	result.set_cansetvideoconfig(canSetVideoConfig);
@@ -547,8 +552,11 @@ unsigned char getDevices(int* arraySize, char** arrayPtr)
 		{
 			auto camera = cameraList.add_cameras();
 
-			camera->set_cameraname(wstring_to_utf8(currentCamera->name));
-			camera->set_camerapath(wstring_to_utf8(currentCamera->path));
+			std::string cameraName = wstring_to_utf8(currentCamera->name);
+			camera->set_cameraname(cameraName);
+
+			std::string cameraPath = wstring_to_utf8(currentCamera->path);
+			camera->set_camerapath(cameraPath);
 
 			auto formats = currentCamera->caps;
 			for (auto currentFormat = formats.begin(); currentFormat != formats.end(); currentFormat++)

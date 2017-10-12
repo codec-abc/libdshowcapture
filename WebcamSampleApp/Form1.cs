@@ -30,7 +30,7 @@ namespace WebcamSampleApp
 
             byte[] array = new byte[size.ToInt32()];
             Marshal.Copy(pointer, array, 0, size.ToInt32());
-            var str = Encoding.ASCII.GetString(array);
+            var str = Encoding.UTF8.GetString(array);
             
             CWrapperAPI.freeByteArray(pointer);
 
@@ -75,7 +75,8 @@ namespace WebcamSampleApp
 
             array = new byte[size.ToInt32()];
             Marshal.Copy(pointer, array, 0, size.ToInt32());
-            str = Encoding.ASCII.GetString(array);
+            str = Encoding.UTF8.GetString(array);
+            Console.WriteLine("result is " + str);
             var startCaptureResult = parser.Parse<CameraReaderWindows.StartCaptureResult>(str);
 
             if (pointer.ToInt64() == 0 || size.ToInt64() == 0)
@@ -84,7 +85,6 @@ namespace WebcamSampleApp
             }
 
             CWrapperAPI.freeByteArray(pointer);
-            Console.WriteLine("result is " + startCaptureResult.ToString());
             Thread.Sleep(1000);
             pointer = new IntPtr(0);
             
