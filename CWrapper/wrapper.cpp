@@ -287,8 +287,15 @@ public:
 		}
 		else
 		{
+			// get the last buffer
 			auto buff = _readyBuffers.back();
 			_readyBuffers.pop_back();
+			// remove older buffers since there are not needed anymore
+			for (auto it = _readyBuffers.begin(); it != _readyBuffers.end(); it++)
+			{
+				_freeBuffers.push_back(*it);
+			}
+			_readyBuffers.clear();
 			_mutex.unlock();
 			return buff;
 		}
