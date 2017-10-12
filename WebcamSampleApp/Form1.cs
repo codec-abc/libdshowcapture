@@ -40,19 +40,20 @@ namespace WebcamSampleApp
                     new Google.Protobuf.JsonParser.Settings(10000)
                 );
 
-            var camList = parser.Parse<Camera.CameraList>(str);
+            var camList = parser.Parse<CameraReaderWindows.CameraList>(str);
 
             Console.WriteLine(camList);
 
-            Camera.StartCaptureArguments args = new Camera.StartCaptureArguments();
+            CameraReaderWindows.StartCaptureArguments args = new CameraReaderWindows.StartCaptureArguments();
 
             // TODO : logic to choose best devices
             args.CameraName = camList.Cameras[0].CameraName;
             args.CameraPath = camList.Cameras[0].CameraPath;
-            args.Encoding = Camera.CaptureEncoding.Mjpeg;
+            args.Encoding = CameraReaderWindows.CaptureEncoding.Mjpeg;
             args.Frameinterval = 300000000;
-            args.Width = 1280;
-            args.Height = 720;
+            args.Width = 640;
+            args.Height = 480;
+            args.FlippingMode = CameraReaderWindows.Flip.Vertically;
 
             Google.Protobuf.JsonFormatter formatter = 
                 new Google.Protobuf.JsonFormatter
@@ -75,7 +76,7 @@ namespace WebcamSampleApp
             array = new byte[size.ToInt32()];
             Marshal.Copy(pointer, array, 0, size.ToInt32());
             str = Encoding.ASCII.GetString(array);
-            var startCaptureResult = parser.Parse<Camera.StartCaptureResult>(str);
+            var startCaptureResult = parser.Parse<CameraReaderWindows.StartCaptureResult>(str);
 
             if (pointer.ToInt64() == 0 || size.ToInt64() == 0)
             {
@@ -96,7 +97,7 @@ namespace WebcamSampleApp
                 startCaptureResult.CanSetAudioConfig &&
                 startCaptureResult.CanSetVideoConfig &&
                 startCaptureResult.DevicePointer != 0 &&
-                startCaptureResult.Result == Camera.StartResult.Success
+                startCaptureResult.Result == CameraReaderWindows.StartResult.Success
             )
             {
                 uint width = 0;
@@ -109,18 +110,23 @@ namespace WebcamSampleApp
                     int bufferSize = (int) width * (int) height * 3;
                     var buffer = new byte[bufferSize];
                     Marshal.Copy(pointer, buffer, 0, bufferSize);
-                    int byteIndex = 0;
+    
+                    var imageSize = image.Width * image.Height;
 
                     for (int j = 0; j < image.Height; j++)
                     {
                         for (int i = 0; i < image.Width; i++)
                         {
-                            var b = buffer[byteIndex++];
-                            var g = buffer[byteIndex++];
-                            var r = buffer[byteIndex++];
+                            var byteIndex = j * image.Width + i;
+                            var y = buffer[byteIndex + imageSize * 0];
+                            var v = buffer[byteIndex + imageSize * 1];
+                            var u = buffer[byteIndex + imageSize * 2];
                             var a = (byte)255;
-                            var color = Color.FromArgb(a, r, g, b);
-
+                            var r = y / 255.0 + 1.13983 * (v - 255.0 / 2.0) / 255.0;
+                            var g = y / 255.0 - 0.39465 * (u - 255.0 / 2.0) / 255.0 - 0.58060 * (v - 255.0 / 2.0) / 255.0;
+                            var b = y / 255.0 + 2.03211 * (u - 255.0 / 2.0) / 255.0;
+                            var color = Color.FromArgb(a, (byte) (r * 255), (byte) (g * 255), (byte)(b * 255));
+                            
                             image.SetPixel(i, j, color);
                         }
                     }

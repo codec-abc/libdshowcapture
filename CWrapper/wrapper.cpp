@@ -14,12 +14,51 @@
 #include <codecvt>
 #include <string>
 
+int clamp(int val, int min, int max)
+{
+	if (val >= max)
+	{
+		return max - 1;
+	}
+	else if (val <= min)
+	{
+		return min;
+	}
+	return val;
+}
+
+enum FlippingMode
+{
+	None,
+	Vertically,
+	Horizontally,
+	Both
+};
+
+FlippingMode ProtobufFlippingModeToFlippingMode(cameraReaderWindows::Flip flippingMode)
+{
+	switch (flippingMode)
+	{
+	case cameraReaderWindows::FlipNone:
+		return FlippingMode::None;
+	case cameraReaderWindows::FlipVertically:
+		return FlippingMode::Vertically;
+	case cameraReaderWindows::FlipHorizontally:
+		return FlippingMode::Horizontally;
+	case cameraReaderWindows::FlipBoth:
+		return FlippingMode::Both;
+	default:
+		return None;
+	}
+}
+
 void convertToYUV
 (
 	unsigned char* inputBuff, 
 	unsigned char* outputBuff, 
-	unsigned int width, 
-	unsigned int height
+	int width, 
+	int height,
+	FlippingMode flippingMode
 )
 {
 	__m128 divideBy255 = _mm_set_ps1(0.0039215f); //0. 0039215 = 1.0 / 255.0
@@ -55,9 +94,11 @@ void convertToYUV
 		0.0f
 	);
 
-	concurrency::parallel_for((unsigned int)0, width, [&](unsigned int i)
+	//concurrency::parallel_for(
+	//(int)0, width, [&](int i)
+	for (int i = 0; i < width; i++)
 	{
-		for (unsigned int j = 0; j < height; j++)
+		for (int j = 0; j < height; j++)
 		{
 			int index = (i * height + j) * 4;
 
@@ -107,28 +148,71 @@ void convertToYUV
 			// convert it back to integer
 			__m128i yuvInteger = _mm_cvtps_epi32(yuvFloat);
 
-			auto pixelIndex = (i * height + j);
 			auto imageSize = width * height;
 
-			outputBuff[0 * imageSize + pixelIndex] = yuvInteger.m128i_u32[0];
-			outputBuff[1 * imageSize + pixelIndex] = yuvInteger.m128i_u32[1];
-			outputBuff[2 * imageSize + pixelIndex] = yuvInteger.m128i_u32[2];
-		}
-	});
-}
 
+			if (flippingMode == FlippingMode::None)
+			{
+				int pixelIndex = i * height + j;
+
+				outputBuff[0 * imageSize + pixelIndex] = yuvInteger.m128i_u32[0];
+				outputBuff[1 * imageSize + pixelIndex] = yuvInteger.m128i_u32[1];
+				outputBuff[2 * imageSize + pixelIndex] = yuvInteger.m128i_u32[2];
+			}
+			else if (flippingMode == FlippingMode::Vertically)
+			{
+				int oldPixelIndex = i * height + j;
+				int jPrime = oldPixelIndex / width;
+				int iPrime = oldPixelIndex - jPrime * width;
+				jPrime = height - 1 - jPrime;
+				int pixelIndex = (jPrime) * width + (iPrime);
+
+				outputBuff[0 * imageSize + pixelIndex] = yuvInteger.m128i_u32[0];
+				outputBuff[1 * imageSize + pixelIndex] = yuvInteger.m128i_u32[1];
+				outputBuff[2 * imageSize + pixelIndex] = yuvInteger.m128i_u32[2];
+			}
+			else if (flippingMode == FlippingMode::Both)
+			{
+				int pixelIndex = imageSize - 1 - (i * height + j);
+
+				outputBuff[0 * imageSize + pixelIndex] = yuvInteger.m128i_u32[0];
+				outputBuff[1 * imageSize + pixelIndex] = yuvInteger.m128i_u32[1];
+				outputBuff[2 * imageSize + pixelIndex] = yuvInteger.m128i_u32[2];
+			}
+		}
+	}
+	//);
+
+	//auto imageSize = width * height;
+	//unsigned char* truc = (unsigned char*) malloc(imageSize * 3);
+	//memcpy(truc, outputBuff, imageSize * 3);
+
+	//for (int jj = 0; jj < height; jj++)
+	//{
+	//	for (int ii = 0; ii < width; ii++)
+	//	{
+	//		int delta = ceil((height - 1) / 2.0) - jj;
+	//		int pixelIndex = jj * width + ii;
+	//		int swapped = delta * 2 * width + pixelIndex;
+	//		outputBuff[0 * imageSize + pixelIndex] = truc[0 * imageSize + swapped];
+	//		outputBuff[1 * imageSize + pixelIndex] = truc[1 * imageSize + swapped];
+	//		outputBuff[2 * imageSize + pixelIndex] = truc[2 * imageSize + swapped];
+	//	}
+	//}
+}
 
 class DeviceHolder
 {
 public:
 
-	DeviceHolder(DShow::Device* devicePtr)
+	DeviceHolder(DShow::Device* devicePtr, cameraReaderWindows::Flip flippingmode)
 	{
 		_devicePtr = devicePtr;
 		_frameCount = 0;
 		_imageSize = 0;
 		_width = 0;
 		_height = 0;
+		_flippingMode = ProtobufFlippingModeToFlippingMode(flippingmode);
 	}
 
 	~DeviceHolder()
@@ -182,14 +266,14 @@ public:
 			{
 				unsigned char* buff = _freeBuffers.back();
 				_freeBuffers.pop_back();
-				convertToYUV(data, buff, config.cx, config.cy);
+				convertToYUV(data, buff, config.cx, config.cy, _flippingMode);
 				_readyBuffers.push_back(buff);
 			}
 			else
 			{
 				unsigned char* buff = _readyBuffers[0];
 				_readyBuffers.erase(_readyBuffers.begin());
-				convertToYUV(data, buff, config.cx, config.cy);
+				convertToYUV(data, buff, config.cx, config.cy, _flippingMode);
 				_readyBuffers.push_back(buff);
 			}
 			_mutex.unlock();
@@ -247,6 +331,7 @@ private:
 	unsigned int _width;
 	unsigned int _height;
 	std::mutex _mutex;
+	FlippingMode _flippingMode;
 };
 std::wstring utf8_to_wstring(const std::string& str)
 {
@@ -260,81 +345,81 @@ std::string wstring_to_utf8(const std::wstring& str)
 	return myconv.to_bytes(str);
 }
 
-camera::CaptureEncoding DshowCaptureToProtobufCapture(const DShow::VideoInfo& info)
+cameraReaderWindows::CaptureEncoding DshowCaptureToProtobufCapture(const DShow::VideoInfo& info)
 {
 	switch (info.format)
 	{
 	case DShow::VideoFormat::ARGB:
-		return camera::CaptureEncoding::ARGB;
+		return cameraReaderWindows::CaptureEncoding::ARGB;
 	case DShow::VideoFormat::XRGB:
-		return camera::CaptureEncoding::XRGB;
+		return cameraReaderWindows::CaptureEncoding::XRGB;
 	case DShow::VideoFormat::I420:
-		return camera::CaptureEncoding::I420;
+		return cameraReaderWindows::CaptureEncoding::I420;
 	case DShow::VideoFormat::NV12:
-		return camera::CaptureEncoding::NV12;
+		return cameraReaderWindows::CaptureEncoding::NV12;
 	case DShow::VideoFormat::YV12:
-		return camera::CaptureEncoding::YV12;
+		return cameraReaderWindows::CaptureEncoding::YV12;
 	case DShow::VideoFormat::Y800:
-		return camera::CaptureEncoding::Y800;
+		return cameraReaderWindows::CaptureEncoding::Y800;
 	case DShow::VideoFormat::YVYU:
-		return camera::CaptureEncoding::YVYU;
+		return cameraReaderWindows::CaptureEncoding::YVYU;
 	case DShow::VideoFormat::YUY2:
-		return camera::CaptureEncoding::YUY2;
+		return cameraReaderWindows::CaptureEncoding::YUY2;
 	case DShow::VideoFormat::UYVY:
-		return camera::CaptureEncoding::UYVY;
+		return cameraReaderWindows::CaptureEncoding::UYVY;
 	case DShow::VideoFormat::HDYC:
-		return camera::CaptureEncoding::HDYC;
+		return cameraReaderWindows::CaptureEncoding::HDYC;
 	case DShow::VideoFormat::MJPEG:
-		return camera::CaptureEncoding::MJPEG;
+		return cameraReaderWindows::CaptureEncoding::MJPEG;
 	case DShow::VideoFormat::H264:
-		return camera::CaptureEncoding::H264;
+		return cameraReaderWindows::CaptureEncoding::H264;
 	case DShow::VideoFormat::Any:
-		return camera::CaptureEncoding::Any;
+		return cameraReaderWindows::CaptureEncoding::Any;
 	case DShow::VideoFormat::Unknown:
-		return camera::CaptureEncoding::Unknown;
+		return cameraReaderWindows::CaptureEncoding::Unknown;
 	default:
-		return camera::CaptureEncoding::Unknown;
+		return cameraReaderWindows::CaptureEncoding::Unknown;
 	}
 }
 
-DShow::VideoFormat ProtobufCaptureToDshowCapture(camera::CaptureEncoding format)
+DShow::VideoFormat ProtobufCaptureToDshowCapture(cameraReaderWindows::CaptureEncoding format)
 {
 	switch (format)
 	{
-	case camera::CaptureEncoding::ARGB:
+	case cameraReaderWindows::CaptureEncoding::ARGB:
 		return DShow::VideoFormat::ARGB;
-	case camera::CaptureEncoding::XRGB:
+	case cameraReaderWindows::CaptureEncoding::XRGB:
 		return DShow::VideoFormat::XRGB;
-	case camera::CaptureEncoding::I420:
+	case cameraReaderWindows::CaptureEncoding::I420:
 		return DShow::VideoFormat::I420;
-	case camera::CaptureEncoding::NV12:
+	case cameraReaderWindows::CaptureEncoding::NV12:
 		return DShow::VideoFormat::NV12;
-	case camera::CaptureEncoding::YV12:
+	case cameraReaderWindows::CaptureEncoding::YV12:
 		return DShow::VideoFormat::YV12;
-	case camera::CaptureEncoding::Y800:
+	case cameraReaderWindows::CaptureEncoding::Y800:
 		return DShow::VideoFormat::Y800;
-	case camera::CaptureEncoding::YVYU:
+	case cameraReaderWindows::CaptureEncoding::YVYU:
 		return DShow::VideoFormat::YVYU;
-	case camera::CaptureEncoding::YUY2:
+	case cameraReaderWindows::CaptureEncoding::YUY2:
 		return DShow::VideoFormat::YUY2;
-	case camera::CaptureEncoding::UYVY:
+	case cameraReaderWindows::CaptureEncoding::UYVY:
 		return DShow::VideoFormat::UYVY;
-	case camera::CaptureEncoding::HDYC:
+	case cameraReaderWindows::CaptureEncoding::HDYC:
 		return DShow::VideoFormat::HDYC;
-	case camera::CaptureEncoding::MJPEG:
+	case cameraReaderWindows::CaptureEncoding::MJPEG:
 		return DShow::VideoFormat::MJPEG;
-	case camera::CaptureEncoding::H264:
+	case cameraReaderWindows::CaptureEncoding::H264:
 		return DShow::VideoFormat::H264;
-	case camera::CaptureEncoding::Any:
+	case cameraReaderWindows::CaptureEncoding::Any:
 		return DShow::VideoFormat::Any;
-	case camera::CaptureEncoding::Unknown:
+	case cameraReaderWindows::CaptureEncoding::Unknown:
 		return DShow::VideoFormat::Unknown;
 	default:
 		return DShow::VideoFormat::Unknown;
 	}
 }
 
-void AllocResultByteArray(const camera::StartCaptureResult& result, int* arraySize, char** arrayPtr)
+void AllocResultByteArray(const cameraReaderWindows::StartCaptureResult& result, int* arraySize, char** arrayPtr)
 {
 	std::string output;
 	auto status = google::protobuf::util::MessageToJsonString(result, &output);
@@ -347,20 +432,20 @@ void AllocResultByteArray(const camera::StartCaptureResult& result, int* arraySi
 
 void startCapture(char* startCaptureOptions, int* arraySize, char** arrayPtr)
 {
-	camera::StartCaptureArguments message;
+	cameraReaderWindows::StartCaptureArguments message;
 	std::string messageAsString(startCaptureOptions);
 	google::protobuf::util::JsonStringToMessage(messageAsString, &message);
 
-	camera::StartCaptureResult result;
+	cameraReaderWindows::StartCaptureResult result;
 
 	result.set_canconnectfilters(false);
 	result.set_canresetgraph(false);
 	result.set_cansetaudioconfig(false);
 	result.set_cansetvideoconfig(false);
-	result.set_result(camera::StartResult::Error);
+	result.set_result(cameraReaderWindows::StartResult::Error);
 
 	DShow::Device* device = new DShow::Device();
-	DeviceHolder* deviceHolder = new DeviceHolder(device);
+	DeviceHolder* deviceHolder = new DeviceHolder(device, message.flippingmode());
 	long addr = (long) (deviceHolder);
 	result.set_devicepointer(addr);
 
@@ -426,13 +511,13 @@ void startCapture(char* startCaptureOptions, int* arraySize, char** arrayPtr)
 	switch (startResult)
 	{
 	case DShow::Result::Success:
-		result.set_result(camera::StartResult::Success);
+		result.set_result(cameraReaderWindows::StartResult::Success);
 		break;
 	case DShow::Result::Error:
-		result.set_result(camera::StartResult::Error);
+		result.set_result(cameraReaderWindows::StartResult::Error);
 		break;
 	case DShow::Result::InUse:
-		result.set_result(camera::StartResult::InUse);
+		result.set_result(cameraReaderWindows::StartResult::InUse);
 		break;
 	}
 	AllocResultByteArray(result, arraySize, arrayPtr);
@@ -450,7 +535,7 @@ unsigned char getDevices(int* arraySize, char** arrayPtr)
 	}
 	else
 	{
-		camera::CameraList cameraList;
+		cameraReaderWindows::CameraList cameraList;
 
 		for (auto currentCamera = devices.begin(); currentCamera != devices.end(); currentCamera++)
 		{

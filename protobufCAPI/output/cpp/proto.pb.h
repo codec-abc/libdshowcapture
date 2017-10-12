@@ -31,13 +31,13 @@
 #include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
-namespace camera {
-class Camera;
-class CameraDefaultTypeInternal;
-extern CameraDefaultTypeInternal _Camera_default_instance_;
+namespace cameraReaderWindows {
 class CameraList;
 class CameraListDefaultTypeInternal;
 extern CameraListDefaultTypeInternal _CameraList_default_instance_;
+class CameraReaderWindows;
+class CameraReaderWindowsDefaultTypeInternal;
+extern CameraReaderWindowsDefaultTypeInternal _CameraReaderWindows_default_instance_;
 class CaptureFormat;
 class CaptureFormatDefaultTypeInternal;
 extern CaptureFormatDefaultTypeInternal _CaptureFormat_default_instance_;
@@ -47,9 +47,9 @@ extern StartCaptureArgumentsDefaultTypeInternal _StartCaptureArguments_default_i
 class StartCaptureResult;
 class StartCaptureResultDefaultTypeInternal;
 extern StartCaptureResultDefaultTypeInternal _StartCaptureResult_default_instance_;
-}  // namespace camera
+}  // namespace cameraReaderWindows
 
-namespace camera {
+namespace cameraReaderWindows {
 
 namespace protobuf_proto_2eproto {
 // Internal implementation detail -- do not call these.
@@ -98,6 +98,29 @@ inline bool CaptureEncoding_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<CaptureEncoding>(
     CaptureEncoding_descriptor(), name, value);
 }
+enum Flip {
+  FlipNone = 0,
+  FlipVertically = 1,
+  FlipHorizontally = 2,
+  FlipBoth = 3,
+  Flip_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  Flip_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool Flip_IsValid(int value);
+const Flip Flip_MIN = FlipNone;
+const Flip Flip_MAX = FlipBoth;
+const int Flip_ARRAYSIZE = Flip_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* Flip_descriptor();
+inline const ::std::string& Flip_Name(Flip value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    Flip_descriptor(), value);
+}
+inline bool Flip_Parse(
+    const ::std::string& name, Flip* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<Flip>(
+    Flip_descriptor(), name, value);
+}
 enum StartResult {
   Success = 0,
   InUse = 1,
@@ -122,7 +145,7 @@ inline bool StartResult_Parse(
 }
 // ===================================================================
 
-class CaptureFormat : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:camera.CaptureFormat) */ {
+class CaptureFormat : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:cameraReaderWindows.CaptureFormat) */ {
  public:
   CaptureFormat();
   virtual ~CaptureFormat();
@@ -204,13 +227,13 @@ class CaptureFormat : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::google::protobuf::uint64 frameinterval() const;
   void set_frameinterval(::google::protobuf::uint64 value);
 
-  // .camera.CaptureEncoding encoding = 4;
+  // .cameraReaderWindows.CaptureEncoding encoding = 4;
   void clear_encoding();
   static const int kEncodingFieldNumber = 4;
-  ::camera::CaptureEncoding encoding() const;
-  void set_encoding(::camera::CaptureEncoding value);
+  ::cameraReaderWindows::CaptureEncoding encoding() const;
+  void set_encoding(::cameraReaderWindows::CaptureEncoding value);
 
-  // @@protoc_insertion_point(class_scope:camera.CaptureFormat)
+  // @@protoc_insertion_point(class_scope:cameraReaderWindows.CaptureFormat)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -223,39 +246,39 @@ class CaptureFormat : public ::google::protobuf::Message /* @@protoc_insertion_p
 };
 // -------------------------------------------------------------------
 
-class Camera : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:camera.Camera) */ {
+class CameraReaderWindows : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:cameraReaderWindows.CameraReaderWindows) */ {
  public:
-  Camera();
-  virtual ~Camera();
+  CameraReaderWindows();
+  virtual ~CameraReaderWindows();
 
-  Camera(const Camera& from);
+  CameraReaderWindows(const CameraReaderWindows& from);
 
-  inline Camera& operator=(const Camera& from) {
+  inline CameraReaderWindows& operator=(const CameraReaderWindows& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const Camera& default_instance();
+  static const CameraReaderWindows& default_instance();
 
-  static inline const Camera* internal_default_instance() {
-    return reinterpret_cast<const Camera*>(
-               &_Camera_default_instance_);
+  static inline const CameraReaderWindows* internal_default_instance() {
+    return reinterpret_cast<const CameraReaderWindows*>(
+               &_CameraReaderWindows_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
     1;
 
-  void Swap(Camera* other);
+  void Swap(CameraReaderWindows* other);
 
   // implements Message ----------------------------------------------
 
-  inline Camera* New() const PROTOBUF_FINAL { return New(NULL); }
+  inline CameraReaderWindows* New() const PROTOBUF_FINAL { return New(NULL); }
 
-  Camera* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  CameraReaderWindows* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
   void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
   void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
-  void CopyFrom(const Camera& from);
-  void MergeFrom(const Camera& from);
+  void CopyFrom(const CameraReaderWindows& from);
+  void MergeFrom(const CameraReaderWindows& from);
   void Clear() PROTOBUF_FINAL;
   bool IsInitialized() const PROTOBUF_FINAL;
 
@@ -271,7 +294,7 @@ class Camera : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const PROTOBUF_FINAL;
-  void InternalSwap(Camera* other);
+  void InternalSwap(CameraReaderWindows* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -287,16 +310,16 @@ class Camera : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
 
   // accessors -------------------------------------------------------
 
-  // repeated .camera.CaptureFormat formats = 7;
+  // repeated .cameraReaderWindows.CaptureFormat formats = 7;
   int formats_size() const;
   void clear_formats();
   static const int kFormatsFieldNumber = 7;
-  const ::camera::CaptureFormat& formats(int index) const;
-  ::camera::CaptureFormat* mutable_formats(int index);
-  ::camera::CaptureFormat* add_formats();
-  ::google::protobuf::RepeatedPtrField< ::camera::CaptureFormat >*
+  const ::cameraReaderWindows::CaptureFormat& formats(int index) const;
+  ::cameraReaderWindows::CaptureFormat* mutable_formats(int index);
+  ::cameraReaderWindows::CaptureFormat* add_formats();
+  ::google::protobuf::RepeatedPtrField< ::cameraReaderWindows::CaptureFormat >*
       mutable_formats();
-  const ::google::protobuf::RepeatedPtrField< ::camera::CaptureFormat >&
+  const ::google::protobuf::RepeatedPtrField< ::cameraReaderWindows::CaptureFormat >&
       formats() const;
 
   // string cameraName = 5;
@@ -327,11 +350,11 @@ class Camera : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
   ::std::string* release_camerapath();
   void set_allocated_camerapath(::std::string* camerapath);
 
-  // @@protoc_insertion_point(class_scope:camera.Camera)
+  // @@protoc_insertion_point(class_scope:cameraReaderWindows.CameraReaderWindows)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::RepeatedPtrField< ::camera::CaptureFormat > formats_;
+  ::google::protobuf::RepeatedPtrField< ::cameraReaderWindows::CaptureFormat > formats_;
   ::google::protobuf::internal::ArenaStringPtr cameraname_;
   ::google::protobuf::internal::ArenaStringPtr camerapath_;
   mutable int _cached_size_;
@@ -339,7 +362,7 @@ class Camera : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
 };
 // -------------------------------------------------------------------
 
-class CameraList : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:camera.CameraList) */ {
+class CameraList : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:cameraReaderWindows.CameraList) */ {
  public:
   CameraList();
   virtual ~CameraList();
@@ -403,29 +426,29 @@ class CameraList : public ::google::protobuf::Message /* @@protoc_insertion_poin
 
   // accessors -------------------------------------------------------
 
-  // repeated .camera.Camera cameras = 7;
+  // repeated .cameraReaderWindows.CameraReaderWindows cameras = 7;
   int cameras_size() const;
   void clear_cameras();
   static const int kCamerasFieldNumber = 7;
-  const ::camera::Camera& cameras(int index) const;
-  ::camera::Camera* mutable_cameras(int index);
-  ::camera::Camera* add_cameras();
-  ::google::protobuf::RepeatedPtrField< ::camera::Camera >*
+  const ::cameraReaderWindows::CameraReaderWindows& cameras(int index) const;
+  ::cameraReaderWindows::CameraReaderWindows* mutable_cameras(int index);
+  ::cameraReaderWindows::CameraReaderWindows* add_cameras();
+  ::google::protobuf::RepeatedPtrField< ::cameraReaderWindows::CameraReaderWindows >*
       mutable_cameras();
-  const ::google::protobuf::RepeatedPtrField< ::camera::Camera >&
+  const ::google::protobuf::RepeatedPtrField< ::cameraReaderWindows::CameraReaderWindows >&
       cameras() const;
 
-  // @@protoc_insertion_point(class_scope:camera.CameraList)
+  // @@protoc_insertion_point(class_scope:cameraReaderWindows.CameraList)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::RepeatedPtrField< ::camera::Camera > cameras_;
+  ::google::protobuf::RepeatedPtrField< ::cameraReaderWindows::CameraReaderWindows > cameras_;
   mutable int _cached_size_;
   friend struct protobuf_proto_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class StartCaptureArguments : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:camera.StartCaptureArguments) */ {
+class StartCaptureArguments : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:cameraReaderWindows.StartCaptureArguments) */ {
  public:
   StartCaptureArguments();
   virtual ~StartCaptureArguments();
@@ -517,12 +540,6 @@ class StartCaptureArguments : public ::google::protobuf::Message /* @@protoc_ins
   ::std::string* release_camerapath();
   void set_allocated_camerapath(::std::string* camerapath);
 
-  // .camera.CaptureEncoding encoding = 13;
-  void clear_encoding();
-  static const int kEncodingFieldNumber = 13;
-  ::camera::CaptureEncoding encoding() const;
-  void set_encoding(::camera::CaptureEncoding value);
-
   // uint32 width = 10;
   void clear_width();
   static const int kWidthFieldNumber = 10;
@@ -541,22 +558,35 @@ class StartCaptureArguments : public ::google::protobuf::Message /* @@protoc_ins
   ::google::protobuf::uint64 frameinterval() const;
   void set_frameinterval(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:camera.StartCaptureArguments)
+  // .cameraReaderWindows.CaptureEncoding encoding = 13;
+  void clear_encoding();
+  static const int kEncodingFieldNumber = 13;
+  ::cameraReaderWindows::CaptureEncoding encoding() const;
+  void set_encoding(::cameraReaderWindows::CaptureEncoding value);
+
+  // .cameraReaderWindows.Flip flippingMode = 14;
+  void clear_flippingmode();
+  static const int kFlippingModeFieldNumber = 14;
+  ::cameraReaderWindows::Flip flippingmode() const;
+  void set_flippingmode(::cameraReaderWindows::Flip value);
+
+  // @@protoc_insertion_point(class_scope:cameraReaderWindows.StartCaptureArguments)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr cameraname_;
   ::google::protobuf::internal::ArenaStringPtr camerapath_;
-  int encoding_;
   ::google::protobuf::uint32 width_;
   ::google::protobuf::uint32 height_;
   ::google::protobuf::uint64 frameinterval_;
+  int encoding_;
+  int flippingmode_;
   mutable int _cached_size_;
   friend struct protobuf_proto_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class StartCaptureResult : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:camera.StartCaptureResult) */ {
+class StartCaptureResult : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:cameraReaderWindows.StartCaptureResult) */ {
  public:
   StartCaptureResult();
   virtual ~StartCaptureResult();
@@ -644,11 +674,11 @@ class StartCaptureResult : public ::google::protobuf::Message /* @@protoc_insert
   bool canconnectfilters() const;
   void set_canconnectfilters(bool value);
 
-  // .camera.StartResult result = 18;
+  // .cameraReaderWindows.StartResult result = 18;
   void clear_result();
   static const int kResultFieldNumber = 18;
-  ::camera::StartResult result() const;
-  void set_result(::camera::StartResult value);
+  ::cameraReaderWindows::StartResult result() const;
+  void set_result(::cameraReaderWindows::StartResult value);
 
   // uint64 devicePointer = 19;
   void clear_devicepointer();
@@ -656,7 +686,7 @@ class StartCaptureResult : public ::google::protobuf::Message /* @@protoc_insert
   ::google::protobuf::uint64 devicepointer() const;
   void set_devicepointer(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:camera.StartCaptureResult)
+  // @@protoc_insertion_point(class_scope:cameraReaderWindows.StartCaptureResult)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -682,13 +712,13 @@ inline void CaptureFormat::clear_width() {
   width_ = 0u;
 }
 inline ::google::protobuf::uint32 CaptureFormat::width() const {
-  // @@protoc_insertion_point(field_get:camera.CaptureFormat.width)
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.CaptureFormat.width)
   return width_;
 }
 inline void CaptureFormat::set_width(::google::protobuf::uint32 value) {
   
   width_ = value;
-  // @@protoc_insertion_point(field_set:camera.CaptureFormat.width)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.CaptureFormat.width)
 }
 
 // uint32 height = 2;
@@ -696,13 +726,13 @@ inline void CaptureFormat::clear_height() {
   height_ = 0u;
 }
 inline ::google::protobuf::uint32 CaptureFormat::height() const {
-  // @@protoc_insertion_point(field_get:camera.CaptureFormat.height)
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.CaptureFormat.height)
   return height_;
 }
 inline void CaptureFormat::set_height(::google::protobuf::uint32 value) {
   
   height_ = value;
-  // @@protoc_insertion_point(field_set:camera.CaptureFormat.height)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.CaptureFormat.height)
 }
 
 // uint64 frameinterval = 3;
@@ -710,166 +740,166 @@ inline void CaptureFormat::clear_frameinterval() {
   frameinterval_ = GOOGLE_ULONGLONG(0);
 }
 inline ::google::protobuf::uint64 CaptureFormat::frameinterval() const {
-  // @@protoc_insertion_point(field_get:camera.CaptureFormat.frameinterval)
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.CaptureFormat.frameinterval)
   return frameinterval_;
 }
 inline void CaptureFormat::set_frameinterval(::google::protobuf::uint64 value) {
   
   frameinterval_ = value;
-  // @@protoc_insertion_point(field_set:camera.CaptureFormat.frameinterval)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.CaptureFormat.frameinterval)
 }
 
-// .camera.CaptureEncoding encoding = 4;
+// .cameraReaderWindows.CaptureEncoding encoding = 4;
 inline void CaptureFormat::clear_encoding() {
   encoding_ = 0;
 }
-inline ::camera::CaptureEncoding CaptureFormat::encoding() const {
-  // @@protoc_insertion_point(field_get:camera.CaptureFormat.encoding)
-  return static_cast< ::camera::CaptureEncoding >(encoding_);
+inline ::cameraReaderWindows::CaptureEncoding CaptureFormat::encoding() const {
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.CaptureFormat.encoding)
+  return static_cast< ::cameraReaderWindows::CaptureEncoding >(encoding_);
 }
-inline void CaptureFormat::set_encoding(::camera::CaptureEncoding value) {
+inline void CaptureFormat::set_encoding(::cameraReaderWindows::CaptureEncoding value) {
   
   encoding_ = value;
-  // @@protoc_insertion_point(field_set:camera.CaptureFormat.encoding)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.CaptureFormat.encoding)
 }
 
 // -------------------------------------------------------------------
 
-// Camera
+// CameraReaderWindows
 
 // string cameraName = 5;
-inline void Camera::clear_cameraname() {
+inline void CameraReaderWindows::clear_cameraname() {
   cameraname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& Camera::cameraname() const {
-  // @@protoc_insertion_point(field_get:camera.Camera.cameraName)
+inline const ::std::string& CameraReaderWindows::cameraname() const {
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.CameraReaderWindows.cameraName)
   return cameraname_.GetNoArena();
 }
-inline void Camera::set_cameraname(const ::std::string& value) {
+inline void CameraReaderWindows::set_cameraname(const ::std::string& value) {
   
   cameraname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:camera.Camera.cameraName)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.CameraReaderWindows.cameraName)
 }
 #if LANG_CXX11
-inline void Camera::set_cameraname(::std::string&& value) {
+inline void CameraReaderWindows::set_cameraname(::std::string&& value) {
   
   cameraname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:camera.Camera.cameraName)
+  // @@protoc_insertion_point(field_set_rvalue:cameraReaderWindows.CameraReaderWindows.cameraName)
 }
 #endif
-inline void Camera::set_cameraname(const char* value) {
+inline void CameraReaderWindows::set_cameraname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   cameraname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:camera.Camera.cameraName)
+  // @@protoc_insertion_point(field_set_char:cameraReaderWindows.CameraReaderWindows.cameraName)
 }
-inline void Camera::set_cameraname(const char* value, size_t size) {
+inline void CameraReaderWindows::set_cameraname(const char* value, size_t size) {
   
   cameraname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:camera.Camera.cameraName)
+  // @@protoc_insertion_point(field_set_pointer:cameraReaderWindows.CameraReaderWindows.cameraName)
 }
-inline ::std::string* Camera::mutable_cameraname() {
+inline ::std::string* CameraReaderWindows::mutable_cameraname() {
   
-  // @@protoc_insertion_point(field_mutable:camera.Camera.cameraName)
+  // @@protoc_insertion_point(field_mutable:cameraReaderWindows.CameraReaderWindows.cameraName)
   return cameraname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* Camera::release_cameraname() {
-  // @@protoc_insertion_point(field_release:camera.Camera.cameraName)
+inline ::std::string* CameraReaderWindows::release_cameraname() {
+  // @@protoc_insertion_point(field_release:cameraReaderWindows.CameraReaderWindows.cameraName)
   
   return cameraname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void Camera::set_allocated_cameraname(::std::string* cameraname) {
+inline void CameraReaderWindows::set_allocated_cameraname(::std::string* cameraname) {
   if (cameraname != NULL) {
     
   } else {
     
   }
   cameraname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), cameraname);
-  // @@protoc_insertion_point(field_set_allocated:camera.Camera.cameraName)
+  // @@protoc_insertion_point(field_set_allocated:cameraReaderWindows.CameraReaderWindows.cameraName)
 }
 
 // string cameraPath = 6;
-inline void Camera::clear_camerapath() {
+inline void CameraReaderWindows::clear_camerapath() {
   camerapath_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& Camera::camerapath() const {
-  // @@protoc_insertion_point(field_get:camera.Camera.cameraPath)
+inline const ::std::string& CameraReaderWindows::camerapath() const {
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.CameraReaderWindows.cameraPath)
   return camerapath_.GetNoArena();
 }
-inline void Camera::set_camerapath(const ::std::string& value) {
+inline void CameraReaderWindows::set_camerapath(const ::std::string& value) {
   
   camerapath_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:camera.Camera.cameraPath)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.CameraReaderWindows.cameraPath)
 }
 #if LANG_CXX11
-inline void Camera::set_camerapath(::std::string&& value) {
+inline void CameraReaderWindows::set_camerapath(::std::string&& value) {
   
   camerapath_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:camera.Camera.cameraPath)
+  // @@protoc_insertion_point(field_set_rvalue:cameraReaderWindows.CameraReaderWindows.cameraPath)
 }
 #endif
-inline void Camera::set_camerapath(const char* value) {
+inline void CameraReaderWindows::set_camerapath(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   camerapath_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:camera.Camera.cameraPath)
+  // @@protoc_insertion_point(field_set_char:cameraReaderWindows.CameraReaderWindows.cameraPath)
 }
-inline void Camera::set_camerapath(const char* value, size_t size) {
+inline void CameraReaderWindows::set_camerapath(const char* value, size_t size) {
   
   camerapath_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:camera.Camera.cameraPath)
+  // @@protoc_insertion_point(field_set_pointer:cameraReaderWindows.CameraReaderWindows.cameraPath)
 }
-inline ::std::string* Camera::mutable_camerapath() {
+inline ::std::string* CameraReaderWindows::mutable_camerapath() {
   
-  // @@protoc_insertion_point(field_mutable:camera.Camera.cameraPath)
+  // @@protoc_insertion_point(field_mutable:cameraReaderWindows.CameraReaderWindows.cameraPath)
   return camerapath_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* Camera::release_camerapath() {
-  // @@protoc_insertion_point(field_release:camera.Camera.cameraPath)
+inline ::std::string* CameraReaderWindows::release_camerapath() {
+  // @@protoc_insertion_point(field_release:cameraReaderWindows.CameraReaderWindows.cameraPath)
   
   return camerapath_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void Camera::set_allocated_camerapath(::std::string* camerapath) {
+inline void CameraReaderWindows::set_allocated_camerapath(::std::string* camerapath) {
   if (camerapath != NULL) {
     
   } else {
     
   }
   camerapath_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), camerapath);
-  // @@protoc_insertion_point(field_set_allocated:camera.Camera.cameraPath)
+  // @@protoc_insertion_point(field_set_allocated:cameraReaderWindows.CameraReaderWindows.cameraPath)
 }
 
-// repeated .camera.CaptureFormat formats = 7;
-inline int Camera::formats_size() const {
+// repeated .cameraReaderWindows.CaptureFormat formats = 7;
+inline int CameraReaderWindows::formats_size() const {
   return formats_.size();
 }
-inline void Camera::clear_formats() {
+inline void CameraReaderWindows::clear_formats() {
   formats_.Clear();
 }
-inline const ::camera::CaptureFormat& Camera::formats(int index) const {
-  // @@protoc_insertion_point(field_get:camera.Camera.formats)
+inline const ::cameraReaderWindows::CaptureFormat& CameraReaderWindows::formats(int index) const {
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.CameraReaderWindows.formats)
   return formats_.Get(index);
 }
-inline ::camera::CaptureFormat* Camera::mutable_formats(int index) {
-  // @@protoc_insertion_point(field_mutable:camera.Camera.formats)
+inline ::cameraReaderWindows::CaptureFormat* CameraReaderWindows::mutable_formats(int index) {
+  // @@protoc_insertion_point(field_mutable:cameraReaderWindows.CameraReaderWindows.formats)
   return formats_.Mutable(index);
 }
-inline ::camera::CaptureFormat* Camera::add_formats() {
-  // @@protoc_insertion_point(field_add:camera.Camera.formats)
+inline ::cameraReaderWindows::CaptureFormat* CameraReaderWindows::add_formats() {
+  // @@protoc_insertion_point(field_add:cameraReaderWindows.CameraReaderWindows.formats)
   return formats_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::camera::CaptureFormat >*
-Camera::mutable_formats() {
-  // @@protoc_insertion_point(field_mutable_list:camera.Camera.formats)
+inline ::google::protobuf::RepeatedPtrField< ::cameraReaderWindows::CaptureFormat >*
+CameraReaderWindows::mutable_formats() {
+  // @@protoc_insertion_point(field_mutable_list:cameraReaderWindows.CameraReaderWindows.formats)
   return &formats_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::camera::CaptureFormat >&
-Camera::formats() const {
-  // @@protoc_insertion_point(field_list:camera.Camera.formats)
+inline const ::google::protobuf::RepeatedPtrField< ::cameraReaderWindows::CaptureFormat >&
+CameraReaderWindows::formats() const {
+  // @@protoc_insertion_point(field_list:cameraReaderWindows.CameraReaderWindows.formats)
   return formats_;
 }
 
@@ -877,33 +907,33 @@ Camera::formats() const {
 
 // CameraList
 
-// repeated .camera.Camera cameras = 7;
+// repeated .cameraReaderWindows.CameraReaderWindows cameras = 7;
 inline int CameraList::cameras_size() const {
   return cameras_.size();
 }
 inline void CameraList::clear_cameras() {
   cameras_.Clear();
 }
-inline const ::camera::Camera& CameraList::cameras(int index) const {
-  // @@protoc_insertion_point(field_get:camera.CameraList.cameras)
+inline const ::cameraReaderWindows::CameraReaderWindows& CameraList::cameras(int index) const {
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.CameraList.cameras)
   return cameras_.Get(index);
 }
-inline ::camera::Camera* CameraList::mutable_cameras(int index) {
-  // @@protoc_insertion_point(field_mutable:camera.CameraList.cameras)
+inline ::cameraReaderWindows::CameraReaderWindows* CameraList::mutable_cameras(int index) {
+  // @@protoc_insertion_point(field_mutable:cameraReaderWindows.CameraList.cameras)
   return cameras_.Mutable(index);
 }
-inline ::camera::Camera* CameraList::add_cameras() {
-  // @@protoc_insertion_point(field_add:camera.CameraList.cameras)
+inline ::cameraReaderWindows::CameraReaderWindows* CameraList::add_cameras() {
+  // @@protoc_insertion_point(field_add:cameraReaderWindows.CameraList.cameras)
   return cameras_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::camera::Camera >*
+inline ::google::protobuf::RepeatedPtrField< ::cameraReaderWindows::CameraReaderWindows >*
 CameraList::mutable_cameras() {
-  // @@protoc_insertion_point(field_mutable_list:camera.CameraList.cameras)
+  // @@protoc_insertion_point(field_mutable_list:cameraReaderWindows.CameraList.cameras)
   return &cameras_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::camera::Camera >&
+inline const ::google::protobuf::RepeatedPtrField< ::cameraReaderWindows::CameraReaderWindows >&
 CameraList::cameras() const {
-  // @@protoc_insertion_point(field_list:camera.CameraList.cameras)
+  // @@protoc_insertion_point(field_list:cameraReaderWindows.CameraList.cameras)
   return cameras_;
 }
 
@@ -916,41 +946,41 @@ inline void StartCaptureArguments::clear_cameraname() {
   cameraname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& StartCaptureArguments::cameraname() const {
-  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.cameraName)
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.StartCaptureArguments.cameraName)
   return cameraname_.GetNoArena();
 }
 inline void StartCaptureArguments::set_cameraname(const ::std::string& value) {
   
   cameraname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.cameraName)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.StartCaptureArguments.cameraName)
 }
 #if LANG_CXX11
 inline void StartCaptureArguments::set_cameraname(::std::string&& value) {
   
   cameraname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:camera.StartCaptureArguments.cameraName)
+  // @@protoc_insertion_point(field_set_rvalue:cameraReaderWindows.StartCaptureArguments.cameraName)
 }
 #endif
 inline void StartCaptureArguments::set_cameraname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   cameraname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:camera.StartCaptureArguments.cameraName)
+  // @@protoc_insertion_point(field_set_char:cameraReaderWindows.StartCaptureArguments.cameraName)
 }
 inline void StartCaptureArguments::set_cameraname(const char* value, size_t size) {
   
   cameraname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:camera.StartCaptureArguments.cameraName)
+  // @@protoc_insertion_point(field_set_pointer:cameraReaderWindows.StartCaptureArguments.cameraName)
 }
 inline ::std::string* StartCaptureArguments::mutable_cameraname() {
   
-  // @@protoc_insertion_point(field_mutable:camera.StartCaptureArguments.cameraName)
+  // @@protoc_insertion_point(field_mutable:cameraReaderWindows.StartCaptureArguments.cameraName)
   return cameraname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* StartCaptureArguments::release_cameraname() {
-  // @@protoc_insertion_point(field_release:camera.StartCaptureArguments.cameraName)
+  // @@protoc_insertion_point(field_release:cameraReaderWindows.StartCaptureArguments.cameraName)
   
   return cameraname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -961,7 +991,7 @@ inline void StartCaptureArguments::set_allocated_cameraname(::std::string* camer
     
   }
   cameraname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), cameraname);
-  // @@protoc_insertion_point(field_set_allocated:camera.StartCaptureArguments.cameraName)
+  // @@protoc_insertion_point(field_set_allocated:cameraReaderWindows.StartCaptureArguments.cameraName)
 }
 
 // string cameraPath = 9;
@@ -969,41 +999,41 @@ inline void StartCaptureArguments::clear_camerapath() {
   camerapath_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& StartCaptureArguments::camerapath() const {
-  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.cameraPath)
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.StartCaptureArguments.cameraPath)
   return camerapath_.GetNoArena();
 }
 inline void StartCaptureArguments::set_camerapath(const ::std::string& value) {
   
   camerapath_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.cameraPath)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.StartCaptureArguments.cameraPath)
 }
 #if LANG_CXX11
 inline void StartCaptureArguments::set_camerapath(::std::string&& value) {
   
   camerapath_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:camera.StartCaptureArguments.cameraPath)
+  // @@protoc_insertion_point(field_set_rvalue:cameraReaderWindows.StartCaptureArguments.cameraPath)
 }
 #endif
 inline void StartCaptureArguments::set_camerapath(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   camerapath_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:camera.StartCaptureArguments.cameraPath)
+  // @@protoc_insertion_point(field_set_char:cameraReaderWindows.StartCaptureArguments.cameraPath)
 }
 inline void StartCaptureArguments::set_camerapath(const char* value, size_t size) {
   
   camerapath_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:camera.StartCaptureArguments.cameraPath)
+  // @@protoc_insertion_point(field_set_pointer:cameraReaderWindows.StartCaptureArguments.cameraPath)
 }
 inline ::std::string* StartCaptureArguments::mutable_camerapath() {
   
-  // @@protoc_insertion_point(field_mutable:camera.StartCaptureArguments.cameraPath)
+  // @@protoc_insertion_point(field_mutable:cameraReaderWindows.StartCaptureArguments.cameraPath)
   return camerapath_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* StartCaptureArguments::release_camerapath() {
-  // @@protoc_insertion_point(field_release:camera.StartCaptureArguments.cameraPath)
+  // @@protoc_insertion_point(field_release:cameraReaderWindows.StartCaptureArguments.cameraPath)
   
   return camerapath_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1014,7 +1044,7 @@ inline void StartCaptureArguments::set_allocated_camerapath(::std::string* camer
     
   }
   camerapath_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), camerapath);
-  // @@protoc_insertion_point(field_set_allocated:camera.StartCaptureArguments.cameraPath)
+  // @@protoc_insertion_point(field_set_allocated:cameraReaderWindows.StartCaptureArguments.cameraPath)
 }
 
 // uint32 width = 10;
@@ -1022,13 +1052,13 @@ inline void StartCaptureArguments::clear_width() {
   width_ = 0u;
 }
 inline ::google::protobuf::uint32 StartCaptureArguments::width() const {
-  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.width)
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.StartCaptureArguments.width)
   return width_;
 }
 inline void StartCaptureArguments::set_width(::google::protobuf::uint32 value) {
   
   width_ = value;
-  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.width)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.StartCaptureArguments.width)
 }
 
 // uint32 height = 11;
@@ -1036,13 +1066,13 @@ inline void StartCaptureArguments::clear_height() {
   height_ = 0u;
 }
 inline ::google::protobuf::uint32 StartCaptureArguments::height() const {
-  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.height)
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.StartCaptureArguments.height)
   return height_;
 }
 inline void StartCaptureArguments::set_height(::google::protobuf::uint32 value) {
   
   height_ = value;
-  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.height)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.StartCaptureArguments.height)
 }
 
 // uint64 frameinterval = 12;
@@ -1050,27 +1080,41 @@ inline void StartCaptureArguments::clear_frameinterval() {
   frameinterval_ = GOOGLE_ULONGLONG(0);
 }
 inline ::google::protobuf::uint64 StartCaptureArguments::frameinterval() const {
-  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.frameinterval)
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.StartCaptureArguments.frameinterval)
   return frameinterval_;
 }
 inline void StartCaptureArguments::set_frameinterval(::google::protobuf::uint64 value) {
   
   frameinterval_ = value;
-  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.frameinterval)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.StartCaptureArguments.frameinterval)
 }
 
-// .camera.CaptureEncoding encoding = 13;
+// .cameraReaderWindows.CaptureEncoding encoding = 13;
 inline void StartCaptureArguments::clear_encoding() {
   encoding_ = 0;
 }
-inline ::camera::CaptureEncoding StartCaptureArguments::encoding() const {
-  // @@protoc_insertion_point(field_get:camera.StartCaptureArguments.encoding)
-  return static_cast< ::camera::CaptureEncoding >(encoding_);
+inline ::cameraReaderWindows::CaptureEncoding StartCaptureArguments::encoding() const {
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.StartCaptureArguments.encoding)
+  return static_cast< ::cameraReaderWindows::CaptureEncoding >(encoding_);
 }
-inline void StartCaptureArguments::set_encoding(::camera::CaptureEncoding value) {
+inline void StartCaptureArguments::set_encoding(::cameraReaderWindows::CaptureEncoding value) {
   
   encoding_ = value;
-  // @@protoc_insertion_point(field_set:camera.StartCaptureArguments.encoding)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.StartCaptureArguments.encoding)
+}
+
+// .cameraReaderWindows.Flip flippingMode = 14;
+inline void StartCaptureArguments::clear_flippingmode() {
+  flippingmode_ = 0;
+}
+inline ::cameraReaderWindows::Flip StartCaptureArguments::flippingmode() const {
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.StartCaptureArguments.flippingMode)
+  return static_cast< ::cameraReaderWindows::Flip >(flippingmode_);
+}
+inline void StartCaptureArguments::set_flippingmode(::cameraReaderWindows::Flip value) {
+  
+  flippingmode_ = value;
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.StartCaptureArguments.flippingMode)
 }
 
 // -------------------------------------------------------------------
@@ -1082,13 +1126,13 @@ inline void StartCaptureResult::clear_canresetgraph() {
   canresetgraph_ = false;
 }
 inline bool StartCaptureResult::canresetgraph() const {
-  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.canResetGraph)
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.StartCaptureResult.canResetGraph)
   return canresetgraph_;
 }
 inline void StartCaptureResult::set_canresetgraph(bool value) {
   
   canresetgraph_ = value;
-  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.canResetGraph)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.StartCaptureResult.canResetGraph)
 }
 
 // bool canSetAudioConfig = 15;
@@ -1096,13 +1140,13 @@ inline void StartCaptureResult::clear_cansetaudioconfig() {
   cansetaudioconfig_ = false;
 }
 inline bool StartCaptureResult::cansetaudioconfig() const {
-  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.canSetAudioConfig)
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.StartCaptureResult.canSetAudioConfig)
   return cansetaudioconfig_;
 }
 inline void StartCaptureResult::set_cansetaudioconfig(bool value) {
   
   cansetaudioconfig_ = value;
-  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.canSetAudioConfig)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.StartCaptureResult.canSetAudioConfig)
 }
 
 // bool canSetVideoConfig = 16;
@@ -1110,13 +1154,13 @@ inline void StartCaptureResult::clear_cansetvideoconfig() {
   cansetvideoconfig_ = false;
 }
 inline bool StartCaptureResult::cansetvideoconfig() const {
-  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.canSetVideoConfig)
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.StartCaptureResult.canSetVideoConfig)
   return cansetvideoconfig_;
 }
 inline void StartCaptureResult::set_cansetvideoconfig(bool value) {
   
   cansetvideoconfig_ = value;
-  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.canSetVideoConfig)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.StartCaptureResult.canSetVideoConfig)
 }
 
 // bool canConnectFilters = 17;
@@ -1124,27 +1168,27 @@ inline void StartCaptureResult::clear_canconnectfilters() {
   canconnectfilters_ = false;
 }
 inline bool StartCaptureResult::canconnectfilters() const {
-  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.canConnectFilters)
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.StartCaptureResult.canConnectFilters)
   return canconnectfilters_;
 }
 inline void StartCaptureResult::set_canconnectfilters(bool value) {
   
   canconnectfilters_ = value;
-  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.canConnectFilters)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.StartCaptureResult.canConnectFilters)
 }
 
-// .camera.StartResult result = 18;
+// .cameraReaderWindows.StartResult result = 18;
 inline void StartCaptureResult::clear_result() {
   result_ = 0;
 }
-inline ::camera::StartResult StartCaptureResult::result() const {
-  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.result)
-  return static_cast< ::camera::StartResult >(result_);
+inline ::cameraReaderWindows::StartResult StartCaptureResult::result() const {
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.StartCaptureResult.result)
+  return static_cast< ::cameraReaderWindows::StartResult >(result_);
 }
-inline void StartCaptureResult::set_result(::camera::StartResult value) {
+inline void StartCaptureResult::set_result(::cameraReaderWindows::StartResult value) {
   
   result_ = value;
-  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.result)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.StartCaptureResult.result)
 }
 
 // uint64 devicePointer = 19;
@@ -1152,13 +1196,13 @@ inline void StartCaptureResult::clear_devicepointer() {
   devicepointer_ = GOOGLE_ULONGLONG(0);
 }
 inline ::google::protobuf::uint64 StartCaptureResult::devicepointer() const {
-  // @@protoc_insertion_point(field_get:camera.StartCaptureResult.devicePointer)
+  // @@protoc_insertion_point(field_get:cameraReaderWindows.StartCaptureResult.devicePointer)
   return devicepointer_;
 }
 inline void StartCaptureResult::set_devicepointer(::google::protobuf::uint64 value) {
   
   devicepointer_ = value;
-  // @@protoc_insertion_point(field_set:camera.StartCaptureResult.devicePointer)
+  // @@protoc_insertion_point(field_set:cameraReaderWindows.StartCaptureResult.devicePointer)
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -1174,21 +1218,26 @@ inline void StartCaptureResult::set_devicepointer(::google::protobuf::uint64 val
 // @@protoc_insertion_point(namespace_scope)
 
 
-}  // namespace camera
+}  // namespace cameraReaderWindows
 
 #ifndef SWIG
 namespace google {
 namespace protobuf {
 
-template <> struct is_proto_enum< ::camera::CaptureEncoding> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::cameraReaderWindows::CaptureEncoding> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::camera::CaptureEncoding>() {
-  return ::camera::CaptureEncoding_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::cameraReaderWindows::CaptureEncoding>() {
+  return ::cameraReaderWindows::CaptureEncoding_descriptor();
 }
-template <> struct is_proto_enum< ::camera::StartResult> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::cameraReaderWindows::Flip> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::camera::StartResult>() {
-  return ::camera::StartResult_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::cameraReaderWindows::Flip>() {
+  return ::cameraReaderWindows::Flip_descriptor();
+}
+template <> struct is_proto_enum< ::cameraReaderWindows::StartResult> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::cameraReaderWindows::StartResult>() {
+  return ::cameraReaderWindows::StartResult_descriptor();
 }
 
 }  // namespace protobuf

@@ -7,7 +7,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Camera {
+namespace CameraReaderWindows {
 
   /// <summary>Holder for reflection information generated from proto.proto</summary>
   public static partial class ProtoReflection {
@@ -22,33 +22,38 @@ namespace Camera {
     static ProtoReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cgtwcm90by5wcm90bxIGY2FtZXJhInAKDUNhcHR1cmVGb3JtYXQSDQoFd2lk",
-            "dGgYASABKA0SDgoGaGVpZ2h0GAIgASgNEhUKDWZyYW1laW50ZXJ2YWwYAyAB",
-            "KAQSKQoIZW5jb2RpbmcYBCABKA4yFy5jYW1lcmEuQ2FwdHVyZUVuY29kaW5n",
-            "IlgKBkNhbWVyYRISCgpjYW1lcmFOYW1lGAUgASgJEhIKCmNhbWVyYVBhdGgY",
-            "BiABKAkSJgoHZm9ybWF0cxgHIAMoCzIVLmNhbWVyYS5DYXB0dXJlRm9ybWF0",
-            "Ii0KCkNhbWVyYUxpc3QSHwoHY2FtZXJhcxgHIAMoCzIOLmNhbWVyYS5DYW1l",
-            "cmEioAEKFVN0YXJ0Q2FwdHVyZUFyZ3VtZW50cxISCgpjYW1lcmFOYW1lGAgg",
-            "ASgJEhIKCmNhbWVyYVBhdGgYCSABKAkSDQoFd2lkdGgYCiABKA0SDgoGaGVp",
-            "Z2h0GAsgASgNEhUKDWZyYW1laW50ZXJ2YWwYDCABKAQSKQoIZW5jb2RpbmcY",
-            "DSABKA4yFy5jYW1lcmEuQ2FwdHVyZUVuY29kaW5nIrgBChJTdGFydENhcHR1",
-            "cmVSZXN1bHQSFQoNY2FuUmVzZXRHcmFwaBgOIAEoCBIZChFjYW5TZXRBdWRp",
-            "b0NvbmZpZxgPIAEoCBIZChFjYW5TZXRWaWRlb0NvbmZpZxgQIAEoCBIZChFj",
-            "YW5Db25uZWN0RmlsdGVycxgRIAEoCBIjCgZyZXN1bHQYEiABKA4yEy5jYW1l",
-            "cmEuU3RhcnRSZXN1bHQSFQoNZGV2aWNlUG9pbnRlchgTIAEoBCqgAQoPQ2Fw",
-            "dHVyZUVuY29kaW5nEgcKA0FueRAAEgsKB1Vua25vd24QARIICgRBUkdCEAIS",
-            "CAoEWFJHQhADEggKBEk0MjAQBBIICgROVjEyEAUSCAoEWVYxMhAGEggKBFk4",
-            "MDAQBxIICgRZVllVEAgSCAoEWVVZMhAJEggKBFVZVlkQChIICgRIRFlDEAsS",
-            "CQoFTUpQRUcQDBIICgRIMjY0EA0qMAoLU3RhcnRSZXN1bHQSCwoHU3VjY2Vz",
-            "cxAAEgkKBUluVXNlEAESCQoFRXJyb3IQAmIGcHJvdG8z"));
+            "Cgtwcm90by5wcm90bxITY2FtZXJhUmVhZGVyV2luZG93cyJ9Cg1DYXB0dXJl",
+            "Rm9ybWF0Eg0KBXdpZHRoGAEgASgNEg4KBmhlaWdodBgCIAEoDRIVCg1mcmFt",
+            "ZWludGVydmFsGAMgASgEEjYKCGVuY29kaW5nGAQgASgOMiQuY2FtZXJhUmVh",
+            "ZGVyV2luZG93cy5DYXB0dXJlRW5jb2RpbmcicgoTQ2FtZXJhUmVhZGVyV2lu",
+            "ZG93cxISCgpjYW1lcmFOYW1lGAUgASgJEhIKCmNhbWVyYVBhdGgYBiABKAkS",
+            "MwoHZm9ybWF0cxgHIAMoCzIiLmNhbWVyYVJlYWRlcldpbmRvd3MuQ2FwdHVy",
+            "ZUZvcm1hdCJHCgpDYW1lcmFMaXN0EjkKB2NhbWVyYXMYByADKAsyKC5jYW1l",
+            "cmFSZWFkZXJXaW5kb3dzLkNhbWVyYVJlYWRlcldpbmRvd3Mi3gEKFVN0YXJ0",
+            "Q2FwdHVyZUFyZ3VtZW50cxISCgpjYW1lcmFOYW1lGAggASgJEhIKCmNhbWVy",
+            "YVBhdGgYCSABKAkSDQoFd2lkdGgYCiABKA0SDgoGaGVpZ2h0GAsgASgNEhUK",
+            "DWZyYW1laW50ZXJ2YWwYDCABKAQSNgoIZW5jb2RpbmcYDSABKA4yJC5jYW1l",
+            "cmFSZWFkZXJXaW5kb3dzLkNhcHR1cmVFbmNvZGluZxIvCgxmbGlwcGluZ01v",
+            "ZGUYDiABKA4yGS5jYW1lcmFSZWFkZXJXaW5kb3dzLkZsaXAixQEKElN0YXJ0",
+            "Q2FwdHVyZVJlc3VsdBIVCg1jYW5SZXNldEdyYXBoGA4gASgIEhkKEWNhblNl",
+            "dEF1ZGlvQ29uZmlnGA8gASgIEhkKEWNhblNldFZpZGVvQ29uZmlnGBAgASgI",
+            "EhkKEWNhbkNvbm5lY3RGaWx0ZXJzGBEgASgIEjAKBnJlc3VsdBgSIAEoDjIg",
+            "LmNhbWVyYVJlYWRlcldpbmRvd3MuU3RhcnRSZXN1bHQSFQoNZGV2aWNlUG9p",
+            "bnRlchgTIAEoBCqgAQoPQ2FwdHVyZUVuY29kaW5nEgcKA0FueRAAEgsKB1Vu",
+            "a25vd24QARIICgRBUkdCEAISCAoEWFJHQhADEggKBEk0MjAQBBIICgROVjEy",
+            "EAUSCAoEWVYxMhAGEggKBFk4MDAQBxIICgRZVllVEAgSCAoEWVVZMhAJEggK",
+            "BFVZVlkQChIICgRIRFlDEAsSCQoFTUpQRUcQDBIICgRIMjY0EA0qTAoERmxp",
+            "cBIMCghGbGlwTm9uZRAAEhIKDkZsaXBWZXJ0aWNhbGx5EAESFAoQRmxpcEhv",
+            "cml6b250YWxseRACEgwKCEZsaXBCb3RoEAMqMAoLU3RhcnRSZXN1bHQSCwoH",
+            "U3VjY2VzcxAAEgkKBUluVXNlEAESCQoFRXJyb3IQAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Camera.CaptureEncoding), typeof(global::Camera.StartResult), }, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.CaptureFormat), global::Camera.CaptureFormat.Parser, new[]{ "Width", "Height", "Frameinterval", "Encoding" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.Camera), global::Camera.Camera.Parser, new[]{ "CameraName", "CameraPath", "Formats" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.CameraList), global::Camera.CameraList.Parser, new[]{ "Cameras" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.StartCaptureArguments), global::Camera.StartCaptureArguments.Parser, new[]{ "CameraName", "CameraPath", "Width", "Height", "Frameinterval", "Encoding" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Camera.StartCaptureResult), global::Camera.StartCaptureResult.Parser, new[]{ "CanResetGraph", "CanSetAudioConfig", "CanSetVideoConfig", "CanConnectFilters", "Result", "DevicePointer" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::CameraReaderWindows.CaptureEncoding), typeof(global::CameraReaderWindows.Flip), typeof(global::CameraReaderWindows.StartResult), }, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::CameraReaderWindows.CaptureFormat), global::CameraReaderWindows.CaptureFormat.Parser, new[]{ "Width", "Height", "Frameinterval", "Encoding" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::CameraReaderWindows.CameraReaderWindows), global::CameraReaderWindows.CameraReaderWindows.Parser, new[]{ "CameraName", "CameraPath", "Formats" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::CameraReaderWindows.CameraList), global::CameraReaderWindows.CameraList.Parser, new[]{ "Cameras" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::CameraReaderWindows.StartCaptureArguments), global::CameraReaderWindows.StartCaptureArguments.Parser, new[]{ "CameraName", "CameraPath", "Width", "Height", "Frameinterval", "Encoding", "FlippingMode" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::CameraReaderWindows.StartCaptureResult), global::CameraReaderWindows.StartCaptureResult.Parser, new[]{ "CanResetGraph", "CanSetAudioConfig", "CanSetVideoConfig", "CanConnectFilters", "Result", "DevicePointer" }, null, null, null)
           }));
     }
     #endregion
@@ -72,6 +77,13 @@ namespace Camera {
     [pbr::OriginalName("H264")] H264 = 13,
   }
 
+  public enum Flip {
+    [pbr::OriginalName("FlipNone")] None = 0,
+    [pbr::OriginalName("FlipVertically")] Vertically = 1,
+    [pbr::OriginalName("FlipHorizontally")] Horizontally = 2,
+    [pbr::OriginalName("FlipBoth")] Both = 3,
+  }
+
   public enum StartResult {
     [pbr::OriginalName("Success")] Success = 0,
     [pbr::OriginalName("InUse")] InUse = 1,
@@ -88,7 +100,7 @@ namespace Camera {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Camera.ProtoReflection.Descriptor.MessageTypes[0]; }
+      get { return global::CameraReaderWindows.ProtoReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -151,9 +163,9 @@ namespace Camera {
 
     /// <summary>Field number for the "encoding" field.</summary>
     public const int EncodingFieldNumber = 4;
-    private global::Camera.CaptureEncoding encoding_ = 0;
+    private global::CameraReaderWindows.CaptureEncoding encoding_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Camera.CaptureEncoding Encoding {
+    public global::CameraReaderWindows.CaptureEncoding Encoding {
       get { return encoding_; }
       set {
         encoding_ = value;
@@ -273,7 +285,7 @@ namespace Camera {
             break;
           }
           case 32: {
-            encoding_ = (global::Camera.CaptureEncoding) input.ReadEnum();
+            encoding_ = (global::CameraReaderWindows.CaptureEncoding) input.ReadEnum();
             break;
           }
         }
@@ -282,14 +294,14 @@ namespace Camera {
 
   }
 
-  public sealed partial class Camera : pb::IMessage<Camera> {
-    private static readonly pb::MessageParser<Camera> _parser = new pb::MessageParser<Camera>(() => new Camera());
+  public sealed partial class CameraReaderWindows : pb::IMessage<CameraReaderWindows> {
+    private static readonly pb::MessageParser<CameraReaderWindows> _parser = new pb::MessageParser<CameraReaderWindows>(() => new CameraReaderWindows());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Camera> Parser { get { return _parser; } }
+    public static pb::MessageParser<CameraReaderWindows> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Camera.ProtoReflection.Descriptor.MessageTypes[1]; }
+      get { return global::CameraReaderWindows.ProtoReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -298,22 +310,22 @@ namespace Camera {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Camera() {
+    public CameraReaderWindows() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Camera(Camera other) : this() {
+    public CameraReaderWindows(CameraReaderWindows other) : this() {
       cameraName_ = other.cameraName_;
       cameraPath_ = other.cameraPath_;
       formats_ = other.formats_.Clone();
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Camera Clone() {
-      return new Camera(this);
+    public CameraReaderWindows Clone() {
+      return new CameraReaderWindows(this);
     }
 
     /// <summary>Field number for the "cameraName" field.</summary>
@@ -340,21 +352,21 @@ namespace Camera {
 
     /// <summary>Field number for the "formats" field.</summary>
     public const int FormatsFieldNumber = 7;
-    private static readonly pb::FieldCodec<global::Camera.CaptureFormat> _repeated_formats_codec
-        = pb::FieldCodec.ForMessage(58, global::Camera.CaptureFormat.Parser);
-    private readonly pbc::RepeatedField<global::Camera.CaptureFormat> formats_ = new pbc::RepeatedField<global::Camera.CaptureFormat>();
+    private static readonly pb::FieldCodec<global::CameraReaderWindows.CaptureFormat> _repeated_formats_codec
+        = pb::FieldCodec.ForMessage(58, global::CameraReaderWindows.CaptureFormat.Parser);
+    private readonly pbc::RepeatedField<global::CameraReaderWindows.CaptureFormat> formats_ = new pbc::RepeatedField<global::CameraReaderWindows.CaptureFormat>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Camera.CaptureFormat> Formats {
+    public pbc::RepeatedField<global::CameraReaderWindows.CaptureFormat> Formats {
       get { return formats_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as Camera);
+      return Equals(other as CameraReaderWindows);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Camera other) {
+    public bool Equals(CameraReaderWindows other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -408,7 +420,7 @@ namespace Camera {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Camera other) {
+    public void MergeFrom(CameraReaderWindows other) {
       if (other == null) {
         return;
       }
@@ -454,7 +466,7 @@ namespace Camera {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Camera.ProtoReflection.Descriptor.MessageTypes[2]; }
+      get { return global::CameraReaderWindows.ProtoReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -481,11 +493,11 @@ namespace Camera {
 
     /// <summary>Field number for the "cameras" field.</summary>
     public const int CamerasFieldNumber = 7;
-    private static readonly pb::FieldCodec<global::Camera.Camera> _repeated_cameras_codec
-        = pb::FieldCodec.ForMessage(58, global::Camera.Camera.Parser);
-    private readonly pbc::RepeatedField<global::Camera.Camera> cameras_ = new pbc::RepeatedField<global::Camera.Camera>();
+    private static readonly pb::FieldCodec<global::CameraReaderWindows.CameraReaderWindows> _repeated_cameras_codec
+        = pb::FieldCodec.ForMessage(58, global::CameraReaderWindows.CameraReaderWindows.Parser);
+    private readonly pbc::RepeatedField<global::CameraReaderWindows.CameraReaderWindows> cameras_ = new pbc::RepeatedField<global::CameraReaderWindows.CameraReaderWindows>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Camera.Camera> Cameras {
+    public pbc::RepeatedField<global::CameraReaderWindows.CameraReaderWindows> Cameras {
       get { return cameras_; }
     }
 
@@ -563,7 +575,7 @@ namespace Camera {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Camera.ProtoReflection.Descriptor.MessageTypes[3]; }
+      get { return global::CameraReaderWindows.ProtoReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -586,6 +598,7 @@ namespace Camera {
       height_ = other.height_;
       frameinterval_ = other.frameinterval_;
       encoding_ = other.encoding_;
+      flippingMode_ = other.flippingMode_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -650,12 +663,23 @@ namespace Camera {
 
     /// <summary>Field number for the "encoding" field.</summary>
     public const int EncodingFieldNumber = 13;
-    private global::Camera.CaptureEncoding encoding_ = 0;
+    private global::CameraReaderWindows.CaptureEncoding encoding_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Camera.CaptureEncoding Encoding {
+    public global::CameraReaderWindows.CaptureEncoding Encoding {
       get { return encoding_; }
       set {
         encoding_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "flippingMode" field.</summary>
+    public const int FlippingModeFieldNumber = 14;
+    private global::CameraReaderWindows.Flip flippingMode_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::CameraReaderWindows.Flip FlippingMode {
+      get { return flippingMode_; }
+      set {
+        flippingMode_ = value;
       }
     }
 
@@ -678,6 +702,7 @@ namespace Camera {
       if (Height != other.Height) return false;
       if (Frameinterval != other.Frameinterval) return false;
       if (Encoding != other.Encoding) return false;
+      if (FlippingMode != other.FlippingMode) return false;
       return true;
     }
 
@@ -690,6 +715,7 @@ namespace Camera {
       if (Height != 0) hash ^= Height.GetHashCode();
       if (Frameinterval != 0UL) hash ^= Frameinterval.GetHashCode();
       if (Encoding != 0) hash ^= Encoding.GetHashCode();
+      if (FlippingMode != 0) hash ^= FlippingMode.GetHashCode();
       return hash;
     }
 
@@ -724,6 +750,10 @@ namespace Camera {
         output.WriteRawTag(104);
         output.WriteEnum((int) Encoding);
       }
+      if (FlippingMode != 0) {
+        output.WriteRawTag(112);
+        output.WriteEnum((int) FlippingMode);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -746,6 +776,9 @@ namespace Camera {
       }
       if (Encoding != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Encoding);
+      }
+      if (FlippingMode != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) FlippingMode);
       }
       return size;
     }
@@ -772,6 +805,9 @@ namespace Camera {
       }
       if (other.Encoding != 0) {
         Encoding = other.Encoding;
+      }
+      if (other.FlippingMode != 0) {
+        FlippingMode = other.FlippingMode;
       }
     }
 
@@ -804,7 +840,11 @@ namespace Camera {
             break;
           }
           case 104: {
-            encoding_ = (global::Camera.CaptureEncoding) input.ReadEnum();
+            encoding_ = (global::CameraReaderWindows.CaptureEncoding) input.ReadEnum();
+            break;
+          }
+          case 112: {
+            flippingMode_ = (global::CameraReaderWindows.Flip) input.ReadEnum();
             break;
           }
         }
@@ -820,7 +860,7 @@ namespace Camera {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Camera.ProtoReflection.Descriptor.MessageTypes[4]; }
+      get { return global::CameraReaderWindows.ProtoReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -896,9 +936,9 @@ namespace Camera {
 
     /// <summary>Field number for the "result" field.</summary>
     public const int ResultFieldNumber = 18;
-    private global::Camera.StartResult result_ = 0;
+    private global::CameraReaderWindows.StartResult result_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Camera.StartResult Result {
+    public global::CameraReaderWindows.StartResult Result {
       get { return result_; }
       set {
         result_ = value;
@@ -1057,7 +1097,7 @@ namespace Camera {
             break;
           }
           case 144: {
-            result_ = (global::Camera.StartResult) input.ReadEnum();
+            result_ = (global::CameraReaderWindows.StartResult) input.ReadEnum();
             break;
           }
           case 152: {

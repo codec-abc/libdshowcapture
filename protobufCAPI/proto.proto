@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package camera;
+package cameraReaderWindows;
 
 enum CaptureEncoding {
 
@@ -30,14 +30,21 @@ message CaptureFormat {
     CaptureEncoding encoding = 4;
 }
 
-message Camera {
+message CameraReaderWindows {
     string cameraName = 5;
 	string cameraPath = 6;
     repeated CaptureFormat formats = 7;
 }
 
 message CameraList {
-    repeated Camera cameras = 7;
+    repeated CameraReaderWindows cameras = 7;
+}
+
+enum Flip {
+	FlipNone = 0;
+	FlipVertically = 1;
+	FlipHorizontally = 2;
+	FlipBoth = 3;
 }
 
 message StartCaptureArguments {
@@ -47,6 +54,7 @@ message StartCaptureArguments {
 	uint32 height = 11;
 	uint64 frameinterval = 12;
 	CaptureEncoding encoding = 13;
+	Flip flippingMode = 14;
 }
 
 enum StartResult {
