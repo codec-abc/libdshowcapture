@@ -94,9 +94,9 @@ void convertToYUV
 		0.0f
 	);
 
-	//concurrency::parallel_for(
-	//(int)0, width, [&](int i)
-	for (int i = 0; i < width; i++)
+	concurrency::parallel_for(
+	(int)0, width, [&](int i)
+	//for (int i = 0; i < width; i++)
 	{
 		for (int j = 0; j < height; j++)
 		{
@@ -150,7 +150,6 @@ void convertToYUV
 
 			auto imageSize = width * height;
 
-
 			if (flippingMode == FlippingMode::None)
 			{
 				int pixelIndex = i * height + j;
@@ -165,7 +164,20 @@ void convertToYUV
 				int jPrime = oldPixelIndex / width;
 				int iPrime = oldPixelIndex - jPrime * width;
 				jPrime = height - 1 - jPrime;
-				int pixelIndex = (jPrime) * width + (iPrime);
+				int pixelIndex = jPrime * width + iPrime;
+
+				outputBuff[0 * imageSize + pixelIndex] = yuvInteger.m128i_u32[0];
+				outputBuff[1 * imageSize + pixelIndex] = yuvInteger.m128i_u32[1];
+				outputBuff[2 * imageSize + pixelIndex] = yuvInteger.m128i_u32[2];
+			}
+			else if (flippingMode == FlippingMode::Horizontally)
+			{
+				int oldPixelIndex = i * height + j;
+				int jPrime = oldPixelIndex / width;
+				int iPrime = oldPixelIndex - jPrime * width;
+				int pixelIndex = jPrime * width + iPrime;
+				int delta = 2 * (ceil(width / 2.0) - iPrime);
+				pixelIndex += delta;
 
 				outputBuff[0 * imageSize + pixelIndex] = yuvInteger.m128i_u32[0];
 				outputBuff[1 * imageSize + pixelIndex] = yuvInteger.m128i_u32[1];
@@ -180,25 +192,7 @@ void convertToYUV
 				outputBuff[2 * imageSize + pixelIndex] = yuvInteger.m128i_u32[2];
 			}
 		}
-	}
-	//);
-
-	//auto imageSize = width * height;
-	//unsigned char* truc = (unsigned char*) malloc(imageSize * 3);
-	//memcpy(truc, outputBuff, imageSize * 3);
-
-	//for (int jj = 0; jj < height; jj++)
-	//{
-	//	for (int ii = 0; ii < width; ii++)
-	//	{
-	//		int delta = ceil((height - 1) / 2.0) - jj;
-	//		int pixelIndex = jj * width + ii;
-	//		int swapped = delta * 2 * width + pixelIndex;
-	//		outputBuff[0 * imageSize + pixelIndex] = truc[0 * imageSize + swapped];
-	//		outputBuff[1 * imageSize + pixelIndex] = truc[1 * imageSize + swapped];
-	//		outputBuff[2 * imageSize + pixelIndex] = truc[2 * imageSize + swapped];
-	//	}
-	//}
+	});
 }
 
 class DeviceHolder

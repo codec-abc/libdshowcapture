@@ -53,7 +53,7 @@ namespace WebcamSampleApp
             args.Frameinterval = 300000000;
             args.Width = 640;
             args.Height = 480;
-            args.FlippingMode = CameraReaderWindows.Flip.Vertically;
+            args.FlippingMode = CameraReaderWindows.Flip.None;
 
             Google.Protobuf.JsonFormatter formatter = 
                 new Google.Protobuf.JsonFormatter
